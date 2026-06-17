@@ -73,7 +73,7 @@ export default function TeamPicker({
         })}
       </div>
 
-      <div className="action-row" style={{ marginTop: '24px' }}>
+      <div className="action-row" style={{ marginTop: '24px', marginInline: 'Auto' }}>
         <button 
           className={`btn-sm ${refreshCount > 0 ? 'btn-outline' : ''}`} 
           onClick={onRefreshTeams}
@@ -86,7 +86,7 @@ export default function TeamPicker({
 
       {rosterCount > 0 && (
         <div className="roster-mini fadein" style={{ marginTop: '32px' }}>
-          <div className="rm-title">Your Dynasty (Draft in progress)</div>
+          <div className="rm-title">Your Roster (Draft in progress)</div>
           <div className="rm-players">
             {ROLES.map((role, i) => {
               const p = roster[role];

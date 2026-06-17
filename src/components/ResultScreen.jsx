@@ -41,7 +41,7 @@ export default function ResultScreen({
       <div className={`res-title disp ${titleCls}`}>{title}</div>
       <div className="res-sub">
         {champ
-          ? 'Your Dynasty has conquered the M-Series World Championship. Legendary!'
+          ? 'Your Roster has conquered the M-Series World Championship. Legendary!'
           : `Eliminated at the ${last?.stage || 'Qualifier'} — defeated by ${last?.opp || 'an opponent'}.`}
       </div>
 

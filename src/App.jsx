@@ -7,7 +7,6 @@ import ResultScreen from './components/ResultScreen';
 import {
   ROLES,
   STAGES,
-  generatePredefinedCommentary
 } from './data/gameData';
 
 // ── Helpers ──
@@ -138,8 +137,7 @@ export default function App() {
     setCurrentOpponent(null);
     setRefreshCount(3);
 
-    const allKeys = Object.keys(teamData);
-    setOfferedTeams(shuf(allKeys).slice(0, 3));
+    refreshOfferedTeams(teamData, []);
 
     setScreen('draft');
     setPhase('teampick');
@@ -181,9 +179,9 @@ export default function App() {
 
     // If all 5 roles filled → go to tournament
     if (Object.keys(newRoster).length >= 5) {
-      // Pre-calculate opponent for the first proper round (Quarter Final = round 1)
-      // Note: getOpponent needs to know the user's roster, which is newRoster
       setTimeout(() => {
+        // Pre-generate qualifier opponent so it shows in the waiting screen
+        setCurrentOpponent(getOpponent(0));
         setScreen('tournament');
         showToast('Roster locked! Tournament begins! ⚔️', 'n-good');
       }, 600);
@@ -231,95 +229,91 @@ export default function App() {
       }
     });
 
+    // Pick a random team from teamData to borrow name and logo
+    const teamKeys = Object.keys(teamData);
+    let randomTeamKey = teamKeys[rnd(0, teamKeys.length - 1)];
+    // Try to avoid using the same team as chosenTeam if possible
+    if (chosenTeam && randomTeamKey === chosenTeam && teamKeys.length > 1) {
+      randomTeamKey = teamKeys.find(k => k !== chosenTeam) || randomTeamKey;
+    }
+    const oppTeam = teamData[randomTeamKey] || { logo: "⚔️", country: "", year: "" };
+    const cleanName = randomTeamKey.replace(/\s\d{4}$/, '').trim();
+
     return {
-      name: "Enemy Roster",
-      logo: "",
-      country: "",
-      year: "",
+      name: cleanName,
+      logo: oppTeam.logo || "⚔️",
+      country: oppTeam.country || "",
+      year: oppTeam.year || "",
       teamOVR: calcRosterPower(enemyRoster),
       players: Object.values(enemyRoster),
       oppRoster: enemyRoster
     };
-  }, [teamData, roster, journey]);
+  }, [teamData, roster, journey, chosenTeam]);
 
   // ── Tournament: Start a round ──
   const handleStartRound = async () => {
     const stageName = STAGES[currentRound];
+    const opp = currentOpponent;
 
     if (currentRound === 0) {
-      // QUALIFIER: Simple pass/fail after delay
+      // QUALIFIER: Single-game match with full commentary
+      setSeriesResult({ uw: 0, ew: 0, results: [], logs: [] });
       setRoundState('playing');
+      await sleep(1000);
 
-      await sleep(2000);
       const userPower = calcRosterPower(roster);
-      // Qualifier: High chance to pass (80% - 100%)
-      const passChance = Math.min(100, Math.max(80, userPower - 5));
+      const passChance = Math.min(98, Math.max(80, userPower - 5));
       const passed = rnd(1, 100) <= passChance;
 
-      await sleep(1500);
+      // Play single game with sequential log reveal
+      const gameLogs = getGameLogs(passed);
+      for (let i = 0; i < gameLogs.length; i++) {
+        setSeriesResult({
+          uw: 0, ew: 0, results: [],
+          logs: gameLogs.slice(0, i + 1)
+        });
+        await sleep(1000);
+      }
+      await sleep(1200);
 
       setJourney(prev => [
         ...prev,
         {
           stage: stageName,
-          opp: 'Group Stage',
+          opp: 'Opponent',
           score: passed ? '✓ Qualified' : '✗ Failed',
-          result: passed ? 'W' : 'L'
+          result: passed ? 'W' : 'L',
+          oppRoster: opp?.oppRoster
         }
       ]);
 
-      if (passed) {
-        setRoundState('won');
-      } else {
-        setRoundState('lost');
-      }
+      setRoundState(passed ? 'won' : 'lost');
       return;
     }
 
     // BO5 ROUNDS (Quarter Final, Semi Final, Final)
-    // opponent is already selected during `waiting` phase
     setSeriesResult({ uw: 0, ew: 0, results: [], logs: [] });
     setRoundState('playing');
 
-    await autoPlaySeries(currentOpponent, currentRound);
+    await autoPlaySeries(opp, currentRound);
   };
 
   // ── Auto-play BO5 series ──
   const autoPlaySeries = async (opp, roundIdx) => {
     let state = { uw: 0, ew: 0, results: [], logs: [] };
     const stageName = STAGES[roundIdx];
-    const showCommentary = roundIdx >= 2; // Semi Final and Final only
 
     while (state.uw < 3 && state.ew < 3) {
-      state = await playOneGame(state, opp, roundIdx, showCommentary);
-      await sleep(800); // Delay between each game
+      state = await playOneGame(state, opp, roundIdx);
     }
 
     const won = state.uw >= 3;
-
-    // Add final series result log
-    const seriesLog = {
-      t: won
-        ? `🏆 Your Dynasty wins the series ${state.uw}–${state.ew}!`
-        : `💔 The Enemy takes the series ${state.ew}–${state.uw}.`,
-      c: won ? 'll-crit' : 'll-loss'
-    };
-    state.logs = [...state.logs, seriesLog];
-
-    // Commentary for all rounds
-    const rosterArray = Object.values(roster);
-    const star = rosterArray.reduce((best, p) => ((p.ovr || 90) > (best.ovr || 90) ? p : best), rosterArray[0]);
-    const scoreStr = `${state.uw}–${state.ew}`;
-    const commentary = generatePredefinedCommentary(won, star, opp, stageName, scoreStr);
-    state.logs = [...state.logs, { t: `💬 ${commentary}`, c: 'll-crit' }];
-
-    setSeriesResult({ ...state });
 
     setJourney(prev => [
       ...prev,
       {
         stage: stageName,
-        opp: opp.name,
+        opp: 'Opponent',
         score: `${state.uw}–${state.ew}`,
         result: won ? 'W' : 'L',
         oppRoster: opp.oppRoster
@@ -330,13 +324,8 @@ export default function App() {
   };
 
   // ── Play a single game within a BO5 ──
-  const playOneGame = async (currentState, opp, roundIdx, showCommentary) => {
+  const playOneGame = async (currentState, opp, roundIdx) => {
     const gn = currentState.results.length + 1;
-
-    // Clear previous game's logs so the UI stays clean per match
-    let logs = [];
-    setSeriesResult(prev => ({ ...prev, logs }));
-    await sleep(400);
 
     // OVR and synergy based calculation with mathematically forced progressive difficulty
     const userPower = calcRosterPower(roster);
@@ -362,29 +351,33 @@ export default function App() {
     
     const won = rnd(1, 100) <= winChance;
 
-    // Add exactly 3 gameplay logs
+    // Generate all 3 commentary logs (3rd defines who wins)
     const gameLogs = getGameLogs(won);
-    for (const l of gameLogs) {
-      logs = [...logs, l];
-      setSeriesResult(prev => ({ ...prev, logs: [...logs] }));
-      await sleep(600);
-    }
-
     const nextUw = currentState.uw + (won ? 1 : 0);
     const nextEw = currentState.ew + (won ? 0 : 1);
     const nextResults = [...currentState.results, won ? 1 : -1];
 
-    const resultLog = {
-      t: won
-        ? `✓ Game ${gn}: Your Dynasty wins! (${nextUw}–${nextEw})`
-        : `✗ Game ${gn}: The Enemy wins. (${nextUw}–${nextEw})`,
-      c: won ? 'll-win' : 'll-loss'
-    };
-    logs = [...logs, resultLog];
+    // Clear logs and wait 1s before showing Game gn's first log
+    setSeriesResult(prev => ({ ...prev, logs: [] }));
+    await sleep(1000);
 
-    const newState = { uw: nextUw, ew: nextEw, results: nextResults, logs };
-    setSeriesResult({ ...newState });
-    return newState;
+    // Reveal logs one by one with 1-second delay
+    for (let i = 0; i < gameLogs.length; i++) {
+      const isLastLog = i === gameLogs.length - 1;
+      setSeriesResult({
+        // Score only updates on the final (result) log
+        uw: isLastLog ? nextUw : currentState.uw,
+        ew: isLastLog ? nextEw : currentState.ew,
+        results: isLastLog ? nextResults : currentState.results,
+        logs: gameLogs.slice(0, i + 1)
+      });
+      await sleep(1000);
+    }
+
+    // Pause after all 3 logs so player can read before next game
+    await sleep(1200);
+    const finalState = { uw: nextUw, ew: nextEw, results: nextResults, logs: gameLogs };
+    return finalState;
   };
 
   // ── Game log generation ──
@@ -393,41 +386,70 @@ export default function App() {
     const p1 = rosterArray[rnd(0, rosterArray.length - 1)];
     const p2 = rosterArray[rnd(0, rosterArray.length - 1)];
 
-    const NEUTRAL_LOGS = [
-      `The gold is completely even at 5 minutes in...`,
-      `Both teams are trading blows, no clear advantage yet.`,
-      `A tense standoff around the Turtle pit.`,
-      `<span>${p1.ign}</span> is farming safely, looking for a mid-game spike.`,
-      `First blood goes to the enemy, but <span>${p2.ign}</span> trades back a kill!`,
-      `A huge rotation forces both teams to reset.`,
-      `<span>${p1.ign}</span> is controlling the lane beautifully.`,
-      `Jungle invades on both sides! The map is chaotic.`,
-      `The macro play from both teams is outstanding so far.`
+    const CLASH_WIN_LOGS = [
+      `⚔️ <span>${p1.ign}</span> secures the first Turtle of the game, giving Your Roster a gold lead!`,
+      `⚔️ A brilliant rotation from <span>${p1.ign}</span> catches the enemy out of position!`,
+      `⚔️ Your Roster secures a clean 2-for-0 trade in the mid lane, led by <span>${p1.ign}</span>!`,
+      `⚔️ <span>${p1.ign}</span> shuts down the enemy Jungler, securing our jungle buff!`,
+      `⚔️ Perfect micro-play from <span>${p1.ign}</span> wins the duel in the EXP lane!`,
+      `⚔️ <span>${p1.ign}</span> finds a double kill during a chaotic teamfight!`,
+      `⚔️ Your Roster successfully defends the tier-1 turret, with <span>${p1.ign}</span> getting a critical defense!`,
+      `⚔️ <span>${p1.ign}</span> intercepts the enemy rotation, securing a solo elimination!`
+    ];
+
+    const CLASH_LOSS_LOGS = [
+      `💀 The enemy Jungler steals the Turtle, putting Your Roster on the back foot.`,
+      `💀 <span>${p1.ign}</span> gets pickoffed in the river after being caught by the enemy tank.`,
+      `💀 The enemy team coordinates a 3-man dive, eliminating <span>${p2.ign}</span> under the turret.`,
+      `💀 A bad teamfight engage near the Lord pit costs Your Roster two players.`,
+      `💀 The enemy EXP laner wins a close duel against <span>${p1.ign}</span> on the sideline.`,
+      `💀 The enemy team invades and steals our purple buff, slowing down <span>${p1.ign}</span>'s scaling.`,
+      `💀 Your Roster lose the gold lead after the enemy Gold laner secures a double kill.`,
+      `💀 <span>${p1.ign}</span> is forced to retreat, giving up map pressure to the enemy.`
     ];
 
     const WIN_LOGS = [
-      `Flawless engage by <span>${p1.ign}</span> — the teamfight is a 5-0 wipe!`,
-      `Clutch Lord steal by <span>${p1.ign}</span>! Game-changing play!`,
-      `<span>${p1.ign}</span> lands a perfect setup — the enemy backline collapses`,
-      `Your Dynasty dominates — <span>${p1.ign}</span> secures the final push!`,
-      `<span>${p1.ign}</span> counterflanks perfectly — Lord secured and it's over!`
+      `⚔️ <span>VICTORY</span>: Flawless engage by <span>${p1.ign}</span> — the teamfight is a 5-0 wipe and Your Roster destroys the Enemy Crystal!`,
+      `⚔️ <span>VICTORY</span>: Clutch Lord steal by <span>${p1.ign}</span>! Your Roster rushes down mid and secures the win!`,
+      `⚔️ <span>VICTORY</span>: <span>${p1.ign}</span> lands a perfect setup — the enemy backline collapses and Your Roster claims the match!`,
+      `⚔️ <span>VICTORY</span>: Your Roster dominates — <span>${p1.ign}</span> secures the final push to take the game!`,
+      `⚔️ <span>VICTORY</span>: <span>${p1.ign}</span> counterflanks perfectly — Lord secured and the enemy defense is crushed!`
     ];
 
     const LOSS_LOGS = [
-      `The enemy crushes it in a 4v4 at the Lord pit.`,
-      `The enemy secures back-to-back Turtles — can't contest.`,
-      `The enemy catches <span>${p1.ign}</span> out of position and snowballs.`,
-      `Late-game throw — the enemy steals the Lord!`,
-      `The enemy base push is too strong, defense crumbles.`
+      `💀 <span>DEFEAT</span>: The enemy crushes it in a 4v4 at the Lord pit and takes down your Crystal.`,
+      `💀 <span>DEFEAT</span>: The enemy secures back-to-back Turtles, snowballs the lead, and completes the wipeout.`,
+      `💀 <span>DEFEAT</span>: The enemy catches <span>${p1.ign}</span> out of position, secures the Lord, and breaks your base defense.`,
+      `💀 <span>DEFEAT</span>: Late-game throw — the enemy steals the Lord and marches to victory.`,
+      `💀 <span>DEFEAT</span>: The enemy base push is too strong — your defense crumbles and the Nexus falls.`
     ];
 
-    const log1 = { t: NEUTRAL_LOGS[rnd(0, NEUTRAL_LOGS.length - 1)], c: 'll-neu' };
-    const log2 = { t: NEUTRAL_LOGS[rnd(0, NEUTRAL_LOGS.length - 1)], c: 'll-neu' };
-    const log3 = won 
-      ? { t: WIN_LOGS[rnd(0, WIN_LOGS.length - 1)], c: 'll-pos' } 
-      : { t: LOSS_LOGS[rnd(0, LOSS_LOGS.length - 1)], c: 'll-neg' };
+    // Determine outcomes for first two logs
+    // If user won, make logs tend to be wins (e.g. 65% win chance each)
+    // If user lost, make logs tend to be losses (e.g. 65% loss chance each)
+    const log1Win = won ? (rnd(1, 100) <= 65) : (rnd(1, 100) <= 35);
+    const log2Win = won ? (rnd(1, 100) <= 65) : (rnd(1, 100) <= 35);
 
-    return [log1, log2, log3];
+    const log1Text = log1Win 
+      ? CLASH_WIN_LOGS[rnd(0, CLASH_WIN_LOGS.length - 1)]
+      : CLASH_LOSS_LOGS[rnd(0, CLASH_LOSS_LOGS.length - 1)];
+    const log1Class = log1Win ? 'll-win' : 'll-loss';
+
+    const log2Text = log2Win 
+      ? CLASH_WIN_LOGS[rnd(0, CLASH_WIN_LOGS.length - 1)]
+      : CLASH_LOSS_LOGS[rnd(0, CLASH_LOSS_LOGS.length - 1)];
+    const log2Class = log2Win ? 'll-win' : 'll-loss';
+
+    const log3Text = won 
+      ? WIN_LOGS[rnd(0, WIN_LOGS.length - 1)] 
+      : LOSS_LOGS[rnd(0, LOSS_LOGS.length - 1)];
+    const log3Class = won ? 'll-win' : 'll-loss';
+
+    return [
+      { t: log1Text, c: log1Class },
+      { t: log2Text, c: log2Class },
+      { t: log3Text, c: log3Class }
+    ];
   };
 
   // ── After winning a round ──

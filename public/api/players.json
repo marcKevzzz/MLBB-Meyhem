@@ -10,11 +10,31 @@
     "verified": true,
     "notes": "M1 World Champions. Oura was Finals MVP. Grand Final vs RRQ Hoshi 4-3. REKT was Jungler. Dominant force in early MPL ID era.",
     "players": [
-      { "ign": "Oura", "role": "EXP", "ovr": 94 },
-      { "ign": "REKT", "role": "Jungler", "ovr": 93 },
-      { "ign": "Luminaire", "role": "Mid", "ovr": 93 },
-      { "ign": "Wannn", "role": "Gold", "ovr": 92 },
-      { "ign": "Donkey", "role": "Roamer", "ovr": 92 }
+      {
+        "ign": "Oura",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Wannn",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Luminaire",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "REKT",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Donkey",
+        "role": "Roamer",
+        "ovr": 92
+      }
     ]
   },
   "TODAK 2019": {
@@ -28,11 +48,31 @@
     "verified": true,
     "notes": "Competed at M1 2019. One of Malaysia's flagship MLBB organizations. Yums is a long-standing veteran of the MY scene.",
     "players": [
-      { "ign": "Moon", "role": "Jungler", "ovr": 93 },
-      { "ign": "CikuGais", "role": "Gold", "ovr": 92 },
-      { "ign": "4Meyz", "role": "EXP", "ovr": 91 },
-      { "ign": "Feekz", "role": "Mid", "ovr": 89 },
-      { "ign": "Yums", "role": "Roamer", "ovr": 90 }
+      {
+        "ign": "Lychee",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Moon",
+        "role": "Jungler",
+        "ovr": 92
+      },
+      {
+        "ign": "Nenass",
+        "role": "Mid",
+        "ovr": 89
+      },
+      {
+        "ign": "CikuGais",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Eone",
+        "role": "Roamer",
+        "ovr": 90
+      }
     ]
   },
   "RRQ Hoshi 2019": {
@@ -46,11 +86,31 @@
     "verified": true,
     "notes": "M1 Grand Finals runners-up, lost 3-4 to EVOS Legends in a legendary series. One of Indonesia's most storied franchises.",
     "players": [
-      { "ign": "Xinnn", "role": "Jungler", "ovr": 92 },
-      { "ign": "Lemon", "role": "Mid", "ovr": 93 },
-      { "ign": "Skylar", "role": "Gold", "ovr": 91 },
-      { "ign": "VYN", "role": "Roamer", "ovr": 91 },
-      { "ign": "Oura", "role": "EXP", "ovr": 93 }
+      {
+        "ign": "Lemon",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Xinnn",
+        "role": "Jungler",
+        "ovr": 92
+      },
+      {
+        "ign": "AyamJago",
+        "role": "Mid",
+        "ovr": 91
+      },
+      {
+        "ign": "Tuturu",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "VYN",
+        "role": "Roamer",
+        "ovr": 91
+      }
     ]
   },
   "Bren Esports 2021": {
@@ -64,11 +124,31 @@
     "verified": true,
     "notes": "M2 World Champions. Defeated Burmese Ghouls 4-3 in the Grand Final. First Filipino team to win a world title. KarlTzy was standout Jungler.",
     "players": [
-      { "ign": "KarlTzy", "role": "Jungler", "ovr": 98 },
-      { "ign": "FlapTzy", "role": "EXP", "ovr": 96 },
-      { "ign": "Pheww", "role": "Mid", "ovr": 95 },
-      { "ign": "Ribo", "role": "Gold", "ovr": 94 },
-      { "ign": "Lusty", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 98
+      },
+      {
+        "ign": "FlapTzy",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Pheww",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Ribo",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "Lusty",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "Burmese Ghouls 2021": {
@@ -82,11 +162,31 @@
     "verified": true,
     "notes": "M2 runners-up. Legendary 4-3 series against Bren Esports. Represented Myanmar on the global stage as one of the strongest non-SEA-big-3 teams ever.",
     "players": [
-      { "ign": "Ace", "role": "Jungler", "ovr": 96 },
-      { "ign": "Dee", "role": "Mid", "ovr": 94 },
-      { "ign": "RubyDD", "role": "Gold", "ovr": 94 },
-      { "ign": "Saw", "role": "EXP", "ovr": 93 },
-      { "ign": "Maybe", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "Dee",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Ace",
+        "role": "Jungler",
+        "ovr": 96
+      },
+      {
+        "ign": "Kid",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "RubyDD",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "Maybe",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "Blacklist International 2021": {
@@ -100,11 +200,31 @@
     "verified": true,
     "notes": "M3 World Champions. The iconic VeeWise era and UBE strategy. Swept ONIC PH 4-0 in the Grand Final. Oheb was Finals MVP. OhMyV33nus was the legendary captain.",
     "players": [
-      { "ign": "Wise", "role": "Jungler", "ovr": 97 },
-      { "ign": "Edward", "role": "EXP", "ovr": 98 },
-      { "ign": "Hadji", "role": "Mid", "ovr": 96 },
-      { "ign": "Oheb", "role": "Gold", "ovr": 97 },
-      { "ign": "OhMyV33nus", "role": "Roamer", "ovr": 98 }
+      {
+        "ign": "Wise",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Edward",
+        "role": "EXP",
+        "ovr": 98
+      },
+      {
+        "ign": "Hadji",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Oheb",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "OhMyV33nus",
+        "role": "Roamer",
+        "ovr": 98
+      }
     ]
   },
   "ONIC PH 2021": {
@@ -118,11 +238,31 @@
     "verified": true,
     "notes": "M3 runners-up. Kairi's breakout tournament on the world stage before moving to ONIC ID.",
     "players": [
-      { "ign": "Kairi", "role": "Jungler", "ovr": 95 },
-      { "ign": "Baloyskie", "role": "Roamer", "ovr": 94 },
-      { "ign": "DLar", "role": "EXP", "ovr": 92 },
-      { "ign": "Markyyy", "role": "Gold", "ovr": 93 },
-      { "ign": "Kramm", "role": "Mid", "ovr": 91 }
+      {
+        "ign": "DLar",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "Hatred",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Markyyy",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Baloyskie",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "RRQ Hoshi 2021": {
@@ -136,11 +276,31 @@
     "verified": true,
     "notes": "Strong MPL ID team in 2021. Alberttt was one of Indonesia's best Junglers. Made M3 Grand Final bracket but did not reach finals.",
     "players": [
-      { "ign": "Alberttt", "role": "Jungler", "ovr": 97 },
-      { "ign": "R7", "role": "EXP", "ovr": 96 },
-      { "ign": "Clayyy", "role": "Mid", "ovr": 93 },
-      { "ign": "Skylar", "role": "Gold", "ovr": 95 },
-      { "ign": "VYN", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "Alberttt",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "R7",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Clayyy",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Skylar",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "VYN",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "Alter Ego 2021": {
@@ -154,11 +314,31 @@
     "verified": true,
     "notes": "M2 4th place. Won the MPL Invitational 2020 with a perfect 11-0 record. Celiboy was their star Jungler. One of Indonesia's elite teams of the era.",
     "players": [
-      { "ign": "Celiboy", "role": "Jungler", "ovr": 94 },
-      { "ign": "Yoxx", "role": "Mid", "ovr": 92 },
-      { "ign": "Arss", "role": "Gold", "ovr": 92 },
-      { "ign": "Leomurphy", "role": "EXP", "ovr": 93 },
-      { "ign": "Caesius", "role": "Roamer", "ovr": 91 }
+      {
+        "ign": "Pai",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Celiboy",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Udil",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Ahmad",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Leomurphy",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "BTK 2021": {
@@ -172,11 +352,31 @@
     "verified": true,
     "notes": "BloodThirstyKings. North American representatives at M3. MobaZane remains the most recognized NA MLBB player of his generation.",
     "players": [
-      { "ign": "MobaZane", "role": "Jungler", "ovr": 95 },
-      { "ign": "FwydChickn", "role": "EXP", "ovr": 92 },
-      { "ign": "ZIA", "role": "Mid", "ovr": 90 },
-      { "ign": "Basic", "role": "Gold", "ovr": 91 },
-      { "ign": "Shark", "role": "Roamer", "ovr": 93 }
+      {
+        "ign": "MobaZane",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "FwydChickn",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "ZIA",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "Basic",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Shark",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "Team SMG 2021": {
@@ -190,15 +390,35 @@
     "verified": true,
     "notes": "Malaysian representatives at M3 World Championship 2021. Sasa was their standout Gold laner.",
     "players": [
-      { "ign": "Momo", "role": "Jungler", "ovr": 92 },
-      { "ign": "Saiful", "role": "Mid", "ovr": 91 },
-      { "ign": "Sasa", "role": "Gold", "ovr": 94 },
-      { "ign": "Wang", "role": "EXP", "ovr": 92 },
-      { "ign": "Smooth", "role": "Roamer", "ovr": 92 }
+      {
+        "ign": "Smooth",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "Wynn",
+        "role": "Jungler",
+        "ovr": 91
+      },
+      {
+        "ign": "ZaimSempoi",
+        "role": "Mid",
+        "ovr": 91
+      },
+      {
+        "ign": "Sasa",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "XpDEA",
+        "role": "Roamer",
+        "ovr": 91
+      }
     ]
   },
-  "RSG SG 2021": {
-    "logo": "🦁",
+  "EVOS SG 2021": {
+    "logo": "🇸🇬",
     "year": 2021,
     "country": "Singapore",
     "region": "INT",
@@ -206,13 +426,33 @@
     "championship": null,
     "teamOVR": 92,
     "verified": true,
-    "notes": "Singapore representatives at M3. Light (future M7 MVP and Aurora Gaming PH captain) played Gold Lane here. Historically significant roster.",
+    "notes": "M3 World Championship 4th place. The highest finish for a Singaporean representative in M-series history.",
     "players": [
-      { "ign": "Nathzz", "role": "Jungler", "ovr": 93 },
-      { "ign": "Diablo", "role": "Mid", "ovr": 91 },
-      { "ign": "Light", "role": "Gold", "ovr": 92 },
-      { "ign": "Fossa", "role": "EXP", "ovr": 91 },
-      { "ign": "Duke", "role": "Roamer", "ovr": 92 }
+      {
+        "ign": "Gear",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "Potato",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Seilah",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Adammir",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "JPL",
+        "role": "Roamer",
+        "ovr": 92
+      }
     ]
   },
   "Natus Vincere 2021": {
@@ -226,11 +466,31 @@
     "verified": true,
     "notes": "CIS representatives at M3. One of the very few European/Eastern European orgs to reach an MLBB world stage. Finished 7-8th.",
     "players": [
-      { "ign": "Neon", "role": "Jungler", "ovr": 89 },
-      { "ign": "Bes", "role": "Mid", "ovr": 87 },
-      { "ign": "Lori", "role": "Gold", "ovr": 88 },
-      { "ign": "Grime", "role": "EXP", "ovr": 87 },
-      { "ign": "Puls", "role": "Roamer", "ovr": 88 }
+      {
+        "ign": "Defender",
+        "role": "EXP",
+        "ovr": 87
+      },
+      {
+        "ign": "Lil",
+        "role": "Jungler",
+        "ovr": 89
+      },
+      {
+        "ign": "Sunset Lover",
+        "role": "Mid",
+        "ovr": 88
+      },
+      {
+        "ign": "Nagib",
+        "role": "Gold",
+        "ovr": 87
+      },
+      {
+        "ign": "SAWO",
+        "role": "Roamer",
+        "ovr": 88
+      }
     ]
   },
   "Vivo Keyd 2021": {
@@ -244,11 +504,69 @@
     "verified": true,
     "notes": "M3 7-8th place. One of Brazil's most prominent MLBB teams. Represented LATAM at M3 alongside Red Canids.",
     "players": [
-      { "ign": "Ryu", "role": "Jungler", "ovr": 90 },
-      { "ign": "Brow", "role": "Mid", "ovr": 88 },
-      { "ign": "Shot", "role": "Gold", "ovr": 89 },
-      { "ign": "Coruja", "role": "EXP", "ovr": 88 },
-      { "ign": "Hachi", "role": "Roamer", "ovr": 89 }
+      {
+        "ign": "Mayke",
+        "role": "EXP",
+        "ovr": 88
+      },
+      {
+        "ign": "Blink",
+        "role": "Jungler",
+        "ovr": 89
+      },
+      {
+        "ign": "Luiizz",
+        "role": "Mid",
+        "ovr": 88
+      },
+      {
+        "ign": "Tekashi",
+        "role": "Gold",
+        "ovr": 88
+      },
+      {
+        "ign": "Kiing",
+        "role": "Roamer",
+        "ovr": 89
+      }
+    ]
+  },
+  "RSG PH 2022": {
+    "logo": "🦁",
+    "year": 2022,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": "MSC",
+    "teamOVR": 95,
+    "verified": true,
+    "notes": "MSC 2022 Champions, defeated RRQ Hoshi 4-0 in Grand Finals. Light was MVP.",
+    "players": [
+      {
+        "ign": "Nathzz",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Demonkite",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "Aqua",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "EMANN",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Light",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "AURA Fire 2022": {
@@ -262,11 +580,145 @@
     "verified": true,
     "notes": "MPL Indonesia Season 9 3rd place. Fierce competitive mid-tier team during the ONIC/RRQ dominance era. Consistently punched above their weight.",
     "players": [
-      { "ign": "Ceki", "role": "Jungler", "ovr": 93 },
-      { "ign": "Maevia", "role": "Mid", "ovr": 91 },
-      { "ign": "Sasa", "role": "Gold", "ovr": 93 },
-      { "ign": "Dranix", "role": "EXP", "ovr": 91 },
-      { "ign": "Jeyy", "role": "Roamer", "ovr": 91 }
+      {
+        "ign": "Fluffy",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "High",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Facehugger",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Kabuki",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "God1va",
+        "role": "Roamer",
+        "ovr": 92
+      }
+    ]
+  },
+  "See You Soon 2023": {
+    "logo": "🇰🇭",
+    "year": 2023,
+    "country": "Cambodia",
+    "region": "INT",
+    "league": "MPL KH",
+    "championship": null,
+    "teamOVR": 93,
+    "verified": true,
+    "notes": "M5 World Championship 5-6th place. Defeated top teams like Triple Esports. Coached by Zico (ex-Burn X Flash). MP the King was the star Jungler.",
+    "players": [
+      {
+        "ign": "Felix",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "MPtheKing",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "RAA",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Kousei",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Boxi",
+        "role": "Roamer",
+        "ovr": 93
+      }
+    ]
+  },
+  "Burn X Flash 2023": {
+    "logo": "🇰🇭",
+    "year": 2023,
+    "country": "Cambodia",
+    "region": "INT",
+    "league": "MPL KH",
+    "championship": null,
+    "teamOVR": 93,
+    "verified": true,
+    "notes": "MSC 2023 4th place. Highest international achievement for Cambodia in MSC history. Donut (Filipino import) was their star carry.",
+    "players": [
+      {
+        "ign": "ATM",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Celichma",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "C Cat",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Donut",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "D7",
+        "role": "Roamer",
+        "ovr": 93
+      }
+    ]
+  },
+  "Fire Flux Esports 2023": {
+    "logo": "🇹🇷",
+    "year": 2023,
+    "country": "Turkey",
+    "region": "INT",
+    "league": "MPL TR",
+    "championship": null,
+    "teamOVR": 93,
+    "verified": true,
+    "notes": "Represented Turkey at M5 World Championship, securing top 8 finish. The dominant power of the Turkish MLBB scene.",
+    "players": [
+      {
+        "ign": "Alien",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "Tienzy",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Rosa",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Sunshine",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "APEX47",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "ECHO 2023": {
@@ -280,11 +732,31 @@
     "verified": true,
     "notes": "M4 World Champions. Swept Blacklist 4-0 in the Grand Final. KarlTzy became the first 2x M-series champion. Bennyqt was the dominant Gold laner. Yawi was Roamer.",
     "players": [
-      { "ign": "KarlTzy", "role": "Jungler", "ovr": 97 },
-      { "ign": "Sanji", "role": "Mid", "ovr": 95 },
-      { "ign": "Bennyqt", "role": "Gold", "ovr": 98 },
-      { "ign": "Sanford", "role": "EXP", "ovr": 96 },
-      { "ign": "Yawi", "role": "Roamer", "ovr": 96 }
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Sanji",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Bennyqt",
+        "role": "Gold",
+        "ovr": 98
+      },
+      {
+        "ign": "Sanford",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Yawi",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "AP Bren 2023": {
@@ -298,11 +770,31 @@
     "verified": true,
     "notes": "M5 World Champions. Defeated ONIC ID 4-3 in a legendary Grand Final on home soil. First org with 2 world titles. FlapTzy was the best EXP laner in the world at the time.",
     "players": [
-      { "ign": "KyleTzy", "role": "Jungler", "ovr": 97 },
-      { "ign": "Pheww", "role": "Mid", "ovr": 96 },
-      { "ign": "Super Marco", "role": "Gold", "ovr": 96 },
-      { "ign": "FlapTzy", "role": "EXP", "ovr": 99 },
-      { "ign": "Owgwen", "role": "Roamer", "ovr": 97 }
+      {
+        "ign": "KyleTzy",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Pheww",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Super Marco",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "FlapTzy",
+        "role": "EXP",
+        "ovr": 99
+      },
+      {
+        "ign": "Owgwen",
+        "role": "Roamer",
+        "ovr": 97
+      }
     ]
   },
   "ONIC Esports 2023": {
@@ -316,11 +808,31 @@
     "verified": true,
     "notes": "M5 runners-up. Lost 3-4 to AP Bren. Kairi, Sanz, CW, Butsss, Kiboy — dominant MPL ID roster that season.",
     "players": [
-      { "ign": "Kairi", "role": "Jungler", "ovr": 98 },
-      { "ign": "Sanz", "role": "Mid", "ovr": 96 },
-      { "ign": "CW", "role": "Gold", "ovr": 95 },
-      { "ign": "Butsss", "role": "EXP", "ovr": 94 },
-      { "ign": "Kiboy", "role": "Roamer", "ovr": 97 }
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 98
+      },
+      {
+        "ign": "Sanz",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "CW",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Butsss",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Kiboy",
+        "role": "Roamer",
+        "ovr": 97
+      }
     ]
   },
   "Falcon Esports 2023": {
@@ -334,11 +846,31 @@
     "verified": true,
     "notes": "Myanmar representatives at M4/M5. Spiritual successor to the Burmese Ghouls. Continued Myanmar's strong world championship presence.",
     "players": [
-      { "ign": "Joy", "role": "Jungler", "ovr": 95 },
-      { "ign": "Might", "role": "Mid", "ovr": 93 },
-      { "ign": "Justin", "role": "Gold", "ovr": 94 },
-      { "ign": "Akeno", "role": "EXP", "ovr": 93 },
-      { "ign": "Ruby", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "Yellowflash",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Kenn",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "JustiN",
+        "role": "Mid",
+        "ovr": 94
+      },
+      {
+        "ign": "Zippx",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Naomi",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "RRQ Akira 2023": {
@@ -352,11 +884,31 @@
     "verified": true,
     "notes": "Brazilian RRQ affiliate at M4/M5. Represented LATAM at the world stage under the RRQ banner.",
     "players": [
-      { "ign": "Kiing", "role": "Jungler", "ovr": 92 },
-      { "ign": "Lunna", "role": "Mid", "ovr": 91 },
-      { "ign": "Hate", "role": "Gold", "ovr": 93 },
-      { "ign": "Julius", "role": "EXP", "ovr": 91 },
-      { "ign": "Guts", "role": "Roamer", "ovr": 92 }
+      {
+        "ign": "Tekashi",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Kiing",
+        "role": "Jungler",
+        "ovr": 92
+      },
+      {
+        "ign": "Seigen",
+        "role": "Mid",
+        "ovr": 91
+      },
+      {
+        "ign": "Luiizz",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Blink",
+        "role": "Roamer",
+        "ovr": 92
+      }
     ]
   },
   "The Valley 2023": {
@@ -370,11 +922,31 @@
     "verified": true,
     "notes": "The rebranded BTK (BloodThirstyKings), competing as The Valley at M4/M5. MobaZane remained the standout NA player of his era.",
     "players": [
-      { "ign": "MobaZane", "role": "Jungler", "ovr": 95 },
-      { "ign": "Hoon", "role": "Mid", "ovr": 94 },
-      { "ign": "Basic", "role": "Gold", "ovr": 92 },
-      { "ign": "FwydChickn", "role": "EXP", "ovr": 93 },
-      { "ign": "Shark", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "MobaZane",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "Hoon",
+        "role": "Mid",
+        "ovr": 94
+      },
+      {
+        "ign": "Basic",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "FwydChickn",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Shark",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "Team HAQ 2023": {
@@ -388,11 +960,107 @@
     "verified": true,
     "notes": "Malaysian representatives at M4/M5. Yums is a long-standing veteran of the Malaysian MLBB scene.",
     "players": [
-      { "ign": "Chibi", "role": "Jungler", "ovr": 94 },
-      { "ign": "Jeymz", "role": "Mid", "ovr": 91 },
-      { "ign": "Wizking", "role": "Gold", "ovr": 93 },
-      { "ign": "Garyy", "role": "EXP", "ovr": 92 },
-      { "ign": "Yums", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "Lolla",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Garyy",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Mann",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Syam",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Minn",
+        "role": "Roamer",
+        "ovr": 92
+      }
+    ]
+  },
+  "NIP Flash 2024": {
+    "logo": "🇸🇬",
+    "year": 2024,
+    "country": "Singapore",
+    "region": "INT",
+    "league": "MPL SG",
+    "championship": null,
+    "teamOVR": 94,
+    "verified": true,
+    "notes": "MSC 2024 5-8th place. Won MPL SG Season 7 and 8 under the Ninjas in Pyjamas partnership. Hadess was the hyper-carry Jungler.",
+    "players": [
+      {
+        "ign": "Diablo",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Hadess",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "KurtTzy",
+        "role": "Mid",
+        "ovr": 94
+      },
+      {
+        "ign": "Vanix",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "JPL",
+        "role": "Roamer",
+        "ovr": 94
+      }
+    ]
+  },
+  "KeepBest Gaming 2024": {
+    "logo": "🇨🇳",
+    "year": 2024,
+    "country": "China",
+    "region": "INT",
+    "league": "M6 Wildcard",
+    "championship": null,
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "First Chinese team to officially integrate Filipino imports (Saxa, Tracy) to compete in the M6 World Championship wildcard stage.",
+    "players": [
+      {
+        "ign": "WindReturn",
+        "role": "EXP",
+        "ovr": 89
+      },
+      {
+        "ign": "Saxa",
+        "role": "Jungler",
+        "ovr": 92
+      },
+      {
+        "ign": "LMU",
+        "role": "Mid",
+        "ovr": 89
+      },
+      {
+        "ign": "Siyu",
+        "role": "Gold",
+        "ovr": 89
+      },
+      {
+        "ign": "Tracy",
+        "role": "Roamer",
+        "ovr": 91
+      }
     ]
   },
   "Fnatic ONIC PH 2024": {
@@ -406,11 +1074,31 @@
     "verified": true,
     "notes": "M6 World Champions (Dec 2024). 100% match win rate throughout the tournament. Kelra was Finals MVP. Only the 2nd team ever to win M with a perfect record, after EVOS Legends at M1.",
     "players": [
-      { "ign": "K1NGKONG", "role": "Jungler", "ovr": 98 },
-      { "ign": "Super Frince", "role": "Mid", "ovr": 97 },
-      { "ign": "Kelra", "role": "Gold", "ovr": 99 },
-      { "ign": "Kirk", "role": "EXP", "ovr": 97 },
-      { "ign": "Brusko", "role": "Roamer", "ovr": 97 }
+      {
+        "ign": "K1NGKONG",
+        "role": "Jungler",
+        "ovr": 98
+      },
+      {
+        "ign": "Super Frince",
+        "role": "Mid",
+        "ovr": 97
+      },
+      {
+        "ign": "Kelra",
+        "role": "Gold",
+        "ovr": 99
+      },
+      {
+        "ign": "Kirk",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "Brusko",
+        "role": "Roamer",
+        "ovr": 97
+      }
     ]
   },
   "Falcons AP.Bren 2024": {
@@ -424,11 +1112,31 @@
     "verified": false,
     "notes": "⚠️ Original data listed M5 as 2024 achievement — incorrect. M5 was won by the 2023 AP Bren roster. The 2024 Falcons AP.Bren squad (MPL PH S13 champions) did not win a world title that year.",
     "players": [
-      { "ign": "KyleTzy", "role": "Jungler", "ovr": 97 },
-      { "ign": "Pheww", "role": "Mid", "ovr": 95 },
-      { "ign": "Super Marco", "role": "Gold", "ovr": 94 },
-      { "ign": "FlapTzy", "role": "EXP", "ovr": 97 },
-      { "ign": "Owgwen", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "KyleTzy",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Pheww",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Super Marco",
+        "role": "Gold",
+        "ovr": 94
+      },
+      {
+        "ign": "FlapTzy",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "Owgwen",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "Liquid ECHO 2024": {
@@ -442,11 +1150,31 @@
     "verified": false,
     "notes": "⚠️ Original data listed M4 as 2024 achievement — incorrect. M4 was won by the 2023 ECHO roster. Liquid ECHO won MPL PH S13 (2024). No world title for this 2024 squad.",
     "players": [
-      { "ign": "KarlTzy", "role": "Jungler", "ovr": 97 },
-      { "ign": "Sanji", "role": "Mid", "ovr": 95 },
-      { "ign": "Bennyqt", "role": "Gold", "ovr": 97 },
-      { "ign": "Sanford", "role": "EXP", "ovr": 95 },
-      { "ign": "Jaypee", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Sanji",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Bennyqt",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "Sanford",
+        "role": "EXP",
+        "ovr": 95
+      },
+      {
+        "ign": "Jaypee",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "Blacklist Intl 2024": {
@@ -460,11 +1188,31 @@
     "verified": false,
     "notes": "⚠️ Original data listed M3 as a 2024 achievement — incorrect. M3 was won by the 2021 Blacklist roster. The 2024 squad (Sensui, Hadji, Oheb, Edward, Kimpoy) did not win a world title. Franchise slot was later sold before Season 17.",
     "players": [
-      { "ign": "Sensui", "role": "Jungler", "ovr": 94 },
-      { "ign": "Hadji", "role": "Mid", "ovr": 96 },
-      { "ign": "Oheb", "role": "Gold", "ovr": 96 },
-      { "ign": "Edward", "role": "EXP", "ovr": 97 },
-      { "ign": "Kimpoy", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "Sensui",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Hadji",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Oheb",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Edward",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "Kimpoy",
+        "role": "Roamer",
+        "ovr": 94
+      }
     ]
   },
   "RRQ Hoshi 2024": {
@@ -478,11 +1226,31 @@
     "verified": true,
     "notes": "Active MPL ID franchise in 2024. Skylar Gold laner, Clayyy Mid. Historically Indonesia's biggest team by fanbase.",
     "players": [
-      { "ign": "Sutsujin", "role": "Jungler", "ovr": 94 },
-      { "ign": "Clayyy", "role": "Mid", "ovr": 93 },
-      { "ign": "Skylar", "role": "Gold", "ovr": 95 },
-      { "ign": "Dyrennn", "role": "EXP", "ovr": 93 },
-      { "ign": "Idok", "role": "Roamer", "ovr": 93 }
+      {
+        "ign": "Sutsujin",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Clayyy",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Skylar",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Dyrennn",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Idok",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "EVOS Glory 2024": {
@@ -496,11 +1264,31 @@
     "verified": true,
     "notes": "EVOS rebranded to EVOS Glory for MPL ID 2024. Branz is a verified Gold laner. Competitive mid-table team.",
     "players": [
-      { "ign": "Anavel", "role": "Jungler", "ovr": 94 },
-      { "ign": "Claws", "role": "Mid", "ovr": 92 },
-      { "ign": "Branz", "role": "Gold", "ovr": 93 },
-      { "ign": "Fluffy", "role": "EXP", "ovr": 92 },
-      { "ign": "DreamS", "role": "Roamer", "ovr": 92 }
+      {
+        "ign": "Anavel",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Clawkun",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Branz",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Fluffy",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "DreamS",
+        "role": "Roamer",
+        "ovr": 92
+      }
     ]
   },
   "ONIC Esports 2024": {
@@ -514,11 +1302,31 @@
     "verified": true,
     "notes": "MPL ID S15 & S16 champions. Dominant Indonesian roster. Kairi, Sanz, CW, Lutpiii, Kiboy. Lost M6 to Fnatic ONIC PH in Grand Final.",
     "players": [
-      { "ign": "Kairi", "role": "Jungler", "ovr": 99 },
-      { "ign": "Sanz", "role": "Mid", "ovr": 97 },
-      { "ign": "CW", "role": "Gold", "ovr": 97 },
-      { "ign": "Lutpiii", "role": "EXP", "ovr": 96 },
-      { "ign": "Kiboy", "role": "Roamer", "ovr": 98 }
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 99
+      },
+      {
+        "ign": "Sanz",
+        "role": "Mid",
+        "ovr": 97
+      },
+      {
+        "ign": "CW",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "Lutpiii",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Kiboy",
+        "role": "Roamer",
+        "ovr": 98
+      }
     ]
   },
   "Fnatic ONIC 2024": {
@@ -532,11 +1340,31 @@
     "verified": true,
     "notes": "ONIC ID with Fnatic branding partnership in 2024. Same core of Kairi, Sanz, CW, Kiboy with Lutpii. Competed at M6 before losing to their PH counterpart.",
     "players": [
-      { "ign": "Kairi", "role": "Jungler", "ovr": 98 },
-      { "ign": "Sanz", "role": "Mid", "ovr": 96 },
-      { "ign": "CW", "role": "Gold", "ovr": 95 },
-      { "ign": "Lutpii", "role": "EXP", "ovr": 94 },
-      { "ign": "Kiboy", "role": "Roamer", "ovr": 96 }
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 98
+      },
+      {
+        "ign": "Sanz",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "CW",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Lutpii",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Kiboy",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "Geek Fam ID 2024": {
@@ -550,11 +1378,31 @@
     "verified": true,
     "notes": "MPL ID 2024 competitive squad. Baloyskie (ex-ONIC PH) moved to Geek Fam ID. Caderaa was their standout Gold laner.",
     "players": [
-      { "ign": "Maykids", "role": "Jungler", "ovr": 95 },
-      { "ign": "Aboy", "role": "Mid", "ovr": 95 },
-      { "ign": "Caderaa", "role": "Gold", "ovr": 96 },
-      { "ign": "Luke", "role": "EXP", "ovr": 94 },
-      { "ign": "Baloyskie", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "Reyy",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "Aboy",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Caderaa",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Luke",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Baloyskie",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "Selangor Red Giants 2024": {
@@ -568,11 +1416,31 @@
     "verified": true,
     "notes": "M6 3rd place (2nd runners-up). Best Malaysian finish at a world championship. Sekys Jungler, Yums Roamer (MLBB veteran). Premier Malaysian team.",
     "players": [
-      { "ign": "Sekys", "role": "Jungler", "ovr": 98 },
-      { "ign": "Stormie", "role": "Mid", "ovr": 96 },
-      { "ign": "Izanami", "role": "Gold", "ovr": 96 },
-      { "ign": "Kramm", "role": "EXP", "ovr": 95 },
-      { "ign": "Yums", "role": "Roamer", "ovr": 97 }
+      {
+        "ign": "Sekys",
+        "role": "Jungler",
+        "ovr": 98
+      },
+      {
+        "ign": "Stormie",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Innocent",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Kramm",
+        "role": "EXP",
+        "ovr": 95
+      },
+      {
+        "ign": "Yums",
+        "role": "Roamer",
+        "ovr": 97
+      }
     ]
   },
   "Team Liquid ID 2024": {
@@ -586,11 +1454,31 @@
     "verified": true,
     "notes": "M6 runners-up to Fnatic ONIC PH. Team Liquid's Indonesian division. Favian, AeronnShikii, Yehezkiel solid lineup.",
     "players": [
-      { "ign": "Favian", "role": "Jungler", "ovr": 97 },
-      { "ign": "AeronnShikii", "role": "Mid", "ovr": 97 },
-      { "ign": "Yehezkiel", "role": "Gold", "ovr": 97 },
-      { "ign": "Aran", "role": "EXP", "ovr": 96 },
-      { "ign": "Widy", "role": "Roamer", "ovr": 96 }
+      {
+        "ign": "Favian",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Yehezkiel",
+        "role": "Mid",
+        "ovr": 97
+      },
+      {
+        "ign": "AeronnShikii",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "Aran",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Widy",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "Aurora PH 2024": {
@@ -604,47 +1492,31 @@
     "verified": false,
     "notes": "⚠️ Aurora Gaming PH became truly prominent in 2025, not 2024. Roster listed may reflect early MPL PH S14 lineup. M7 winning roster (2026) had different player configuration.",
     "players": [
-      { "ign": "Demonkite", "role": "Jungler", "ovr": 96 },
-      { "ign": "Domengkite", "role": "Mid", "ovr": 93 },
-      { "ign": "Edward", "role": "EXP", "ovr": 97 },
-      { "ign": "Yue", "role": "Gold", "ovr": 95 },
-      { "ign": "Renejay", "role": "Roamer", "ovr": 95 }
-    ]
-  },
-  "Alter Ego 2026": {
-    "logo": "🌀",
-    "year": 2026,
-    "country": "Indonesia",
-    "region": "ID",
-    "league": "MPL ID",
-    "championship": null,
-    "teamOVR": 97,
-    "verified": true,
-    "notes": "M7 World Championship runners-up (Jan 2026), swept 0-4 by Aurora Gaming PH. First Alter Ego M Finals appearance in 5 years. Currently competing in MPL ID S17.",
-    "players": [
-      { "ign": "Halim", "role": "Jungler", "ovr": 97 },
-      { "ign": "Affan", "role": "Mid", "ovr": 96 },
-      { "ign": "Owen", "role": "Gold", "ovr": 96 },
-      { "ign": "Dalvin", "role": "EXP", "ovr": 96 },
-      { "ign": "Syauki", "role": "Roamer", "ovr": 95 }
-    ]
-  },
-  "Aurora Gaming PH 2026": {
-    "logo": "❄️",
-    "year": 2026,
-    "country": "Philippines",
-    "region": "PH",
-    "league": "MPL PH",
-    "championship": "M7",
-    "teamOVR": 99,
-    "verified": true,
-    "notes": "M7 World Champions (Jan 2026). Swept Alter Ego 4-0 in the Grand Final. Light named Finals MVP. Set a new mobile esports viewership record. 6th consecutive Filipino world title. Full roster retained for MPL PH S17.",
-    "players": [
-      { "ign": "Demonkite", "role": "Jungler", "ovr": 97 },
-      { "ign": "Domengkite", "role": "Gold", "ovr": 96 },
-      { "ign": "Edward", "role": "EXP", "ovr": 98 },
-      { "ign": "Yue", "role": "Mid", "ovr": 95 },
-      { "ign": "Light", "role": "Roamer", "ovr": 99 }
+      {
+        "ign": "Demonkite",
+        "role": "Jungler",
+        "ovr": 96
+      },
+      {
+        "ign": "Yue",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Domengkite",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Edward",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "Renejay",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "Team Liquid PH 2025": {
@@ -658,11 +1530,183 @@
     "verified": true,
     "notes": "MPL PH Seasons 13, 15 & 16 champions. MSC 2025 winners. M7 4th place. Most-titled MPL PH org (4 titles as of end-2025). KarlTzy the centrepiece jungler.",
     "players": [
-      { "ign": "KarlTzy", "role": "Jungler", "ovr": 99 },
-      { "ign": "Sanji", "role": "Mid", "ovr": 96 },
-      { "ign": "Bennyqt", "role": "Gold", "ovr": 98 },
-      { "ign": "Sanford", "role": "EXP", "ovr": 96 },
-      { "ign": "Jaypee", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 99
+      },
+      {
+        "ign": "Sanji",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Bennyqt",
+        "role": "Gold",
+        "ovr": 98
+      },
+      {
+        "ign": "Sanford",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Jaypee",
+        "role": "Roamer",
+        "ovr": 95
+      }
+    ]
+  },
+  "Team Falcons MENA 2026": {
+    "logo": "🇸🇦",
+    "year": 2026,
+    "country": "Saudi Arabia",
+    "region": "INT",
+    "league": "MPL MENA",
+    "championship": null,
+    "teamOVR": 92,
+    "verified": true,
+    "notes": "MPL MENA Season 9 runners-up. Coached by Filipino staff and featured Boyet in the Jungle.",
+    "players": [
+      {
+        "ign": "Sanji",
+        "role": "EXP",
+        "ovr": 92
+      },
+      {
+        "ign": "Boyet",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Cuffin",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Saano",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Trolll",
+        "role": "Roamer",
+        "ovr": 92
+      }
+    ]
+  },
+  "Geekay Esports 2026": {
+    "logo": "🇪🇬",
+    "year": 2026,
+    "country": "Egypt",
+    "region": "INT",
+    "league": "MPL MENA",
+    "championship": null,
+    "teamOVR": 93,
+    "verified": true,
+    "notes": "MPL MENA Season 9 Champions (May 2026). Defeated Team Falcons 4-2 to qualify for the 2026 Mid Season Cup (MSC).",
+    "players": [
+      {
+        "ign": "Aizn",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Xeno",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Quanok",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Pharaoh",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Shen",
+        "role": "Roamer",
+        "ovr": 93
+      }
+    ]
+  },
+  "Alter Ego 2026": {
+    "logo": "🌀",
+    "year": 2026,
+    "country": "Indonesia",
+    "region": "ID",
+    "league": "MPL ID",
+    "championship": null,
+    "teamOVR": 97,
+    "verified": true,
+    "notes": "M7 World Championship runners-up (Jan 2026), swept 0-4 by Aurora Gaming PH. First Alter Ego M Finals appearance in 5 years. Currently competing in MPL ID S17.",
+    "players": [
+      {
+        "ign": "Nino",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Reyy",
+        "role": "Jungler",
+        "ovr": 96
+      },
+      {
+        "ign": "Hijumee",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Arfy",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Owen",
+        "role": "Roamer",
+        "ovr": 95
+      }
+    ]
+  },
+  "Aurora Gaming PH 2026": {
+    "logo": "❄️",
+    "year": 2026,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": "M7",
+    "teamOVR": 99,
+    "verified": true,
+    "notes": "M7 World Champions (Jan 2026). Swept Alter Ego 4-0 in the Grand Final. Light named Finals MVP. Set a new mobile esports viewership record. 6th consecutive Filipino world title. Full roster retained for MPL PH S17.",
+    "players": [
+      {
+        "ign": "Demonkite",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Domengkite",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Edward",
+        "role": "EXP",
+        "ovr": 98
+      },
+      {
+        "ign": "Yue",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Light",
+        "role": "Roamer",
+        "ovr": 99
+      }
     ]
   },
   "Selangor Red Giants 2026": {
@@ -676,11 +1720,31 @@
     "verified": true,
     "notes": "M7 3rd place — best Malaysian finish at a world championship. MSC 2025 runners-up. Yums still on the roster, one of MLBB's longest-serving veterans.",
     "players": [
-      { "ign": "Sekys", "role": "Jungler", "ovr": 97 },
-      { "ign": "Stormie", "role": "Mid", "ovr": 95 },
-      { "ign": "Izanami", "role": "Gold", "ovr": 95 },
-      { "ign": "Kramm", "role": "EXP", "ovr": 94 },
-      { "ign": "Yums", "role": "Roamer", "ovr": 96 }
+      {
+        "ign": "Sekys",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Stormie",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Innocent",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Kramm",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Yums",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "ONIC Esports 2026 (MPL ID S17)": {
@@ -694,11 +1758,31 @@
     "verified": true,
     "notes": "CURRENT — MPL ID S17 (2026). Grand Finalist. Signed Kelra from Fnatic ONIC PH — the biggest transfer of the offseason. Kairi + Kelra is the most feared duo in current MLBB. CW now Head Coach. Advancing to MPL ID S17 Grand Final and MSC 2026.",
     "players": [
-      { "ign": "Kairi", "role": "Jungler", "ovr": 99 },
-      { "ign": "Sanz", "role": "Mid", "ovr": 97 },
-      { "ign": "Kelra", "role": "Gold", "ovr": 99 },
-      { "ign": "Lutpiii", "role": "EXP", "ovr": 96 },
-      { "ign": "Kiboy", "role": "Roamer", "ovr": 97 }
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 99
+      },
+      {
+        "ign": "Sanz",
+        "role": "Mid",
+        "ovr": 97
+      },
+      {
+        "ign": "Kelra",
+        "role": "Gold",
+        "ovr": 99
+      },
+      {
+        "ign": "Lutpiii",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Kiboy",
+        "role": "Roamer",
+        "ovr": 97
+      }
     ]
   },
   "Team Liquid PH 2026 (MPL PH S17)": {
@@ -712,11 +1796,31 @@
     "verified": true,
     "notes": "CURRENT — MPL PH S17 Champions (May 2026). Three-peat winners (S15, S16, S17) — first team to win three consecutive MPL PH titles. KarlTzy named Season MVP. AeronnShikii on loan from Team Liquid ID. Daikiqt replaced Oheb. Sanford was Finals MVP in 4-2 win over Falcons.",
     "players": [
-      { "ign": "KarlTzy", "role": "Jungler", "ovr": 99 },
-      { "ign": "AeronnShikii", "role": "Mid", "ovr": 96 },
-      { "ign": "Daikiqt", "role": "Gold", "ovr": 94 },
-      { "ign": "Sanford", "role": "EXP", "ovr": 97 },
-      { "ign": "Santi Sucre", "role": "Roamer", "ovr": 93 }
+      {
+        "ign": "Sanford",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 99
+      },
+      {
+        "ign": "Sanji",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "AeronnShikii",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Santi Sucre",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "Team Falcons PH 2026 (MPL PH S17)": {
@@ -730,11 +1834,31 @@
     "verified": true,
     "notes": "CURRENT — MPL PH S17 runners-up. Signed Hadji as Mid laner (formerly Blacklist). Jeymz as EXP. Raizen Mid/Flex. Perkz/Owgwen/Wuraaaah in supporting roles. Saudi-backed org (Team Falcons MENA) that absorbed the former Falcons AP.Bren brand.",
     "players": [
-      { "ign": "Minguin", "role": "Jungler", "ovr": 96 },
-      { "ign": "Hadji", "role": "Mid", "ovr": 97 },
-      { "ign": "Nets", "role": "Gold", "ovr": 95 },
-      { "ign": "Jeymz", "role": "EXP", "ovr": 96 },
-      { "ign": "Raizen", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "FlapTzy",
+        "role": "EXP",
+        "ovr": 97
+      },
+      {
+        "ign": "KyleTzy",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Hadji",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "SUPER MARCO",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Owgwen",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "ONIC Philippines 2026 (MPL PH S17)": {
@@ -748,11 +1872,31 @@
     "verified": true,
     "notes": "CURRENT — Fnatic partnership ended, reverted to ONIC Philippines branding. Major post-M6 rebuild. Kelra left for ONIC ID. Savero joined as Gold (Indonesian import). K1NGKONG and Brusko retained. Super Frince captain.",
     "players": [
-      { "ign": "K1NGKONG", "role": "Jungler", "ovr": 97 },
-      { "ign": "Super Frince", "role": "Mid", "ovr": 96 },
-      { "ign": "Savero", "role": "Gold", "ovr": 96 },
-      { "ign": "Kirk", "role": "EXP", "ovr": 96 },
-      { "ign": "Brusko", "role": "Roamer", "ovr": 95 }
+      {
+        "ign": "K1NGKONG",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Super Frince",
+        "role": "Mid",
+        "ovr": 96
+      },
+      {
+        "ign": "Savero",
+        "role": "Gold",
+        "ovr": 96
+      },
+      {
+        "ign": "Kirk",
+        "role": "EXP",
+        "ovr": 96
+      },
+      {
+        "ign": "Brusko",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "Aurora Gaming PH 2026 (MPL PH S17)": {
@@ -766,11 +1910,31 @@
     "verified": true,
     "notes": "CURRENT — M7 World Champions (Jan 2026), full roster intact for MPL PH S17. Finished 5-9 in regular season but showed strong late-season form. Light is captain and team cornerstone.",
     "players": [
-      { "ign": "Demonkite", "role": "Jungler", "ovr": 97 },
-      { "ign": "Yue", "role": "Mid", "ovr": 95 },
-      { "ign": "Domengkite", "role": "Gold", "ovr": 95 },
-      { "ign": "Edward", "role": "EXP", "ovr": 98 },
-      { "ign": "Light", "role": "Roamer", "ovr": 99 }
+      {
+        "ign": "Demonkite",
+        "role": "Jungler",
+        "ovr": 97
+      },
+      {
+        "ign": "Yue",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Domengkite",
+        "role": "Gold",
+        "ovr": 95
+      },
+      {
+        "ign": "Edward",
+        "role": "EXP",
+        "ovr": 98
+      },
+      {
+        "ign": "Light",
+        "role": "Roamer",
+        "ovr": 99
+      }
     ]
   },
   "AP Bren 2026 (MPL PH S17)": {
@@ -784,11 +1948,31 @@
     "verified": true,
     "notes": "CURRENT — Rebuilt after splitting from Team Falcons. Kielvj returned from China (MSC 2025 stint with DianFengYaoGuai). Jamespangks Jungler, Aqua Mid, Shizou Gold, Nova Roamer. Finished 8th in S16, rebuilding toward contention.",
     "players": [
-      { "ign": "Jamespangks", "role": "Jungler", "ovr": 93 },
-      { "ign": "Aqua", "role": "Mid", "ovr": 92 },
-      { "ign": "Shizou", "role": "Gold", "ovr": 92 },
-      { "ign": "Kielvj", "role": "EXP", "ovr": 94 },
-      { "ign": "Nova", "role": "Roamer", "ovr": 91 }
+      {
+        "ign": "Jamespangks",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Aqua",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Shizou",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Kielvj",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Nova",
+        "role": "Roamer",
+        "ovr": 91
+      }
     ]
   },
   "Twisted Minds PH 2026 (MPL PH S17)": {
@@ -802,11 +1986,31 @@
     "verified": true,
     "notes": "CURRENT — Saudi-backed org (Twisted Minds) that acquired the former RSG Philippines franchise slot. Inherited Blacklist's legendary coaching duo of Eson and Bonchan. MPtheKing in the Jungle. 5th seed in playoffs.",
     "players": [
-      { "ign": "MPtheKing", "role": "Jungler", "ovr": 94 },
-      { "ign": "Eson", "role": "Mid", "ovr": 94 },
-      { "ign": "Pheww", "role": "Gold", "ovr": 94 },
-      { "ign": "Fenix", "role": "EXP", "ovr": 93 },
-      { "ign": "Owgwen", "role": "Roamer", "ovr": 93 }
+      {
+        "ign": "Lansu",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "MPtheKing",
+        "role": "Jungler",
+        "ovr": 94
+      },
+      {
+        "ign": "Sionnn",
+        "role": "Mid",
+        "ovr": 93
+      },
+      {
+        "ign": "Owl",
+        "role": "Gold",
+        "ovr": 93
+      },
+      {
+        "ign": "Caloy",
+        "role": "Roamer",
+        "ovr": 93
+      }
     ]
   },
   "Geek Fam ID 2026 (MPL ID S17)": {
@@ -820,11 +2024,31 @@
     "verified": true,
     "notes": "CURRENT — MPL ID S17 Upper Bracket Finalist. Advanced to MPL ID S17 Grand Final and secured MSC 2026 slot. Competing for the title against ONIC.",
     "players": [
-      { "ign": "Maykids", "role": "Jungler", "ovr": 96 },
-      { "ign": "Aboy", "role": "Mid", "ovr": 95 },
-      { "ign": "Caderaa", "role": "Gold", "ovr": 97 },
-      { "ign": "Luke", "role": "EXP", "ovr": 95 },
-      { "ign": "Baloyskie", "role": "Roamer", "ovr": 96 }
+      {
+        "ign": "Maykids",
+        "role": "Jungler",
+        "ovr": 96
+      },
+      {
+        "ign": "Aboy",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "Caderaa",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "Luke",
+        "role": "EXP",
+        "ovr": 95
+      },
+      {
+        "ign": "Baloyskie",
+        "role": "Roamer",
+        "ovr": 96
+      }
     ]
   },
   "Bigetron by Vitality 2026 (MPL ID S17)": {
@@ -838,11 +2062,31 @@
     "verified": true,
     "notes": "CURRENT — Bigetron rebranded with Vitality partnership. Surprise dark horse of MPL ID S17 playoffs. Eliminated Team Liquid ID in Lower Bracket Semis. Competing in Lower Bracket Final (June 13, 2026) for Grand Final spot and MSC 2026 qualification.",
     "players": [
-      { "ign": "EMANN", "role": "Jungler", "ovr": 96 },
-      { "ign": "Albert", "role": "Mid", "ovr": 95 },
-      { "ign": "Treacky", "role": "Gold", "ovr": 95 },
-      { "ign": "Pheww_ID", "role": "EXP", "ovr": 94 },
-      { "ign": "Rinz", "role": "Roamer", "ovr": 94 }
+      {
+        "ign": "Shogun",
+        "role": "EXP",
+        "ovr": 94
+      },
+      {
+        "ign": "Nnael",
+        "role": "Jungler",
+        "ovr": 95
+      },
+      {
+        "ign": "Moreno",
+        "role": "Mid",
+        "ovr": 95
+      },
+      {
+        "ign": "EMANN",
+        "role": "Gold",
+        "ovr": 97
+      },
+      {
+        "ign": "Finn",
+        "role": "Roamer",
+        "ovr": 95
+      }
     ]
   },
   "RRQ Hoshi 2026 (MPL ID S17)": {
@@ -856,11 +2100,411 @@
     "verified": true,
     "notes": "CURRENT — Struggled in MPL ID S17 regular season. Signed Dan, a Filipino EXP laner (formerly Smart Omega Neos). Failed to qualify for playoffs. Announced a complete roster rebuild post-season. Yehezkiel (ex-Team Liquid ID) joined on loan.",
     "players": [
-      { "ign": "Sutsujin", "role": "Jungler", "ovr": 93 },
-      { "ign": "Clayyy", "role": "Mid", "ovr": 92 },
-      { "ign": "Skylar", "role": "Gold", "ovr": 93 },
-      { "ign": "Dan", "role": "EXP", "ovr": 91 },
-      { "ign": "Idok", "role": "Roamer", "ovr": 91 }
+      {
+        "ign": "Dan",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Superkenn",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Rinz",
+        "role": "Mid",
+        "ovr": 91
+      },
+      {
+        "ign": "Supertoyy",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Idok",
+        "role": "Roamer",
+        "ovr": 91
+      }
+    ]
+  },
+  "RRQ 2018": {
+    "logo": "👑",
+    "year": 2018,
+    "country": "Indonesia",
+    "region": "ID",
+    "league": "MPL ID",
+    "championship": "MPL ID S2",
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "MPL ID Season 2 Champions. Celebrated team featuring legendary players Lemon and Tuturu.",
+    "players": [
+      {
+        "ign": "Lemon",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Ampuh",
+        "role": "Jungler",
+        "ovr": 90
+      },
+      {
+        "ign": "Instinct",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "Tuturu",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Liam",
+        "role": "Roamer",
+        "ovr": 90
+      }
+    ]
+  },
+  "Louvre Esports 2019": {
+    "logo": "🦅",
+    "year": 2019,
+    "country": "Indonesia",
+    "region": "ID",
+    "league": "MPL ID",
+    "championship": null,
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "MSC 2019 Grand Finalists and MPL ID Season 3 runners-up. Known for their fast-paced aggression.",
+    "players": [
+      {
+        "ign": "Jeel",
+        "role": "EXP",
+        "ovr": 90
+      },
+      {
+        "ign": "Watt",
+        "role": "Jungler",
+        "ovr": 91
+      },
+      {
+        "ign": "Kido",
+        "role": "Mid",
+        "ovr": 91
+      },
+      {
+        "ign": "Yoorn",
+        "role": "Gold",
+        "ovr": 89
+      },
+      {
+        "ign": "Marsha",
+        "role": "Roamer",
+        "ovr": 90
+      }
+    ]
+  },
+  "Burmese Ghouls 2019": {
+    "logo": "🇲🇲",
+    "year": 2019,
+    "country": "Myanmar",
+    "region": "MM",
+    "league": "MPL MM",
+    "championship": null,
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "Represented Myanmar at M1 2019, securing a Top 4 finish. Notable for Ruby DD's mechanical prowess.",
+    "players": [
+      {
+        "ign": "ICE ICE",
+        "role": "EXP",
+        "ovr": 90
+      },
+      {
+        "ign": "PVNDV",
+        "role": "Jungler",
+        "ovr": 89
+      },
+      {
+        "ign": "Maybe",
+        "role": "Mid",
+        "ovr": 89
+      },
+      {
+        "ign": "Ruby DD",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Kid",
+        "role": "Roamer",
+        "ovr": 90
+      }
+    ]
+  },
+  "Resurgence SG 2020": {
+    "logo": "🦁",
+    "year": 2020,
+    "country": "Singapore",
+    "region": "SG",
+    "league": "MPL MY/SG",
+    "championship": "MPL MY/SG S5",
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "Winners of MPL MY/SG Season 5, representing Singapore's pinnacle performance in the joint league era.",
+    "players": [
+      {
+        "ign": "Sync",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "Ly4ly4ly4",
+        "role": "Jungler",
+        "ovr": 91
+      },
+      {
+        "ign": "Sana",
+        "role": "Mid",
+        "ovr": 89
+      },
+      {
+        "ign": "Fossa",
+        "role": "Gold",
+        "ovr": 90
+      },
+      {
+        "ign": "Kayzeepi",
+        "role": "Roamer",
+        "ovr": 90
+      }
+    ]
+  },
+  "Team Soulist 2019": {
+    "logo": "🇯🇵",
+    "year": 2019,
+    "country": "Japan",
+    "region": "JP",
+    "league": "Japan Nationals",
+    "championship": null,
+    "teamOVR": 88,
+    "verified": true,
+    "notes": "Pioneers of the Japanese MLBB scene, representing Japan at the M1 World Championship.",
+    "players": [
+      {
+        "ign": "Ryota",
+        "role": "EXP",
+        "ovr": 88
+      },
+      {
+        "ign": "Rush",
+        "role": "Jungler",
+        "ovr": 89
+      },
+      {
+        "ign": "Obuyan",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "Yutapon",
+        "role": "Gold",
+        "ovr": 89
+      },
+      {
+        "ign": "Kiri",
+        "role": "Roamer",
+        "ovr": 87
+      }
+    ]
+  },
+  "Vampire Esports 2021": {
+    "logo": "🦇",
+    "year": 2021,
+    "country": "Thailand",
+    "region": "TH",
+    "league": "Thailand Nationals",
+    "championship": null,
+    "teamOVR": 88,
+    "verified": true,
+    "notes": "Thailand's premier representative at the M3 World Championship, showcasing experimental drafts.",
+    "players": [
+      {
+        "ign": "Zenith",
+        "role": "EXP",
+        "ovr": 87
+      },
+      {
+        "ign": "Framezy",
+        "role": "Jungler",
+        "ovr": 88
+      },
+      {
+        "ign": "P",
+        "role": "Mid",
+        "ovr": 88
+      },
+      {
+        "ign": "Valenz",
+        "role": "Gold",
+        "ovr": 89
+      },
+      {
+        "ign": "J3X",
+        "role": "Roamer",
+        "ovr": 88
+      }
+    ]
+  },
+  "Deus Vult 2023": {
+    "logo": "🇷🇺",
+    "year": 2023,
+    "country": "Russia",
+    "region": "CIS",
+    "league": "MCC",
+    "championship": null,
+    "teamOVR": 92,
+    "verified": true,
+    "notes": "Finished Top 4 at the M5 World Championship. SAWO and Kid Bomba became fan favorites for their heroic runs.",
+    "players": [
+      {
+        "ign": "Kid Bomba",
+        "role": "EXP",
+        "ovr": 93
+      },
+      {
+        "ign": "Carvi",
+        "role": "Jungler",
+        "ovr": 92
+      },
+      {
+        "ign": "Sunset Lover",
+        "role": "Mid",
+        "ovr": 92
+      },
+      {
+        "ign": "Hassa",
+        "role": "Gold",
+        "ovr": 90
+      },
+      {
+        "ign": "SAWO",
+        "role": "Roamer",
+        "ovr": 93
+      }
+    ]
+  },
+  "Triple Esports 2023": {
+    "logo": "🇸🇦",
+    "year": 2023,
+    "country": "Saudi Arabia",
+    "region": "MENA",
+    "league": "MPL MENA",
+    "championship": null,
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "Top Saudi Arabian squad representing the MENA region at M5, displaying incredible growth and macro play.",
+    "players": [
+      {
+        "ign": "Sanji",
+        "role": "EXP",
+        "ovr": 90
+      },
+      {
+        "ign": "Tarzan",
+        "role": "Jungler",
+        "ovr": 91
+      },
+      {
+        "ign": "Troll",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "Fury",
+        "role": "Gold",
+        "ovr": 91
+      },
+      {
+        "ign": "Crak",
+        "role": "Roamer",
+        "ovr": 89
+      }
+    ]
+  },
+  "BloodThirstyKings 2026": {
+    "logo": "🇺🇸",
+    "year": 2026,
+    "country": "USA",
+    "region": "NA",
+    "league": "MPL NA",
+    "championship": null,
+    "teamOVR": 91,
+    "verified": true,
+    "notes": "MobaZane's direct continuation of the BTK legacy competing in MPL NA Season 5.",
+    "players": [
+      {
+        "ign": "Yoonaaa",
+        "role": "EXP",
+        "ovr": 91
+      },
+      {
+        "ign": "MobaZane",
+        "role": "Jungler",
+        "ovr": 93
+      },
+      {
+        "ign": "Fiel",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "Basic",
+        "role": "Gold",
+        "ovr": 92
+      },
+      {
+        "ign": "Bestplayer1",
+        "role": "Roamer",
+        "ovr": 90
+      }
+    ]
+  },
+  "Team Lilgun 2023": {
+    "logo": "🇲🇳",
+    "year": 2023,
+    "country": "Mongolia",
+    "region": "EACC",
+    "league": "MCC",
+    "championship": null,
+    "teamOVR": 89,
+    "verified": true,
+    "notes": "Mongolia's leading esports team that qualified and competed at M5, known for high aggression.",
+    "players": [
+      {
+        "ign": "Zxa",
+        "role": "EXP",
+        "ovr": 89
+      },
+      {
+        "ign": "A2",
+        "role": "Jungler",
+        "ovr": 90
+      },
+      {
+        "ign": "Forbid",
+        "role": "Mid",
+        "ovr": 90
+      },
+      {
+        "ign": "H1",
+        "role": "Gold",
+        "ovr": 89
+      },
+      {
+        "ign": "B9",
+        "role": "Roamer",
+        "ovr": 88
+      }
     ]
   }
 }
