@@ -1,5 +1,35 @@
 import React from 'react';
-import { STAGES, RI, ROLES } from '../data/gameData';
+import { STAGES, ROLE_SVG, ROLES } from '../data/gameData';
+
+function RoleIcon({ role }) {
+  return (
+    <span
+      className="role-icon-svg"
+      dangerouslySetInnerHTML={{ __html: ROLE_SVG[role] || role }}
+    />
+  );
+}
+
+function TeamLogo({ logo, name }) {
+  if (logo && (logo.startsWith('http') || logo.startsWith('/'))) {
+    return (
+      <div className="team-logo-wrap">
+        <img src={logo} alt={name} className="team-logo-img" />
+      </div>
+    );
+  }
+  return <span className="team-logo-emoji">{logo || '⚔️'}</span>;
+}
+
+// Animated sword clash icon
+function SwordClash() {
+  return (
+    <div className="sword-clash-wrap">
+      <span className="sword-left">🗡️</span>
+      <span className="sword-right">🗡️</span>
+    </div>
+  );
+}
 
 export default function TournamentPhase({
   roster,
@@ -13,10 +43,7 @@ export default function TournamentPhase({
   onViewResult,
 }) {
   const isQualifier = currentRound === 0;
-
-  // 'finished' is purely driven by roundState to avoid dual-overlay conflicts
   const finished = roundState === 'won' || roundState === 'lost';
-
   const userWon = roundState === 'won';
 
   // Calculate user roster power (OVR)
@@ -37,7 +64,7 @@ export default function TournamentPhase({
 
   const userPower = calcPower();
 
-  // Bracket component — rendered inside overlays so it shows above the backdrop
+  // Bracket component
   const BracketBar = () => (
     <div className="overlay-bracket-bar">
       {STAGES.map((stage, idx) => {
@@ -58,7 +85,7 @@ export default function TournamentPhase({
             )}
             <div className={nodeClass}>
               <span className="ob-icon">
-                {isDone ? (won ? '✅' : '❌') : isCurrent ? '⚔️' : '🔒'}
+                {isDone ? (won ? '✅' : '❌') : isCurrent ? '⚡' : '🔒'}
               </span>
               <span className="ob-label">{stage}</span>
               {journeyEntry && <span className="ob-score">{journeyEntry.score}</span>}
@@ -69,7 +96,7 @@ export default function TournamentPhase({
     </div>
   );
 
-  // Side-by-side roster matchup: User (left) vs Opponent (right)
+  // Side-by-side roster matchup
   const RosterMatchup = ({ oppPlayers }) => (
     <div className="matchup-grid">
       {/* User side */}
@@ -86,7 +113,7 @@ export default function TournamentPhase({
             if (!p) return null;
             return (
               <div key={role} className="matchup-player matchup-player-user">
-                <span className="matchup-role-icon">{RI[role]}</span>
+                <span className="matchup-role-icon"><RoleIcon role={role} /></span>
                 <span className="matchup-role-label">{role}</span>
                 <span className="matchup-ign">{p.ign}</span>
               </div>
@@ -103,7 +130,9 @@ export default function TournamentPhase({
       {/* Opponent side */}
       <div className="matchup-side matchup-enemy">
         <div className="matchup-team-header matchup-team-header-enemy">
-          <span className="matchup-logo">{opponent?.logo || '⚔️'}</span>
+          <span className="matchup-logo">
+            🛡️
+          </span>
           <div>
             <div className="matchup-team-name disp">Opponent Roster</div>
           </div>
@@ -116,7 +145,7 @@ export default function TournamentPhase({
               <div key={role} className="matchup-player matchup-player-enemy">
                 <span className="matchup-ign">{p.ign}</span>
                 <span className="matchup-role-label">{role}</span>
-                <span className="matchup-role-icon">{RI[role]}</span>
+                <span className="matchup-role-icon"><RoleIcon role={role} /></span>
               </div>
             );
           })}
@@ -125,7 +154,6 @@ export default function TournamentPhase({
     </div>
   );
 
-  // Logs are now set progressively — just display whatever is in seriesResult.logs
   const currentGameLogs = seriesResult?.logs || [];
 
   return (
@@ -169,7 +197,7 @@ export default function TournamentPhase({
                   <span className="sim-team-name disp">Your Roster</span>
                 </div>
                 <div className="sim-scoreboard">
-                  <span className="sim-score-num uw">⚔️</span>
+                  <SwordClash />
                 </div>
                 <div className="sim-team-label sim-team-label-enemy">
                   <span className="sim-team-name disp">Opponent Roster</span>
@@ -188,10 +216,7 @@ export default function TournamentPhase({
                 </div>
               )}
 
-              <div className="sim-indicator">
-                <div className="sim-dots"><span /><span /><span /></div>
-                <span>Qualifying...</span>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -236,7 +261,7 @@ export default function TournamentPhase({
                 </div>
                 <div className="sim-scoreboard">
                   <span className="sim-score-num uw">{seriesResult?.uw || 0}</span>
-                  <span className="sim-score-sep">—</span>
+                  <SwordClash />
                   <span className="sim-score-num ew">{seriesResult?.ew || 0}</span>
                 </div>
                 <div className="sim-team-label sim-team-label-enemy">
@@ -270,10 +295,7 @@ export default function TournamentPhase({
                 </div>
               )}
 
-              <div className="sim-indicator">
-                <div className="sim-dots"><span /><span /><span /></div>
-                <span>Simulating...</span>
-              </div>
+              
             </div>
           </div>
         </div>

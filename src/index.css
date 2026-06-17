@@ -144,6 +144,159 @@ body {
   50% { transform: translateY(-8px); }
 }
 
+/* ── MLBB Role SVG Icons ── */
+.role-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.role-icon-svg .role-svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.rm-role .role-icon-svg .role-svg,
+.matchup-role-icon .role-icon-svg .role-svg {
+  width: 18px;
+  height: 18px;
+}
+.rr-role .role-icon-svg .role-svg {
+  width: 22px;
+  height: 22px;
+}
+.tpc-players .role-icon-svg .role-svg {
+  width: 14px;
+  height: 14px;
+}
+.pc-role-badge .role-icon-svg .role-svg {
+  width: 12px;
+  height: 12px;
+}
+.mvp-role .role-icon-svg .role-svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Team Logo wrap — white glow for visibility on dark bg ── */
+.team-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.137);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 0 12px rgba(255,255,255,0.12);
+  width: fit-content;
+}
+.team-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
+}
+.tpc-logo .team-logo-wrap {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 10px;
+}
+.tpc-logo .team-logo-img {
+  width: 44px;
+  height: 44px;
+}
+.thc-logo .team-logo-wrap {
+  width: 72px;
+  height: 72px;
+}
+.thc-logo .team-logo-img {
+  width: 56px;
+  height: 56px;
+}
+.matchup-logo .team-logo-wrap {
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+}
+.matchup-logo .team-logo-img {
+  width: 26px;
+  height: 26px;
+}
+.team-logo-emoji {
+  font-size: 44px;
+  display: block;
+}
+.matchup-logo .team-logo-emoji {
+  font-size: 24px;
+}
+
+/* ── Sword Clash Animation ── */
+@keyframes swordLeft {
+  0%   { transform: translate(-80%, -50%) rotate(145deg); }
+  40%  { transform: translate(-50%, -50%) rotate(170deg); }
+  50%  { transform: translate(-50%, -50%) rotate(170deg) scale(1.15); }
+  60%  { transform: translate(-50%, -50%) rotate(170deg); }
+  100% { transform: translate(-80%, -50%) rotate(145deg); }
+}
+@keyframes swordRight {
+  0%   { transform: translate(-20%, -50%) rotate(215deg) scaleX(-1); }
+  40%  { transform: translate(-50%, -50%) rotate(190deg) scaleX(-1); }
+  50%  { transform: translate(-50%, -50%) rotate(190deg) scaleX(-1) scale(1.15); }
+  60%  { transform: translate(-50%, -50%) rotate(190deg) scaleX(-1); }
+  100% { transform: translate(-20%, -50%) rotate(215deg) scaleX(-1); }
+}
+
+.sword-clash-wrap {
+  position: relative;
+  width: 60px;
+  height: 40px;
+}
+.sword-left,
+.sword-right {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 22px;
+  line-height: 1;
+
+}
+.sword-left {
+  animation: swordLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin-right: 1px;
+}
+.sword-right {
+  animation: swordRight 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  z-index: 1;
+   margin-left: 1px;
+}
+.clash-flash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 16px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  animation: clashFlash 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Log VICTORY / DEFEAT labels ── */
+.log-victory {
+  color: var(--gold);
+  font-weight: 800;
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.log-defeat {
+  color: var(--red);
+  font-weight: 800;
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
 /* ── Loading Screen ── */
 .loading-screen {
   position: fixed;
@@ -1337,15 +1490,7 @@ body {
 .ll-loss { color: var(--red); font-weight: 700; }
 .ll-crit { color: var(--gold); font-weight: 600; }
 
-.sim-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-  font-size: 12px;
-  color: var(--text3);
-}
+
 .sim-dots {
   display: flex;
   gap: 4px;

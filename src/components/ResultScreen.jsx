@@ -1,5 +1,14 @@
 import React from 'react';
-import { ROLES, RI } from '../data/gameData';
+import { ROLES, ROLE_SVG } from '../data/gameData';
+
+function RoleIcon({ role }) {
+  return (
+    <span
+      className="role-icon-svg"
+      dangerouslySetInnerHTML={{ __html: ROLE_SVG[role] || '' }}
+    />
+  );
+}
 
 export default function ResultScreen({
   champ,
@@ -39,22 +48,6 @@ export default function ResultScreen({
       )}
       <span className="res-emoji">{emoji}</span>
       <div className={`res-title disp ${titleCls}`}>{title}</div>
-      <div className="res-sub">
-        {champ
-          ? 'Your Roster has conquered the M-Series World Championship. Legendary!'
-          : `Eliminated at the ${last?.stage || 'Qualifier'} — defeated by ${last?.opp || 'an opponent'}.`}
-      </div>
-
-      <div className="res-stats">
-        <div className="rst">
-          <div className="rst-v disp">{wins}</div>
-          <div className="rst-l">Rounds Won</div>
-        </div>
-        <div className="rst">
-          <div className="rst-v disp">{journey.length}</div>
-          <div className="rst-l">Rounds Played</div>
-        </div>
-      </div>
 
       {/* Tournament Path */}
       <div className="journey-list">
@@ -75,7 +68,9 @@ export default function ResultScreen({
         <div className="mvp-card fadein">
           <div className="mvp-badge">⭐ RUN MVP</div>
           <div className="mvp-name disp">{mvp.ign}</div>
-          <div className="mvp-role">{RI[mvp.role]} {mvp.role}</div>
+          <div className="mvp-role">
+            <RoleIcon role={mvp.role} /> {mvp.role}
+          </div>
         </div>
       )}
 
@@ -88,7 +83,7 @@ export default function ResultScreen({
             if (!p) return null;
             return (
               <div key={i} className="rr-player">
-                <span className="rr-role">{RI[p.role]}</span>
+                <span className="rr-role"><RoleIcon role={p.role} /></span>
                 <span className="rr-ign">{p.ign}</span>
               </div>
             );

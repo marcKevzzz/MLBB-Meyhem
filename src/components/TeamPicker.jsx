@@ -1,5 +1,25 @@
 import React from 'react';
-import { ROLES, RI } from '../data/gameData';
+import { ROLES, ROLE_SVG } from '../data/gameData';
+
+function RoleIcon({ role }) {
+  return (
+    <span
+      className="role-icon-svg"
+      dangerouslySetInnerHTML={{ __html: ROLE_SVG[role] || role }}
+    />
+  );
+}
+
+function TeamLogo({ logo, name }) {
+  if (logo && (logo.startsWith('http') || logo.startsWith('/'))) {
+    return (
+      <div className="team-logo-wrap">
+        <img src={logo} alt={name} className="team-logo-img" />
+      </div>
+    );
+  }
+  return <span className="team-logo-emoji">{logo}</span>;
+}
 
 export default function TeamPicker({
   TEAM_DATA,
@@ -45,7 +65,7 @@ export default function TeamPicker({
               className={`team-pick-card fadein ${!hasAvailable ? 'tpc-disabled' : ''}`}
               onClick={hasAvailable ? () => onSelectTeam(key) : undefined}
             >
-              <span className="tpc-logo">{t.logo}</span>
+              <TeamLogo logo={t.logo} name={key} />
               <div className="tpc-name disp">{key}</div>
               <div className="tpc-meta">
                 <span className="tpc-year">{t.year}</span>
@@ -59,7 +79,7 @@ export default function TeamPicker({
                   const isFilled = filledRoles.includes(p.role);
                   return (
                     <div key={pIdx} className={isFilled ? 'tp-filled' : ''}>
-                      {RI[p.role]} {p.ign}
+                      <RoleIcon role={p.role} /> {p.ign}
                       {isFilled && <span className="tp-taken">✓</span>}
                     </div>
                   );
@@ -93,7 +113,7 @@ export default function TeamPicker({
               if (!p) return null;
               return (
                 <div key={i} className="rm-player">
-                  <span className="rm-role">{RI[p.role]}</span>
+                  <span className="rm-role"><RoleIcon role={p.role} /></span>
                   <span className="rm-ign">{p.ign}</span>
                 </div>
               );

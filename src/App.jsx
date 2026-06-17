@@ -92,10 +92,14 @@ export default function App() {
   }, []);
 
   // ── Offer 3 random teams ──
-  const refreshOfferedTeams = useCallback((data, filledRoles) => {
+  const refreshOfferedTeams = useCallback((data, currentRoster) => {
+    const filledRoles = Object.keys(currentRoster || {});
+    const draftedTeamKeys = Object.values(currentRoster || {}).map(p => p.teamKey);
+
     const allKeys = Object.keys(data || teamData);
-    // Filter teams that have at least one unfilled role available
+    // Filter teams that have at least one unfilled role available AND haven't been drafted from
     const validTeams = allKeys.filter(key => {
+      if (draftedTeamKeys.includes(key)) return false;
       const team = (data || teamData)[key];
       return team.players.some(p => !filledRoles.includes(p.role));
     });
@@ -137,7 +141,7 @@ export default function App() {
     setCurrentOpponent(null);
     setRefreshCount(3);
 
-    refreshOfferedTeams(teamData, []);
+    refreshOfferedTeams(teamData, {});
 
     setScreen('draft');
     setPhase('teampick');
@@ -147,7 +151,7 @@ export default function App() {
   const handleRefreshTeams = () => {
     if (refreshCount > 0) {
       setRefreshCount(prev => prev - 1);
-      refreshOfferedTeams(teamData, Object.keys(roster));
+      refreshOfferedTeams(teamData, roster);
     }
   };
 
@@ -187,8 +191,7 @@ export default function App() {
       }, 600);
     } else {
       // Show 3 new random teams
-      const filledRoles = Object.keys(newRoster);
-      refreshOfferedTeams(teamData, filledRoles);
+      refreshOfferedTeams(teamData, newRoster);
       setPhase('teampick');
     }
   };
@@ -337,13 +340,13 @@ export default function App() {
     // Apply strict round-based scaling:
     if (roundIdx === 1) {
       // Quarter Final: Very High Odds
-      winChance = Math.max(85, winChance + 35); 
+      winChance = Math.max(80, winChance); 
     } else if (roundIdx === 2) {
       // Semi Final: Moderate Odds
       winChance = Math.max(60, winChance + 10);
     } else {
       // Final: Hard Odds (cap it to make it challenging)
-      winChance = Math.min(85, winChance - 10);
+      winChance = Math.min(80, winChance - 10);
     }
 
     // Clamp absolute bounds
@@ -371,7 +374,7 @@ export default function App() {
         results: isLastLog ? nextResults : currentState.results,
         logs: gameLogs.slice(0, i + 1)
       });
-      await sleep(1000);
+      await sleep(1500);
     }
 
     // Pause after all 3 logs so player can read before next game
@@ -387,42 +390,60 @@ export default function App() {
     const p2 = rosterArray[rnd(0, rosterArray.length - 1)];
 
     const CLASH_WIN_LOGS = [
-      `⚔️ <span>${p1.ign}</span> secures the first Turtle of the game, giving Your Roster a gold lead!`,
-      `⚔️ A brilliant rotation from <span>${p1.ign}</span> catches the enemy out of position!`,
-      `⚔️ Your Roster secures a clean 2-for-0 trade in the mid lane, led by <span>${p1.ign}</span>!`,
-      `⚔️ <span>${p1.ign}</span> shuts down the enemy Jungler, securing our jungle buff!`,
-      `⚔️ Perfect micro-play from <span>${p1.ign}</span> wins the duel in the EXP lane!`,
-      `⚔️ <span>${p1.ign}</span> finds a double kill during a chaotic teamfight!`,
-      `⚔️ Your Roster successfully defends the tier-1 turret, with <span>${p1.ign}</span> getting a critical defense!`,
-      `⚔️ <span>${p1.ign}</span> intercepts the enemy rotation, securing a solo elimination!`
-    ];
+  `<span>${p1.ign}</span> secures Turtle.`,
+  `<span>${p1.ign}</span> wins a key duel.`,
+  `<span>${p1.ign}</span> finds first blood.`,
+  `Your Roster wins a teamfight.`,
+  `<span>${p1.ign}</span> steals the enemy buff.`,
+  `<span>${p1.ign}</span> gets a double kill.`,
+  `A clean rotation from <span>${p1.ign}</span>.`,
+  `Your Roster takes a turret.`,
+  `<span>${p1.ign}</span> catches an enemy.`,
+  `Lord secured by Your Roster.`,
+  `<span>${p1.ign}</span> dominates the lane.`,
+  `Your Roster gains map control.`
+];
 
-    const CLASH_LOSS_LOGS = [
-      `💀 The enemy Jungler steals the Turtle, putting Your Roster on the back foot.`,
-      `💀 <span>${p1.ign}</span> gets pickoffed in the river after being caught by the enemy tank.`,
-      `💀 The enemy team coordinates a 3-man dive, eliminating <span>${p2.ign}</span> under the turret.`,
-      `💀 A bad teamfight engage near the Lord pit costs Your Roster two players.`,
-      `💀 The enemy EXP laner wins a close duel against <span>${p1.ign}</span> on the sideline.`,
-      `💀 The enemy team invades and steals our purple buff, slowing down <span>${p1.ign}</span>'s scaling.`,
-      `💀 Your Roster lose the gold lead after the enemy Gold laner secures a double kill.`,
-      `💀 <span>${p1.ign}</span> is forced to retreat, giving up map pressure to the enemy.`
-    ];
+const CLASH_LOSS_LOGS = [
+  `Enemy secures Turtle.`,
+  `<span>${p1.ign}</span> gets picked off.`,
+  `Enemy wins the teamfight.`,
+  `Your Roster loses a turret.`,
+  `Enemy steals a jungle buff.`,
+  `<span>${p2.ign}</span> falls in a gank.`,
+  `Enemy secures Lord.`,
+  `Your Roster loses map control.`,
+  `Enemy claims a double kill.`,
+  `<span>${p1.ign}</span> is forced back.`,
+  `Enemy pushes all lanes.`,
+  `A costly mistake by Your Roster.`
+];
 
-    const WIN_LOGS = [
-      `⚔️ <span>VICTORY</span>: Flawless engage by <span>${p1.ign}</span> — the teamfight is a 5-0 wipe and Your Roster destroys the Enemy Crystal!`,
-      `⚔️ <span>VICTORY</span>: Clutch Lord steal by <span>${p1.ign}</span>! Your Roster rushes down mid and secures the win!`,
-      `⚔️ <span>VICTORY</span>: <span>${p1.ign}</span> lands a perfect setup — the enemy backline collapses and Your Roster claims the match!`,
-      `⚔️ <span>VICTORY</span>: Your Roster dominates — <span>${p1.ign}</span> secures the final push to take the game!`,
-      `⚔️ <span>VICTORY</span>: <span>${p1.ign}</span> counterflanks perfectly — Lord secured and the enemy defense is crushed!`
-    ];
+const WIN_LOGS = [
+  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> leads the final push!`,
+  `<span class="log-victory">VICTORY</span> — Lord secured. Game over.`,
+  `<span class="log-victory">VICTORY</span> — Ace for Your Roster!`,
+  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> closes the game.`,
+  `<span class="log-victory">VICTORY</span> — Enemy Crystal destroyed.`,
+  `<span class="log-victory">VICTORY</span> — Perfect teamfight by Your Roster.`,
+  `<span class="log-victory">VICTORY</span> — Clean finish from Your Roster.`,
+  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> secures MVP.`,
+  `<span class="log-victory">VICTORY</span> — The comeback is complete!`,
+  `<span class="log-victory">VICTORY</span> — Dominant performance.`
+];
 
-    const LOSS_LOGS = [
-      `💀 <span>DEFEAT</span>: The enemy crushes it in a 4v4 at the Lord pit and takes down your Crystal.`,
-      `💀 <span>DEFEAT</span>: The enemy secures back-to-back Turtles, snowballs the lead, and completes the wipeout.`,
-      `💀 <span>DEFEAT</span>: The enemy catches <span>${p1.ign}</span> out of position, secures the Lord, and breaks your base defense.`,
-      `💀 <span>DEFEAT</span>: Late-game throw — the enemy steals the Lord and marches to victory.`,
-      `💀 <span>DEFEAT</span>: The enemy base push is too strong — your defense crumbles and the Nexus falls.`
-    ];
+const LOSS_LOGS = [
+  `<span class="log-defeat">DEFEAT</span> — Enemy ends the game.`,
+  `<span class="log-defeat">DEFEAT</span> — Lord push succeeds.`,
+  `<span class="log-defeat">DEFEAT</span> — Enemy wins the final fight.`,
+  `<span class="log-defeat">DEFEAT</span> — Base defense falls apart.`,
+  `<span class="log-defeat">DEFEAT</span> — Enemy secures the comeback.`,
+  `<span class="log-defeat">DEFEAT</span> — Crystal destroyed.`,
+  `<span class="log-defeat">DEFEAT</span> — Your Roster gets wiped out.`,
+  `<span class="log-defeat">DEFEAT</span> — Enemy controls the late game.`,
+  `<span class="log-defeat">DEFEAT</span> — The final push cannot be stopped.`,
+  `<span class="log-defeat">DEFEAT</span> — A close game slips away.`
+];
 
     // Determine outcomes for first two logs
     // If user won, make logs tend to be wins (e.g. 65% win chance each)

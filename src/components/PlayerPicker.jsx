@@ -1,5 +1,25 @@
 import React from 'react';
-import { ROLES, RI } from '../data/gameData';
+import { ROLES, ROLE_SVG } from '../data/gameData';
+
+function RoleIcon({ role }) {
+  return (
+    <span
+      className="role-icon-svg"
+      dangerouslySetInnerHTML={{ __html: ROLE_SVG[role] || role }}
+    />
+  );
+}
+
+function TeamLogo({ logo, name }) {
+  if (logo && (logo.startsWith('http') || logo.startsWith('/'))) {
+    return (
+      <div className="team-logo-wrap">
+        <img src={logo} alt={name} className="team-logo-img" />
+      </div>
+    );
+  }
+  return <span className="team-logo-emoji">{logo}</span>;
+}
 
 export default function PlayerPicker({
   TEAM_DATA,
@@ -21,7 +41,9 @@ export default function PlayerPicker({
       </div>
 
       <div className="team-header-card">
-        <div className="thc-logo">{t.logo}</div>
+        <div className="thc-logo">
+          <TeamLogo logo={t.logo} name={chosenTeam} />
+        </div>
         <div className="thc-info">
           <div className="thc-name disp">{chosenTeam}</div>
           <div className="thc-region">{t.country} · {t.year}</div>
@@ -46,7 +68,7 @@ export default function PlayerPicker({
                   <span>Role Filled</span>
                 </div>
                 <div className="pc-ign">{p.ign}</div>
-                <span className={`pc-role-badge rb-${p.role}`}>{RI[p.role]} {p.role}</span>
+                <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
               </div>
             );
           }
@@ -56,7 +78,7 @@ export default function PlayerPicker({
               <div key={p.ign} className="player-card pc-selected">
                 <div className="pc-selected-badge">✓ DRAFTED</div>
                 <div className="pc-ign">{p.ign}</div>
-                <span className={`pc-role-badge rb-${p.role}`}>{RI[p.role]} {p.role}</span>
+                <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
               </div>
             );
           }
@@ -68,7 +90,7 @@ export default function PlayerPicker({
               onClick={() => onDraftPlayer(chosenTeam, p)}
             >
               <div className="pc-ign">{p.ign}</div>
-              <span className={`pc-role-badge rb-${p.role}`}>{RI[p.role]} {p.role}</span>
+              <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
               <div className="pc-draft-hint">Tap to draft →</div>
             </div>
           );
