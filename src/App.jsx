@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import HeroScreen from './components/HeroScreen';
 import TeamPicker from './components/TeamPicker';
 import PlayerPicker from './components/PlayerPicker';
@@ -31,7 +31,7 @@ function sleep(ms) {
 function calcRosterPower(roster) {
   const players = Object.values(roster);
   if (!players.length) return 0;
-  const avgOvr = players.reduce((s, p) => s + (p.ovr || 90), 0) / players.length;
+  const avgOvr = players.reduce((s, p) => s + (p.ovr || 75), 0) / players.length;
 
   // Team synergy bonus (hidden): same-country players boost
   const countries = {};
@@ -71,6 +71,9 @@ export default function App() {
 
   // Toast
   const [toast, setToast] = useState({ message: '', type: '' });
+
+  // Log Deduplication Ref
+  const usedLogsRef = useRef(new Set());
 
   const showToast = useCallback((message, type = 'n-info') => {
     setToast({ message, type });
@@ -255,6 +258,7 @@ export default function App() {
 
   // ── Tournament: Start a round ──
   const handleStartRound = async () => {
+    usedLogsRef.current.clear();
     const stageName = STAGES[currentRound];
     const opp = currentOpponent;
 
@@ -265,7 +269,7 @@ export default function App() {
       await sleep(1000);
 
       const userPower = calcRosterPower(roster);
-      const passChance = Math.min(98, Math.max(80, userPower - 5));
+      const passChance = Math.min(90, Math.max(70, userPower - 15));
       const passed = rnd(1, 100) <= passChance;
 
       // Play single game with sequential log reveal
@@ -337,20 +341,20 @@ export default function App() {
     // Base win chance derived from OVR difference (each 1 OVR diff = 2.5% chance swing)
     let winChance = 50 + (userPower - oppPower) * 2.5;
 
-    // Apply strict round-based scaling:
+    // Apply strict round-based scaling (harder difficulty):
     if (roundIdx === 1) {
-      // Quarter Final: Very High Odds
-      winChance = Math.max(80, winChance); 
+      // Quarter Final: High Odds but not guaranteed
+      winChance = Math.max(65, winChance - 5); 
     } else if (roundIdx === 2) {
-      // Semi Final: Moderate Odds
-      winChance = Math.max(60, winChance + 10);
+      // Semi Final: Coin-flip territory
+      winChance = Math.max(45, winChance - 10);
     } else {
-      // Final: Hard Odds (cap it to make it challenging)
-      winChance = Math.min(80, winChance - 10);
+      // Final: Very hard (cap to make it genuinely challenging)
+      winChance = Math.min(55, winChance - 20);
     }
 
     // Clamp absolute bounds
-    winChance = Math.min(98, Math.max(2, winChance));
+    winChance = Math.min(85, Math.max(10, winChance));
     
     const won = rnd(1, 100) <= winChance;
 
@@ -389,81 +393,108 @@ export default function App() {
     const p1 = rosterArray[rnd(0, rosterArray.length - 1)];
     const p2 = rosterArray[rnd(0, rosterArray.length - 1)];
 
+    const userJungler = roster.Jungler?.ign || 'Your Jungler';
+    const enemyJungler = currentOpponent?.oppRoster?.Jungler?.ign || 'Enemy Jungler';
+
     const CLASH_WIN_LOGS = [
-  `<span>${p1.ign}</span> secures Turtle.`,
-  `<span>${p1.ign}</span> wins a key duel.`,
-  `<span>${p1.ign}</span> finds first blood.`,
-  `Your Roster wins a teamfight.`,
-  `<span>${p1.ign}</span> steals the enemy buff.`,
-  `<span>${p1.ign}</span> gets a double kill.`,
-  `A clean rotation from <span>${p1.ign}</span>.`,
-  `Your Roster takes a turret.`,
-  `<span>${p1.ign}</span> catches an enemy.`,
-  `Lord secured by Your Roster.`,
-  `<span>${p1.ign}</span> dominates the lane.`,
-  `Your Roster gains map control.`
-];
+      `<span>${userJungler}</span> secures Turtle.`,
+      `<span>${userJungler}</span> secures Lord.`,
+      `<span>${userJungler}</span> steals the Turtle from the enemies!`,
+      `<span>${userJungler}</span> steals the Lord from the enemies!`,
+      `<span>${p1.ign}</span> wins a key duel.`,
+      `<span>${p1.ign}</span> finds first blood.`,
+      `Your Roster wins a teamfight.`,
+      `<span>${p1.ign}</span> steals the enemy buff.`,
+      `<span>${p1.ign}</span> gets a double kill.`,
+      `A clean rotation from <span>${p1.ign}</span>.`,
+      `Your Roster takes a turret.`,
+      `<span>${p1.ign}</span> catches an enemy.`,
+      `<span>${p1.ign}</span> dominates the lane.`,
+      `Your Roster gains map control.`,
+      `<span>${p1.ign}</span> shuts down the enemy carry!`,
+      `A beautiful initiation by <span>${p1.ign}</span> wipes the enemy.`,
+      `<span>${p1.ign}</span> defends the high ground successfully.`,
+      `<span>${userJungler}</span> dominates the neutral objectives.`
+    ];
 
-const CLASH_LOSS_LOGS = [
-  `Enemy secures Turtle.`,
-  `<span>${p1.ign}</span> gets picked off.`,
-  `Enemy wins the teamfight.`,
-  `Your Roster loses a turret.`,
-  `Enemy steals a jungle buff.`,
-  `<span>${p2.ign}</span> falls in a gank.`,
-  `Enemy secures Lord.`,
-  `Your Roster loses map control.`,
-  `Enemy claims a double kill.`,
-  `<span>${p1.ign}</span> is forced back.`,
-  `Enemy pushes all lanes.`,
-  `A costly mistake by Your Roster.`
-];
+    const CLASH_LOSS_LOGS = [
+      `<span>${enemyJungler}</span> secures Turtle.`,
+      `<span>${enemyJungler}</span> secures Lord.`,
+      `<span>${enemyJungler}</span> steals the Turtle from your team!`,
+      `<span>${enemyJungler}</span> steals the Lord from your team!`,
+      `<span>${p1.ign}</span> gets picked off.`,
+      `Enemy wins the teamfight.`,
+      `Your Roster loses a turret.`,
+      `Enemy steals a jungle buff.`,
+      `<span>${p2.ign}</span> falls in a gank.`,
+      `Your Roster loses map control.`,
+      `Enemy claims a double kill.`,
+      `<span>${p1.ign}</span> is forced back.`,
+      `Enemy pushes all lanes.`,
+      `A costly mistake by Your Roster.`,
+      `Enemy team ganks and eliminates <span>${p1.ign}</span>.`,
+      `Your Roster is wiped out in the pit.`,
+      `Enemy secures the outer turret.`
+    ];
 
-const WIN_LOGS = [
-  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> leads the final push!`,
-  `<span class="log-victory">VICTORY</span> — Lord secured. Game over.`,
-  `<span class="log-victory">VICTORY</span> — Ace for Your Roster!`,
-  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> closes the game.`,
-  `<span class="log-victory">VICTORY</span> — Enemy Crystal destroyed.`,
-  `<span class="log-victory">VICTORY</span> — Perfect teamfight by Your Roster.`,
-  `<span class="log-victory">VICTORY</span> — Clean finish from Your Roster.`,
-  `<span class="log-victory">VICTORY</span> — <span>${p1.ign}</span> secures MVP.`,
-  `<span class="log-victory">VICTORY</span> — The comeback is complete!`,
-  `<span class="log-victory">VICTORY</span> — Dominant performance.`
-];
+    const WIN_LOGS = [
+      `<span>${p1.ign}</span> leads the final push!`,
+      `Lord secured. Game over.`,
+      `Ace for Your Roster!`,
+      `<span>${p1.ign}</span> closes the game.`,
+      `Enemy Crystal destroyed.`,
+      `Perfect teamfight by Your Roster.`,
+      `Clean finish from Your Roster.`,
+      `<span>${p1.ign}</span> secures MVP.`,
+      `The comeback is complete!`,
+      `Dominant performance.`
+    ];
 
-const LOSS_LOGS = [
-  `<span class="log-defeat">DEFEAT</span> — Enemy ends the game.`,
-  `<span class="log-defeat">DEFEAT</span> — Lord push succeeds.`,
-  `<span class="log-defeat">DEFEAT</span> — Enemy wins the final fight.`,
-  `<span class="log-defeat">DEFEAT</span> — Base defense falls apart.`,
-  `<span class="log-defeat">DEFEAT</span> — Enemy secures the comeback.`,
-  `<span class="log-defeat">DEFEAT</span> — Crystal destroyed.`,
-  `<span class="log-defeat">DEFEAT</span> — Your Roster gets wiped out.`,
-  `<span class="log-defeat">DEFEAT</span> — Enemy controls the late game.`,
-  `<span class="log-defeat">DEFEAT</span> — The final push cannot be stopped.`,
-  `<span class="log-defeat">DEFEAT</span> — A close game slips away.`
-];
+    const LOSS_LOGS = [
+      `Enemy ends the game.`,
+      `Lord push succeeds.`,
+      `Enemy wins the final fight.`,
+      `Base defense falls apart.`,
+      `Enemy secures the comeback.`,
+      `Crystal destroyed.`,
+      `Your Roster gets wiped out.`,
+      `Enemy controls the late game.`,
+      `The final push cannot be stopped.`,
+      `A close game slips away.`
+    ];
+
+    // Deduplication helper
+    const getUniqueLog = (pool, fallbackPool) => {
+      let available = pool.filter(log => !usedLogsRef.current.has(log));
+      if (available.length === 0) {
+        available = fallbackPool.filter(log => !usedLogsRef.current.has(log));
+        if (available.length === 0) {
+          usedLogsRef.current.clear();
+          available = pool;
+        }
+      }
+      const selected = available[rnd(0, available.length - 1)];
+      usedLogsRef.current.add(selected);
+      return selected;
+    };
 
     // Determine outcomes for first two logs
-    // If user won, make logs tend to be wins (e.g. 65% win chance each)
-    // If user lost, make logs tend to be losses (e.g. 65% loss chance each)
     const log1Win = won ? (rnd(1, 100) <= 65) : (rnd(1, 100) <= 35);
     const log2Win = won ? (rnd(1, 100) <= 65) : (rnd(1, 100) <= 35);
 
     const log1Text = log1Win 
-      ? CLASH_WIN_LOGS[rnd(0, CLASH_WIN_LOGS.length - 1)]
-      : CLASH_LOSS_LOGS[rnd(0, CLASH_LOSS_LOGS.length - 1)];
+      ? getUniqueLog(CLASH_WIN_LOGS, CLASH_LOSS_LOGS)
+      : getUniqueLog(CLASH_LOSS_LOGS, CLASH_WIN_LOGS);
     const log1Class = log1Win ? 'll-win' : 'll-loss';
 
     const log2Text = log2Win 
-      ? CLASH_WIN_LOGS[rnd(0, CLASH_WIN_LOGS.length - 1)]
-      : CLASH_LOSS_LOGS[rnd(0, CLASH_LOSS_LOGS.length - 1)];
+      ? getUniqueLog(CLASH_WIN_LOGS, CLASH_LOSS_LOGS)
+      : getUniqueLog(CLASH_LOSS_LOGS, CLASH_WIN_LOGS);
     const log2Class = log2Win ? 'll-win' : 'll-loss';
 
     const log3Text = won 
-      ? WIN_LOGS[rnd(0, WIN_LOGS.length - 1)] 
-      : LOSS_LOGS[rnd(0, LOSS_LOGS.length - 1)];
+      ? getUniqueLog(WIN_LOGS, LOSS_LOGS) 
+      : getUniqueLog(LOSS_LOGS, WIN_LOGS);
     const log3Class = won ? 'll-win' : 'll-loss';
 
     return [

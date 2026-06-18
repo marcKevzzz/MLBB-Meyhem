@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROLES, ROLE_SVG } from '../data/gameData';
+import { ROLES, ROLE_SVG, STAGES } from '../data/gameData';
 
 function RoleIcon({ role }) {
   return (
@@ -49,18 +49,38 @@ export default function ResultScreen({
       <span className="res-emoji">{emoji}</span>
       <div className={`res-title disp ${titleCls}`}>{title}</div>
 
-      {/* Tournament Path */}
-      <div className="journey-list">
-        <div className="jl-title">Tournament Path</div>
-        {journey.map((j, idx) => (
-          <div key={idx} className={`jr ${j.result === 'W' ? 'jr-win' : 'jr-loss'}`}>
-            <div className="jr-stage">{j.stage}</div>
-            <div className="jr-opp">vs {j.opp}</div>
-            <div className={`jr-score ${j.result === 'W' ? 'jw' : 'jl'}`}>
-              {j.score} {j.result === 'W' ? '✅' : '❌'}
-            </div>
-          </div>
-        ))}
+      {/* Tournament Path as Breadcrumbs */}
+      <div className="journey-breadcrumbs-container" style={{ width: '100%' }}>
+        <div className="jl-title disp" style={{ marginBottom: '20px' }}>Tournament Path</div>
+        <div className="overlay-bracket-bar" style={{ background: 'rgba(11, 13, 30, 0.6)', margin: '0 auto 24px' }}>
+          {STAGES.map((stage, idx) => {
+            const journeyEntry = journey[idx];
+            const isPlayed = !!journeyEntry;
+            const won = journeyEntry?.result === 'W';
+
+            let nodeClass = 'ob-node';
+            if (isPlayed) {
+              nodeClass += won ? ' ob-won' : ' ob-lost';
+            } else {
+              nodeClass += ' ob-future';
+            }
+
+            return (
+              <React.Fragment key={idx}>
+                {idx > 0 && (
+                  <div className={`ob-line ${isPlayed ? (won ? 'ob-line-done' : 'ob-line-fail') : ''}`} />
+                )}
+                <div className={nodeClass}>
+                  <span className="ob-icon">
+                    {isPlayed ? (won ? '✅' : '❌') : '🔒'}
+                  </span>
+                  <span className="ob-label">{stage}</span>
+                  {journeyEntry && <span className="ob-score">{journeyEntry.score}</span>}
+                </div>
+              </React.Fragment>
+            );
+          })}
+        </div>
       </div>
 
       {/* MVP */}
@@ -74,17 +94,23 @@ export default function ResultScreen({
         </div>
       )}
 
-      {/* Roster Summary */}
-      <div className="result-roster">
-        <div className="rr-title">Your Roster</div>
-        <div className="rr-players">
-          {ROLES.map((role, i) => {
+      {/* Roster Summary redone to 5-slot grid */}
+      <div className="result-roster" style={{ width: '100%' }}>
+        <div className="rr-title disp">Your Final Roster</div>
+        <div className="rd-slots">
+          {ROLES.map((role) => {
             const p = roster[role];
             if (!p) return null;
             return (
-              <div key={i} className="rr-player">
-                <span className="rr-role"><RoleIcon role={p.role} /></span>
-                <span className="rr-ign">{p.ign}</span>
+              <div key={role} className="rd-slot rd-slot-filled">
+                <div className="rd-slot-role-icon">
+                  <RoleIcon role={role} />
+                </div>
+                <div className="rd-slot-info">
+                  <div className="rd-slot-role-name">{role}</div>
+                  <div className="rd-slot-ign disp">{p.ign}</div>
+                  <div className="rd-slot-meta">{p.country.slice(0,3).toUpperCase()} · {p.year}</div>
+                </div>
               </div>
             );
           })}

@@ -1177,7 +1177,7 @@
       }
     ]
   },
-  "Blacklist Intl 2024": {
+  "Blacklist International 2024": {
     "logo": "/assets/logos/blacklist_international.png",
     "year": 2024,
     "country": "Philippines",
@@ -2514,40 +2514,40 @@
     "region": "PH",
     "league": "MPL PH",
     "championship": null,
-    "teamOVR": 91,
+    "teamOVR": 78,
     "verified": true,
     "notes": "MPL PH S3 Champions. Known for their unpredictable draft and aggressive playstyle.",
     "players": [
       {
         "ign": "Killuash",
         "role": "EXP",
-        "ovr": 93
+        "ovr": 79
+      },
+      {
+        "ign": "Panda",
+        "role": "Jungler",
+        "ovr": 76
+      },
+      {
+        "ign": "Ryo",
+        "role": "Mid",
+        "ovr": 76
+      },
+      {
+        "ign": "Exort",
+        "role": "Gold",
+        "ovr": 77
       },
       {
         "ign": "Jay",
-        "role": "Jungler",
-        "ovr": 90
-      },
-      {
-        "ign": "Ash",
-        "role": "Mid",
-        "ovr": 91
-      },
-      {
-        "ign": "Ribo",
-        "role": "Gold",
-        "ovr": 93
-      },
-      {
-        "ign": "Lusty",
         "role": "Roamer",
-        "ovr": 92
+        "ovr": 75
       }
     ]
   },
-  "Sunsparks 2019": {
+  "Sunsparks 2020": {
     "logo": "/assets/logos/sunsparks.png",
-    "year": 2019,
+    "year": 2020,
     "country": "Philippines",
     "region": "PH",
     "league": "MPL PH",
@@ -2557,7 +2557,7 @@
     "notes": "MPL PH S4 Champions. The team that started the back-to-back championship trend in PH.",
     "players": [
       {
-        "ign": "Renzio",
+        "ign": "Killuash",
         "role": "EXP",
         "ovr": 91
       },
@@ -2572,9 +2572,9 @@
         "ovr": 92
       },
       {
-        "ign": "Fuzaken",
+        "ign": "Kielvj",
         "role": "Gold",
-        "ovr": 90
+        "ovr": 91
       },
       {
         "ign": "Rafflesia",
@@ -2884,6 +2884,348 @@
         "ign": "Renejay",
         "role": "Roamer",
         "ovr": 96
+      }
+    ]
+  },
+  "Sunsparks 2019": {
+    "logo": "/assets/logos/sunsparks.png",
+    "year": 2019,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 80,
+    "verified": true,
+    "notes": "MPL PH Season 3 Champions. One of the earliest dominant PH teams. Greedyy and Kielvj were fan favorites.",
+    "players": [
+      {
+        "ign": "Kielvj",
+        "role": "EXP",
+        "ovr": 80
+      },
+      {
+        "ign": "Rafflesia",
+        "role": "Jungler",
+        "ovr": 82
+      },
+      {
+        "ign": "Renzio",
+        "role": "Mid",
+        "ovr": 76
+      },
+      {
+        "ign": "Jaypee",
+        "role": "Gold",
+        "ovr": 75
+      },
+      {
+        "ign": "Fuzaken",
+        "role": "Roamer",
+        "ovr": 77
+      }
+    ]
+  },
+  "ArkAngel 2020": {
+    "logo": "/assets/logos/arkangel.png",
+    "year": 2020,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 72,
+    "verified": true,
+    "notes": "MPL PH Season 5 contender. A rising PH team that showed promise in the lower bracket. KarlTzy came from this org before joining Bren.",
+    "players": [
+      {
+        "ign": "E2MAX",
+        "role": "EXP",
+        "ovr": 73
+      },
+      {
+        "ign": "Saxa",
+        "role": "Jungler",
+        "ovr": 78
+      },
+      {
+        "ign": "Escalera",
+        "role": "Mid",
+        "ovr": 70
+      },
+      {
+        "ign": "Fall",
+        "role": "Gold",
+        "ovr": 81
+      },
+      {
+        "ign": "Isonn",
+        "role": "Roamer",
+        "ovr": 72
+      }
+    ]
+  },
+  "Execration 2020": {
+    "logo": "/assets/logos/execration.png",
+    "year": 2020,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 82,
+    "verified": true,
+    "notes": "MPL PH Season 7 Champions. Defeated Blacklist International in the Grand Final. Ch4knu was the veteran Roamer.",
+    "players": [
+      {
+        "ign": "Z4pnu",
+        "role": "EXP",
+        "ovr": 82
+      },
+      {
+        "ign": "S4gitnu",
+        "role": "Jungler",
+        "ovr": 80
+      },
+      {
+        "ign": "E2MAX",
+        "role": "Mid",
+        "ovr": 84
+      },
+      {
+        "ign": "Bennyqt",
+        "role": "Gold",
+        "ovr": 82
+      },
+      {
+        "ign": "Ch4knu",
+        "role": "Roamer",
+        "ovr": 85
+      }
+    ]
+  },
+  "Smart Omega 2023": {
+    "logo": "/assets/logos/smart_omega.png",
+    "year": 2023,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 81,
+    "verified": true,
+    "notes": "MPL PH mid-tier team. Kelra was a breakout Gold laner star.",
+    "players": [
+      {
+        "ign": "Renzio",
+        "role": "EXP",
+        "ovr": 74
+      },
+      {
+        "ign": "Raizen",
+        "role": "Jungler",
+        "ovr": 81
+      },
+      {
+        "ign": "E2MAX",
+        "role": "Mid",
+        "ovr": 82
+      },
+      {
+        "ign": "Kelra",
+        "role": "Gold",
+        "ovr": 85
+      },
+      {
+        "ign": "Ch4knu",
+        "role": "Roamer",
+        "ovr": 85
+      }
+    ]
+  },
+  "TNC Pro Team 2020": {
+    "logo": "/assets/logos/tnc.png",
+    "year": 2020,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 70,
+    "verified": true,
+    "notes": "MPL PH Season 6 lower bracket team. Better known for Dota 2, TNC gave MLBB a solid run with home-grown Filipino talent.",
+    "players": [
+      {
+        "ign": "Ben_Dover",
+        "role": "EXP",
+        "ovr": 70
+      },
+      {
+        "ign": "Helios",
+        "role": "Jungler",
+        "ovr": 72
+      },
+      {
+        "ign": "EXORT",
+        "role": "Mid",
+        "ovr": 69
+      },
+      {
+        "ign": "Shiro",
+        "role": "Gold",
+        "ovr": 68
+      },
+      {
+        "ign": "Iy4knu",
+        "role": "Roamer",
+        "ovr": 71
+      }
+    ]
+  },
+  "Nexplay EVOS 2022": {
+    "logo": "/assets/logos/evos_legends.png",
+    "year": 2022,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 83,
+    "verified": true,
+    "notes": "MPL PH Season 8 contender. Featured Renejay before his move to Blacklist International. A farm team that developed future stars.",
+    "players": [
+      {
+        "ign": "S4gitnu",
+        "role": "EXP",
+        "ovr": 81
+      },
+      {
+        "ign": "MP the King",
+        "role": "Jungler",
+        "ovr": 86
+      },
+      {
+        "ign": "YellyHaze",
+        "role": "Mid",
+        "ovr": 82
+      },
+      {
+        "ign": "Hesa",
+        "role": "Gold",
+        "ovr": 84
+      },
+      {
+        "ign": "CADENZA",
+        "role": "Roamer",
+        "ovr": 81
+      }
+    ]
+  },
+  "Blacklist International 2020": {
+    "logo": "/assets/logos/blacklist_international.png",
+    "year": 2020,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 90,
+    "verified": true,
+    "notes": "MPL PH Season 13 Champions. The Codebreakers' next chapter with Oheb leading Gold lane and Edward on EXP.",
+    "players": [
+      {
+        "ign": "Dex Star",
+        "role": "EXP",
+        "ovr": 80
+      },
+      {
+        "ign": "Kairi",
+        "role": "Jungler",
+        "ovr": 86
+      },
+      {
+        "ign": "Aqua",
+        "role": "Mid",
+        "ovr": 80
+      },
+      {
+        "ign": "Riddler",
+        "role": "Gold",
+        "ovr": 75
+      },
+      {
+        "ign": "Eson",
+        "role": "Roamer",
+        "ovr": 80
+      }
+    ]
+  },
+  "ONIC PH 2024": {
+    "logo": "/assets/logos/onic_ph.png",
+    "year": 2024,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 85,
+    "verified": true,
+    "notes": "MPL PH Season 13 contender. Rebuilt after Kairi's departure with a fresh roster of young Filipino talent.",
+    "players": [
+      {
+        "ign": "CJ",
+        "role": "EXP",
+        "ovr": 84
+      },
+      {
+        "ign": "Jundel",
+        "role": "Jungler",
+        "ovr": 86
+      },
+      {
+        "ign": "Hatred",
+        "role": "Mid",
+        "ovr": 85
+      },
+      {
+        "ign": "Markyyy",
+        "role": "Gold",
+        "ovr": 85
+      },
+      {
+        "ign": "Baloy",
+        "role": "Roamer",
+        "ovr": 84
+      }
+    ]
+  },
+  "AP.Bren 2020": {
+    "logo": "/assets/logos/bren_esports.png",
+    "year": 2020,
+    "country": "Philippines",
+    "region": "PH",
+    "league": "MPL PH",
+    "championship": null,
+    "teamOVR": 83,
+    "verified": true,
+    "notes": "MPL PH Season 5 mid-table team. Known for developing raw Filipino talent before the org exited MLBB.",
+    "players": [
+      {
+        "ign": "Coco",
+        "role": "EXP",
+        "ovr": 80
+      },
+      {
+        "ign": "KarlTzy",
+        "role": "Jungler",
+        "ovr": 86
+      },
+      {
+        "ign": "Pheww",
+        "role": "Mid",
+        "ovr": 84
+      },
+      {
+        "ign": "Ribo",
+        "role": "Gold",
+        "ovr": 82
+      },
+      {
+        "ign": "Lastii",
+        "role": "Roamer",
+        "ovr": 80
       }
     ]
   }

@@ -104,23 +104,36 @@ export default function TeamPicker({
         </button>
       </div>
 
-      {rosterCount > 0 && (
-        <div className="roster-mini fadein" style={{ marginTop: '32px' }}>
-          <div className="rm-title">Your Roster (Draft in progress)</div>
-          <div className="rm-players">
-            {ROLES.map((role, i) => {
-              const p = roster[role];
-              if (!p) return null;
-              return (
-                <div key={i} className="rm-player">
-                  <span className="rm-role"><RoleIcon role={p.role} /></span>
-                  <span className="rm-ign">{p.ign}</span>
+      <div className="roster-dashboard fadein" style={{ marginTop: '32px' }}>
+        <div className="rd-title disp">Your Draft Roster</div>
+        <div className="rd-slots">
+          {ROLES.map((role) => {
+            const p = roster[role];
+            return p ? (
+              <div key={role} className="rd-slot rd-slot-filled fadein">
+                <div className="rd-slot-role-icon">
+                  <RoleIcon role={role} />
                 </div>
-              );
-            })}
-          </div>
+                <div className="rd-slot-info">
+                  <div className="rd-slot-role-name">{role}</div>
+                  <div className="rd-slot-ign disp">{p.ign}</div>
+                  <div className="rd-slot-meta">{p.country} · {p.year}</div>
+                </div>
+              </div>
+            ) : (
+              <div key={role} className="rd-slot rd-slot-empty">
+                <div className="rd-slot-role-icon empty">
+                  <RoleIcon role={role} />
+                </div>
+                <div className="rd-slot-info">
+                  <div className="rd-slot-role-name">{role}</div>
+                  <div className="rd-slot-status">PICKING...</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </div>
   );
 }

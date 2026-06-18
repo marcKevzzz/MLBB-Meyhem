@@ -50,7 +50,7 @@ export default function TournamentPhase({
   const calcPower = () => {
     const players = Object.values(roster);
     if (!players.length) return 0;
-    const avgOvr = players.reduce((s, p) => s + (p.ovr || 90), 0) / players.length;
+    const avgOvr = players.reduce((s, p) => s + (p.ovr || 75), 0) / players.length;
     const countries = {};
     players.forEach(p => {
       if (p.country) countries[p.country] = (countries[p.country] || 0) + 1;
@@ -204,6 +204,37 @@ export default function TournamentPhase({
                 </div>
               </div>
 
+              <div className="sim-rosters-row">
+                <div className="sim-rosters-side user">
+                  {ROLES.map(role => {
+                    const p = roster[role];
+                    return p ? (
+                      <div key={role} className="sim-rosters-p">
+                        {p.ign} <span className="country-lbl">({p.year})</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+                <div className="sim-rosters-vs">  {ROLES.map(role => {
+                    const p = roster[role];
+                    return p ? (
+                      <div key={role} className="sim-p">
+                    <span className="role-lbl">{role}</span>
+                      </div>
+                    ) : null;
+                  })}</div>
+                <div className="sim-rosters-side enemy">
+                  {ROLES.map(role => {
+                    const p = opponent.oppRoster?.[role];
+                    return p ? (
+                      <div key={role} className="sim-rosters-p">
+                        <span className="country-lbl">({p.year})</span> {p.ign}
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+
               {currentGameLogs.length > 0 && (
                 <div className="sim-log-box">
                   {currentGameLogs.map((log, idx) => (
@@ -266,6 +297,38 @@ export default function TournamentPhase({
                 </div>
                 <div className="sim-team-label sim-team-label-enemy">
                   <span className="sim-team-name disp">Opponent Roster</span>
+                </div>
+              </div>
+
+              <div className="sim-rosters-row">
+                <div className="sim-rosters-side user">
+                  {ROLES.map(role => {
+                    const p = roster[role];
+                    return p ? (
+                      <div key={role} className="sim-rosters-p">
+                    {p.ign} <span className="country-lbl">({p.year})</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+                <div className="sim-rosters-vs">
+                   {ROLES.map(role => {
+                    const p = roster[role];
+                    return p ? (
+                      <div key={role} className="sim-p">
+                    <span className="role-lbl">{role}</span>
+                      </div>
+                    ) : null;
+                  })}</div>
+                <div className="sim-rosters-side enemy">
+                  {ROLES.map(role => {
+                    const p = opponent.oppRoster?.[role];
+                    return p ? (
+                      <div key={role} className="sim-rosters-p">
+                        <span className="country-lbl">({p.year})</span> {p.ign} 
+                      </div>
+                    ) : null;
+                  })}
                 </div>
               </div>
 

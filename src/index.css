@@ -69,6 +69,40 @@ body {
   background-attachment: fixed;
 }
 
+/* Background image decorations of MLBB heroes */
+body::before {
+  content: '';
+  position: fixed;
+  left: -20px;
+  bottom: 0;
+  width: min(35vw, 420px);
+  height: min(65vh, 650px);
+  background-image: url('/assets/mlbb_heroes_edges.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  right: -20px;
+  bottom: 0;
+  width: min(35vw, 420px);
+  height: min(65vh, 650px);
+  background-image: url('/assets/mlbb_heroes_edges.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  transform: scaleX(-1);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: -1;
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
@@ -938,47 +972,172 @@ body {
   background: var(--red);
 }
 
-/* Roster Mini Display */
-.roster-mini {
-  background: rgba(11, 13, 30, 0.5);
+/* Roster Dashboard Redesign (5 slots style) */
+.roster-dashboard {
+  background: linear-gradient(180deg, var(--ink2), rgba(11, 13, 30, 0.4));
   border: 1px solid var(--rim);
   border-radius: var(--radius);
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 20px 24px;
+  width: 100%;
 }
-.rm-title {
+.rd-title {
   font-family: var(--font-title);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: var(--text3);
+  color: var(--cyan);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  margin-bottom: 16px;
 }
-.rm-players {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.rd-slots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
 }
-.rm-player {
+.rd-slot {
   background: var(--ink3);
   border: 1px solid var(--rim);
-  padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
+  padding: 8px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
-.rm-role {
-  font-size: 14px;
+.rd-slot-filled {
+  background: linear-gradient(135deg, rgba(28, 33, 76, 0.6), rgba(11, 13, 30, 0.9));
+  border: 1px solid rgba(255, 184, 0, 0.3);
+  box-shadow: 0 0 15px rgba(255, 184, 0, 0.05);
 }
-.rm-ign {
-  font-weight: 600;
+.rd-slot-filled:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(255, 184, 0, 0.15);
+}
+.rd-slot-empty {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed var(--rim2);
+  opacity: 0.65;
+}
+.rd-slot-role-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  border: 1px solid var(--rim2);
+  flex-shrink: 0;
+}
+.rd-slot-role-icon.empty {
+  opacity: 0.3;
+}
+.rd-slot-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.rd-slot-role-name {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+.rd-slot-ign {
+  font-size: 12px;
+  font-weight: 700;
   color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 1px 0;
+}
+.rd-slot-filled .rd-slot-ign {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(255, 184, 0, 0.2);
+}
+.rd-slot-meta {
+  font-size: 10px;
+  color: var(--text3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rd-slot-status {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+  animation: pulseGhost 1.8s infinite ease-in-out;
+}
+@keyframes pulseGhost {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Ongoing Match Roster Display */
+.sim-rosters-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(5, 7, 17, 0.4);
+  border: 1px solid var(--rim);
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+.sim-rosters-side {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sim-rosters-side.user {
+  align-items: flex-start;
+  text-align: left;
+}
+.sim-rosters-side.enemy {
+  align-items: flex-end;
+  text-align: right;
+}
+.sim-rosters-p {
+  font-size: 12px;
+  color: var(--text2);
+}
+.sim-rosters-p span {
+  font-weight: 700;
+  color: #fff !important;
+}
+.country-lbl {
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  font-size: 8px;
+  color: var(--text2);
+  opacity: 0.6;
+  font-weight: 300;
+}
+.sim-p .role-lbl {
+  font-size: 12px;
+  margin-top: 1px;
+  margin-bottom: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text3) !important;
+  display: inline-block;
+  min-width: 35px;
+}
+.sim-rosters-vs {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
 }
 
 /* ── Versus Queue & Evaluation Overlay Elements ── */
@@ -1847,6 +2006,13 @@ body {
   .player-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .tpc-players {
+    flex-direction: row;
+    gap: 14px;
+  }
+  .tpc-players > div{
+    gap: 4px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1873,14 +2039,17 @@ body {
   }
   .team-pick-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   .player-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
   .team-header-card {
     flex-direction: column;
     text-align: center;
     padding: 16px;
+    gap: 12px;
   }
   .vs-arena-card {
     flex-direction: column;
@@ -1892,12 +2061,147 @@ body {
   .res-stats {
     gap: 24px;
   }
-  .jr {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+
+  /* Roster Dashboard scaling on mobile */
+  .roster-dashboard, .result-roster {
+    padding: 16px;
   }
-  .jr-stage {
+  .rd-slots {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .rd-slot {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .rd-slot-ign {
+    font-size: 13px;
+  }
+  .rd-slot-role-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Matchup grid scaling on mobile to prevent overflow */
+  .matchup-grid {
+    grid-template-columns: 1fr;
+    border-radius: var(--radius-sm);
+  }
+  .matchup-divider {
+    flex-direction: row;
+    padding: 8px;
     min-width: auto;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--rim);
+    border-bottom: 1px solid var(--rim);
+    justify-content: center;
+    gap: 8px;
+  }
+  .matchup-vs-text {
+    font-size: 14px;
+  }
+  .matchup-player {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .matchup-team-header {
+    padding: 10px 12px;
+  }
+  .matchup-team-name {
+    font-size: 12px;
+    max-width: none;
+  }
+
+  /* Match simulation scaling */
+  .sim-scoreboard {
+    font-size: 32px;
+    gap: 8px;
+  }
+  .sim-scoreboard .sword-clash-wrap {
+    transform: scale(0.75);
+    width: 45px;
+  }
+  .sim-team-name {
+    font-size: 12px;
+    max-width: 100px;
+  }
+  .sim-log-box {
+    padding: 8px 12px;
+  }
+  .sim-log-entry {
+    font-size: 11px;
+  }
+  .sim-rosters-row {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .sim-rosters-p {
+    font-size: 10px;
+  }
+  .sim-p .role-lbl {
+    font-size: 8px;
+    min-width: 28px;
+  }
+  /* Enemy roster left-aligned on mobile */
+  .sim-rosters-side.enemy {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .matchup-player-enemy {
+    flex-direction: row;
+  }
+  .matchup-player-enemy .matchup-ign {
+    text-align: left;
+  }
+  .matchup-team-header-enemy {
+    flex-direction: row;
+    text-align: left;
+  }
+  .matchup-team-header-enemy > div {
+    text-align: left;
+  }
+
+  /* Overlay Bracket path tracker scaling */
+  .overlay-bracket-bar {
+    padding: 6px 10px;
+    gap: 0;
+    border-radius: 20px;
+  }
+  .ob-node {
+    padding: 2px 4px;
+  }
+  .ob-label {
+    font-size: 7.5px;
+    letter-spacing: 0.2px;
+  }
+  .ob-icon {
+    font-size: 10px;
+  }
+  .ob-score {
+    font-size: 7.5px;
+  }
+  .ob-line {
+    min-width: 8px;
+  }
+
+  /* Modal cards */
+  .modal-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .modal-card h2 {
+    font-size: 22px !important;
+    margin: 4px 0 12px !important;
+  }
+
+  /* CTA Buttons */
+  .btn-cta {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+  .btn-sm {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }
