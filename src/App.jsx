@@ -269,7 +269,7 @@ export default function App() {
       await sleep(1000);
 
       const userPower = calcRosterPower(roster);
-      const passChance = Math.min(90, Math.max(70, userPower - 15));
+      const passChance = Math.min(90, Math.max(70, userPower - 5));
       const passed = rnd(1, 100) <= passChance;
 
       // Play single game with sequential log reveal
@@ -344,13 +344,13 @@ export default function App() {
     // Apply strict round-based scaling (harder difficulty):
     if (roundIdx === 1) {
       // Quarter Final: High Odds but not guaranteed
-      winChance = Math.max(65, winChance - 5); 
+      winChance = Math.max(65, winChance); 
     } else if (roundIdx === 2) {
       // Semi Final: Coin-flip territory
-      winChance = Math.max(45, winChance - 10);
+      winChance = Math.max(45, winChance + 2);
     } else {
       // Final: Very hard (cap to make it genuinely challenging)
-      winChance = Math.min(55, winChance - 20);
+      winChance = Math.min(55, winChance - 10);
     }
 
     // Clamp absolute bounds
