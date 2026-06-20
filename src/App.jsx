@@ -201,6 +201,29 @@ export default function App() {
 
   // ── Get a random opponent roster ──
   const getOpponent = useCallback((roundIdx = 0) => {
+    // 1. Determine target player OVR range for the round
+    let minTargetOvr = 65;
+    let maxTargetOvr = 99;
+    
+    if (roundIdx === 0) {
+      // Qualifiers (Group Stage)
+      minTargetOvr = 65;
+      maxTargetOvr = 79;
+    } else if (roundIdx === 1) {
+      // Quarter Finals
+      minTargetOvr = 77;
+      maxTargetOvr = 88;
+    } else if (roundIdx === 2) {
+      // Semi Finals
+      minTargetOvr = 86;
+      maxTargetOvr = 94;
+    } else {
+      // Finals
+      minTargetOvr = 93;
+      maxTargetOvr = 99;
+    }
+
+    // 2. Gather all players in the database
     const playersByRole = { Roamer: [], Jungler: [], EXP: [], Mid: [], Gold: [] };
     const allPlayers = [];
     
@@ -218,15 +241,22 @@ export default function App() {
       }
     });
 
+    // Populate players by role, filtering by target OVR range
     allPlayers.forEach(p => {
       if (!userIGNs.has(p.ign) && playersByRole[p.role]) {
-        playersByRole[p.role].push(p);
+        if (p.ovr >= minTargetOvr && p.ovr <= maxTargetOvr) {
+          playersByRole[p.role].push(p);
+        }
       }
     });
 
+    // Assemble the enemy roster with fallback in case targeted pool is empty
     const enemyRoster = {};
     Object.keys(playersByRole).forEach(role => {
       let pool = playersByRole[role];
+      if (pool.length === 0) {
+        pool = allPlayers.filter(p => p.role === role && !userIGNs.has(p.ign));
+      }
       let unusedPool = pool.filter(p => !usedEnemyIGNs.has(p.ign));
       if (unusedPool.length === 0) unusedPool = pool;
 
@@ -235,15 +265,17 @@ export default function App() {
       }
     });
 
-    // Pick a random team from teamData to borrow name and logo
-    const teamKeys = Object.keys(teamData);
-    let randomTeamKey = teamKeys[rnd(0, teamKeys.length - 1)];
-    // Try to avoid using the same team as chosenTeam if possible
-    if (chosenTeam && randomTeamKey === chosenTeam && teamKeys.length > 1) {
-      randomTeamKey = teamKeys.find(k => k !== chosenTeam) || randomTeamKey;
+    // Pick a random team matching target OVR range to borrow name and logo
+    let eligibleTeams = Object.keys(teamData).filter(key => {
+      const team = teamData[key];
+      return team.teamOVR >= minTargetOvr && team.teamOVR <= maxTargetOvr && key !== chosenTeam;
+    });
+    if (eligibleTeams.length === 0) {
+      eligibleTeams = Object.keys(teamData).filter(key => key !== chosenTeam);
     }
-    const oppTeam = teamData[randomTeamKey] || { logo: "⚔️", country: "", year: "" };
-    const cleanName = randomTeamKey.replace(/\s\d{4}$/, '').trim();
+    const chosenOpponentKey = eligibleTeams[rnd(0, eligibleTeams.length - 1)];
+    const oppTeam = teamData[chosenOpponentKey] || { logo: "⚔️", country: "", year: "" };
+    const cleanName = chosenOpponentKey.replace(/\s\d{4}$/, '').trim();
 
     return {
       name: cleanName,
@@ -269,8 +301,12 @@ export default function App() {
       await sleep(1000);
 
       const userPower = calcRosterPower(roster);
-      const passChance = Math.min(90, Math.max(70, userPower - 5));
-      const passed = rnd(1, 100) <= passChance;
+      const oppPower = opp?.teamOVR || 75;
+      // Base win chance based on OVR difference (each 1 OVR diff = 2% chance swing, centered around 60% for qualifiers)
+      let winChance = 60 + (userPower - oppPower) * 2;
+      // Clamp to realistic bounds with odds: [30%, 95%]
+      winChance = Math.min(95, Math.max(30, winChance));
+      const passed = rnd(1, 100) <= winChance;
 
       // Play single game with sequential log reveal
       const gameLogs = getGameLogs(passed);
@@ -287,7 +323,7 @@ export default function App() {
         ...prev,
         {
           stage: stageName,
-          opp: 'Opponent',
+          opp: opp?.name || 'Opponent',
           score: passed ? '✓ Qualified' : '✗ Failed',
           result: passed ? 'W' : 'L',
           oppRoster: opp?.oppRoster
@@ -320,7 +356,7 @@ export default function App() {
       ...prev,
       {
         stage: stageName,
-        opp: 'Opponent',
+        opp: opp?.name || 'Opponent',
         score: `${state.uw}–${state.ew}`,
         result: won ? 'W' : 'L',
         oppRoster: opp.oppRoster
@@ -334,27 +370,24 @@ export default function App() {
   const playOneGame = async (currentState, opp, roundIdx) => {
     const gn = currentState.results.length + 1;
 
-    // OVR and synergy based calculation with mathematically forced progressive difficulty
+    // OVR and synergy based calculation
     const userPower = calcRosterPower(roster);
     const oppPower = opp.teamOVR;
     
-    // Base win chance derived from OVR difference (each 1 OVR diff = 2.5% chance swing)
-    let winChance = 50 + (userPower - oppPower) * 2.5;
+    // Base win chance derived from OVR difference (each 1 OVR diff = 2% chance swing)
+    let winChance = 50 + (userPower - oppPower) * 2;
 
-    // Apply strict round-based scaling (harder difficulty):
-    if (roundIdx === 1) {
-      // Quarter Final: High Odds but not guaranteed
-      winChance = Math.max(65, winChance); 
-    } else if (roundIdx === 2) {
-      // Semi Final: Coin-flip territory
-      winChance = Math.max(45, winChance + 2);
-    } else {
-      // Final: Very hard (cap to make it genuinely challenging)
-      winChance = Math.min(55, winChance - 10);
+    // Apply progressive round-based pressure penalty:
+    if (roundIdx === 2) {
+      // Semi Final penalty
+      winChance -= 3;
+    } else if (roundIdx === 3) {
+      // Final penalty
+      winChance -= 7;
     }
 
-    // Clamp absolute bounds
-    winChance = Math.min(85, Math.max(10, winChance));
+    // Clamp absolute bounds with a hint of odds (minimum 10%, maximum 90%)
+    winChance = Math.min(90, Math.max(10, winChance));
     
     const won = rnd(1, 100) <= winChance;
 

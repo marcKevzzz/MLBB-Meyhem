@@ -1107,21 +1107,29 @@ body::after {
   text-align: right;
 }
 .sim-rosters-p {
-  font-size: 12px;
-  color: var(--text2);
-}
-.sim-rosters-p span {
-  font-weight: 700;
-  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .country-lbl {
-  margin-left: 6px;
-  margin-right: 6px;
-  margin-bottom: 4px;
-  font-size: 8px;
-  color: var(--text2);
-  opacity: 0.6;
-  font-weight: 300;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.sim-rosters-side.user .country-lbl {
+  color: var(--cyan) !important;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+.sim-rosters-side.enemy .country-lbl {
+  color: var(--violet-glow) !important;
+  background: var(--violet-dim);
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 .sim-p .role-lbl {
   font-size: 12px;
@@ -2008,7 +2016,8 @@ body::after {
   }
   .tpc-players {
     flex-direction: row;
-    gap: 14px;
+    flex-wrap: wrap;
+    gap: 8px 14px;
   }
   .tpc-players > div{
     gap: 4px;
@@ -2123,8 +2132,8 @@ body::after {
     width: 45px;
   }
   .sim-team-name {
-    font-size: 12px;
-    max-width: 100px;
+    font-size: 11px;
+    max-width: 120px;
   }
   .sim-log-box {
     padding: 8px 12px;
@@ -2137,7 +2146,12 @@ body::after {
     gap: 6px;
   }
   .sim-rosters-p {
-    font-size: 10px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  .sim-rosters-p .country-lbl {
+    font-size: 9px;
+    padding: 1px 4px;
   }
   .sim-p .role-lbl {
     font-size: 8px;
@@ -2149,10 +2163,10 @@ body::after {
     text-align: right;
   }
   .matchup-player-enemy {
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
   .matchup-player-enemy .matchup-ign {
-    text-align: left;
+    text-align: right;
   }
   .matchup-team-header-enemy {
     flex-direction: row;
