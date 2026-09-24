@@ -1,5 +1,6 @@
 import React from 'react';
 import { ROLES, ROLE_SVG } from '../data/gameData';
+import SynergyTracker from './SynergyTracker';
 
 function RoleIcon({ role }) {
   return (
@@ -28,7 +29,8 @@ export default function TeamPicker({
   onSelectTeam,
   rosterCount,
   refreshCount,
-  onRefreshTeams
+  onRefreshTeams,
+  gameMode
 }) {
   const filledRoles = Object.keys(roster);
 
@@ -50,6 +52,9 @@ export default function TeamPicker({
           <div className="dp-text">{rosterCount} / 5 players drafted</div>
         </div>
       </div>
+
+      {/* Live Synergy & Chemistry Tracker */}
+      <SynergyTracker roster={roster} />
 
       <div className="team-pick-grid">
         {offeredTeams.map((key) => {
@@ -93,16 +98,18 @@ export default function TeamPicker({
         })}
       </div>
 
-      <div className="action-row" style={{ marginTop: '24px', marginInline: 'Auto' }}>
-        <button 
-          className={`btn-sm ${refreshCount > 0 ? 'btn-outline' : ''}`} 
-          onClick={onRefreshTeams}
-          disabled={refreshCount <= 0}
-          style={{ opacity: refreshCount > 0 ? 1 : 0.5, cursor: refreshCount > 0 ? 'pointer' : 'not-allowed' }}
-        >
-          🔄 Refresh Teams ({refreshCount})
-        </button>
-      </div>
+      {gameMode !== 'gauntlet' && (
+        <div className="action-row" style={{ marginTop: '24px', marginInline: 'auto' }}>
+          <button 
+            className={`btn-sm ${refreshCount > 0 ? 'btn-outline' : ''}`} 
+            onClick={onRefreshTeams}
+            disabled={refreshCount <= 0}
+            style={{ opacity: refreshCount > 0 ? 1 : 0.5, cursor: refreshCount > 0 ? 'pointer' : 'not-allowed' }}
+          >
+            🔄 Refresh Teams ({refreshCount})
+          </button>
+        </div>
+      )}
 
       <div className="roster-dashboard fadein" style={{ marginTop: '32px' }}>
         <div className="rd-title disp">Your Draft Roster</div>

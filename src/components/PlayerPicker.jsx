@@ -1,5 +1,6 @@
 import React from 'react';
 import { ROLES, ROLE_SVG } from '../data/gameData';
+import SynergyTracker from './SynergyTracker';
 
 function RoleIcon({ role }) {
   return (
@@ -36,9 +37,12 @@ export default function PlayerPicker({
         <div className="ph-eyebrow">Step 2 of 2</div>
         <div className="ph-title disp">Pick a Player</div>
         <div className="ph-sub">
-          Choose one player from {chosenTeam} to join your roster.
+          Select one player from <strong>{chosenTeam}</strong> for your roster.
         </div>
       </div>
+
+      {/* Real-time Chemistry & Synergies HUD */}
+      <SynergyTracker roster={roster} />
 
       <div className="team-header-card">
         <div className="thc-logo">
@@ -68,7 +72,9 @@ export default function PlayerPicker({
                   <span>Role Filled</span>
                 </div>
                 <div className="pc-ign">{p.ign}</div>
-                <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
+                <span className={`pc-role-badge rb-${p.role}`}>
+                  <RoleIcon role={p.role} /> {p.role}
+                </span>
               </div>
             );
           }
@@ -78,7 +84,9 @@ export default function PlayerPicker({
               <div key={p.ign} className="player-card pc-selected">
                 <div className="pc-selected-badge">✓ DRAFTED</div>
                 <div className="pc-ign">{p.ign}</div>
-                <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
+                <span className={`pc-role-badge rb-${p.role}`}>
+                  <RoleIcon role={p.role} /> {p.role}
+                </span>
               </div>
             );
           }
@@ -89,8 +97,12 @@ export default function PlayerPicker({
               className="player-card pc-available"
               onClick={() => onDraftPlayer(chosenTeam, p)}
             >
-              <div className="pc-ign">{p.ign}</div>
-              <span className={`pc-role-badge rb-${p.role}`}><RoleIcon role={p.role} /> {p.role}</span>
+              <div className="pc-card-header">
+                <div className="pc-ign">{p.ign}</div>
+                <span className={`pc-role-badge rb-${p.role}`}>
+                  <RoleIcon role={p.role} /> {p.role}
+                </span>
+              </div>
               <div className="pc-draft-hint">Tap to draft →</div>
             </div>
           );
