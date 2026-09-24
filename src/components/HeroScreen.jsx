@@ -21,7 +21,7 @@ export const GAME_MODES = [
     id: 'gauntlet',
     title: 'M-Series Gauntlet',
     badge: 'BOSS RUSH',
-    desc: 'Battle historic World Champions: M1 → M5. Current era squads hold modern meta advantage over previous champions!',
+    desc: 'Battle all 7 World Champions: M1 EVOS up to M7 Aurora Gaming PH! Draft high-chemistry squads to conquer the gauntlet.',
     icon: '🔥',
     cta: 'PLAY GAUNTLET'
   }

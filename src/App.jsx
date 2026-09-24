@@ -5,10 +5,11 @@ import PlayerPicker from './components/PlayerPicker';
 import TournamentPhase from './components/TournamentPhase';
 import ResultScreen from './components/ResultScreen';
 import CoachPerkModal from './components/CoachPerkModal';
-import { ROLES, STAGES } from './data/gameData';
+import { ROLES, STAGES, M_SERIES_STAGES, M_SERIES_CHAMPIONS, getStagesForMode } from './data/gameData';
 import { pickGameHero, calcHeroCounters } from './data/signatureHeroes';
 import { computeRosterSynergies } from './data/synergies';
 import { getPerkChoices, getOpponentCoachPerks } from './data/coachPerks';
+import { preloadHeroPortraits } from './data/heroPortraits';
 
 // ── Helpers ──
 function rnd(a, b) {
@@ -53,11 +54,21 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
     laneDifferential = Math.max(-4.0, laneDifferential); // Prevent overwhelming stat diff against historic squads
   }
 
-  // Separate Team System / Macro Synergy & Franchise Chemistry (Gentle Secondary Influence)
-  const { totalSynergyOvr, activeFranchise, isDisconnected } = computeRosterSynergies(userRoster);
-  let teamSystemBonus = Math.min(4.5, Math.max(-1.5, totalSynergyOvr * 0.28));
+  // Calculate user and opponent average OVR for qualification calibration
+  const userAvgOvr = ROLES.reduce((s, r) => s + (userRoster[r]?.ovr || 75), 0) / ROLES.length;
+  const oppAvgOvr = ROLES.reduce((s, r) => s + (oppRoster?.[r]?.ovr || 72), 0) / ROLES.length;
+  const ovrAdvantage = userAvgOvr - oppAvgOvr;
+
+  // Separate Team System / Macro Synergy & Franchise Chemistry (Significant Reward for Right Players & Synergy)
+  const { totalSynergyOvr, activeFranchise, activeSynergies, activeDuos, isDisconnected } = computeRosterSynergies(userRoster);
+  let teamSystemBonus = Math.min(8.0, Math.max(-1.5, totalSynergyOvr * 0.45));
   if (activeFranchise && activeFranchise.count >= 5) {
-    teamSystemBonus += 1.0; // Mild bonus for full 5-man franchise
+    teamSystemBonus += 2.5; // Substantial boost for full 5-man franchise
+  } else if (activeFranchise && activeFranchise.count >= 3) {
+    teamSystemBonus += 1.2; // Bonus for 3-man core
+  }
+  if (activeDuos && activeDuos.length > 0) {
+    teamSystemBonus += activeDuos.length * 0.8; // Bonus for legendary duos (e.g. V33Wise, Karl+Flap)
   }
   if (isDisconnected) {
     teamSystemBonus -= 1.5; // Mild solo-queue communication variance
@@ -69,107 +80,174 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
   const draftEval = calcHeroCounters(userHeroes, oppHeroes);
   const heroCounterBonus = Math.max(-2.5, Math.min(2.5, draftEval.netBonus)); // -2.5% to +2.5% max
 
-  // Stage Scaling (Smooth Qualifiers vs Fierce Playoff Finals)
+  // Stage Scaling (Smooth Qualifiers vs Fierce Playoff Finals / 7-Round M-Series Gauntlet)
   let stagePressure = 0;
- if (roundIdx === 0) {
-    stagePressure = -10;     // Qualifiers: +10% qualification advantage so runs reliably reach the bracket
-  } else if (roundIdx === 1) {
-    stagePressure = 0;       // Quarters: accessible competitive entry
-  } else if (roundIdx === 2) {
-    stagePressure = 4;       // Semis: high-stakes playoff tension
-  } else if (roundIdx >= 3) {
-    stagePressure = 8;       // Grand Finals: world championship final boss pressure
+  if (gameMode === 'gauntlet') {
+    // M-Series Boss Rush: 7 Rounds (M1 EVOS → M7 Aurora Gaming PH)
+    // Starts accessible against vintage M1, progressively challenging, but fully winnable with right players and synergy!
+    if (roundIdx === 0) {
+      stagePressure = -14;     // M1 (EVOS): Accessible entry (~75-80% win rate for solid squads)
+    } else if (roundIdx === 1) {
+      stagePressure = -8;      // M2 (Bren): Moderate tactical test (~68-72%)
+    } else if (roundIdx === 2) {
+      stagePressure = -2;      // M3 (Blacklist): Even battle against UBE strategy (~60-64%)
+    } else if (roundIdx === 3) {
+      stagePressure = 2;       // M4 (ECHO): Mechanical challenge (~54-58%)
+    } else if (roundIdx === 4) {
+      stagePressure = 5;       // M5 (AP Bren): Two-time world champions (~48-52%)
+    } else if (roundIdx === 5) {
+      stagePressure = 7;       // M6 (Fnatic ONIC PH): Undefeated M6 powerhouse (~44-48%)
+    } else if (roundIdx >= 6) {
+      stagePressure = 9;       // M7 (Aurora Gaming PH): Pinnacle final boss! (~40-44% baseline)
+                               // With right players & synergy (+6-10%) and perks (+10-15%),
+                               // user's win chance comfortably reaches 55-65%!
+    }
+  } else {
+    // Standard / Underdog Tournament
+    if (roundIdx === 0) {
+      // Qualifier Balance: Strong advantage if user drafted good players
+      stagePressure = -16;
+      if (ovrAdvantage > 0) {
+        stagePressure -= Math.min(16, ovrAdvantage * 2.8); // Rewards good roster with 80-90%+ qualification odds
+      }
+    } else if (roundIdx === 1) {
+      stagePressure = 0;       // Quarters: accessible competitive entry
+    } else if (roundIdx === 2) {
+      stagePressure = 4;       // Semis: high-stakes playoff tension
+    } else if (roundIdx >= 3) {
+      stagePressure = 8;       // Grand Finals: world championship final boss pressure
+    }
   }
 
-  // Grand Finals Boss Tenacity: Opponent plays with championship composure when deep in a series
+  // Boss Tenacity: Opponent composure in deep series
   let bossTenacity = 0;
-  if (gameMode !== 'gauntlet' && roundIdx >= 3 && gameIdx >= 2) {
+  if (gameMode === 'gauntlet') {
+    if (roundIdx >= 6 && gameIdx >= 2) {
+      bossTenacity = 2.0; // Aurora composure in late games
+    }
+  } else if (roundIdx >= 3 && gameIdx >= 2) {
     bossTenacity = 3.0;
   }
 
-  // Tactical Coach Perks Catalog (Legendary, Epic, Rare, Common)
+  // Tactical Coach Perks Catalog: Evaluated based on specific numbers, targeted roles, and tactical triggers
   let perkBonus = 0;
   activePerks.forEach(p => {
     // ── Legendary (🌟 Gold Prismatic) ──
-    if (p.id === 'm_world_dynasty') perkBonus += (roundIdx === 2 ? 5 : roundIdx >= 3 ? 7 : 2);
-    if (p.id === 'silver_bullet_draft') perkBonus += 5.5;
-    if (p.id === 'divine_retribution') perkBonus += (gameIdx >= 3 ? 6 : 3);
-    if (p.id === 'apex_hypercarry') {
-      const topOvr = Math.max(userRoster.Jungler?.ovr || 0, userRoster.Gold?.ovr || 0);
-      perkBonus += topOvr >= 85 ? 5 : 2.5;
+    if (p.id === 'm_world_dynasty') {
+      perkBonus += (gameMode === 'gauntlet' ? 6.5 : (roundIdx >= 2 ? 6.0 : 3.0));
+    } else if (p.id === 'divine_retribution') {
+      perkBonus += (gameIdx >= 2 ? 7.5 : 4.5);
+    } else if (p.id === 'apex_hypercarry') {
+      const goldOvr = userRoster.Gold?.ovr || 75;
+      perkBonus += (goldOvr >= 82 ? 6.0 : 3.0);
+    } else if (p.id === 'iron_bastion_roam') {
+      const roamOvr = userRoster.Roamer?.ovr || 75;
+      perkBonus += (roamOvr >= 76 ? 5.5 : 3.5);
+    } else if (p.id === 'tactical_time_rewind') {
+      perkBonus += 1.5;
     }
 
     // ── Epic (💜 Violet) ──
-    if (p.id === 'immortal_armor') perkBonus += 1;
-    if (p.id === 'lord_dominance') perkBonus += 4;
-    if (p.id === 'blade_of_despair' && gameIdx >= 4) perkBonus += 5;
-    if (p.id === 'lvl1_buff_invade') perkBonus += 4;
-    if (p.id === 'split_push_telepathy') perkBonus += 4;
-    if (p.id === 'flawless_micro') perkBonus += 4;
+    else if (p.id === 'assassin_shadow_ambush' || p.id === 'lvl1_buff_invade') {
+      perkBonus += 4.5;
+    } else if (p.id === 'glass_cannon_protocol') {
+      perkBonus += 4.0;
+    } else if (p.id === 'base_defense_lockdown' || p.id === 'high_ground_fortress') {
+      const isTrailing = currentState && currentState.ew > currentState.uw;
+      perkBonus += (isTrailing ? 5.0 : 1.5);
+    } else if (p.id === 'mid_ap_overload') {
+      perkBonus += 4.2;
+    } else if (p.id === 'exp_sidelane_split' || p.id === 'split_push_telepathy') {
+      perkBonus += 4.2;
+    } else if (p.id === 'blade_of_despair_clutch' || p.id === 'blade_of_despair') {
+      perkBonus += (gameIdx >= 2 ? 4.8 : 1.8);
+    } else if (p.id === 'immortal_armor_safeguard' || p.id === 'immortal_armor') {
+      perkBonus += 1.0;
+    } else if (p.id === 'flawless_micro') {
+      perkBonus += 4.0;
+    }
 
     // ── Rare (🩵 Cyan) ──
-    if (p.id === 'scouting_mastery') perkBonus += 3;
-    if (p.id === 'turtle_tempo') perkBonus += 3;
-    if (p.id === 'vocal_captain') perkBonus += 3;
-    if (p.id === 'home_crowd' && gameIdx <= 1) perkBonus += 4;
-    if (p.id === 'gold_lane_funnel') perkBonus += 3;
-    if (p.id === 'draft_flexibility') perkBonus += 3.5;
-    if (p.id === 'flash_initiation') perkBonus += 3.5;
-    if (p.id === 'exp_lane_bully') perkBonus += 3;
-    if (p.id === 'crab_neutral_control') perkBonus += 3;
-    if (p.id === 'mid_lane_prio') perkBonus += 3;
-    if (p.id === 'tier2_tower_defense') perkBonus += 3.5;
+    else if (p.id === 'turtle_tempo_stacking' || p.id === 'turtle_tempo') {
+      perkBonus += 3.2;
+    } else if (p.id === 'pocket_counterpick' || p.id === 'draft_flexibility') {
+      perkBonus += 3.5;
+    } else if (p.id === 'shotcaller_vocal_aura' || p.id === 'vocal_captain') {
+      perkBonus += 3.2;
+    } else if (p.id === 'marksman_funnel_priority' || p.id === 'gold_lane_funnel') {
+      perkBonus += 3.4;
+    } else if (p.id === 'bush_ambush_vision' || p.id === 'flash_initiation') {
+      perkBonus += 3.5;
+    } else if (p.id === 'offlane_brawler_dominance' || p.id === 'exp_lane_bully') {
+      perkBonus += 3.1;
+    } else if (p.id === 'mid_lane_fast_clear' || p.id === 'mid_lane_prio') {
+      perkBonus += 3.0;
+    } else if (p.id === 'gold_crab_neutral_control' || p.id === 'crab_neutral_control') {
+      perkBonus += 2.8;
+    } else if (p.id === 'inner_turret_fortress' || p.id === 'tier2_tower_defense') {
+      perkBonus += 3.0;
+    } else if (p.id === 'home_crowd_roar' || p.id === 'home_crowd') {
+      perkBonus += (gameIdx <= 1 ? 3.3 : 1.5);
+    } else if (p.id === 'scouting_mastery') {
+      perkBonus += 3.0;
+    }
 
     // ── Common (🤍 Silver) ──
-    if (p.id === 'bootcamp_drill') perkBonus += 2;
-    if (p.id === 'bush_ambush') perkBonus += 2.5;
-    if (p.id === 'energy_drink' && gameIdx >= 3) perkBonus += 3.5;
-    if (p.id === 'comfort_picks') perkBonus += 2;
-    if (p.id === 'minion_wave_mgmt') perkBonus += 2;
-    if (p.id === 'mental_fortitude') perkBonus += 2.5;
-    if (p.id === 'potion_refill') perkBonus += 2;
-    if (p.id === 'scrim_vod_review') perkBonus += 2;
-    if (p.id === 'hand_warmers') perkBonus += 2;
-    if (p.id === 'wave_clear_rotation') perkBonus += 2;
-    if (p.id === 'smiteless_leash') perkBonus += 2;
-    if (p.id === 'target_pinging') perkBonus += 2;
-    if (p.id === 'comfort_itemization') perkBonus += 2;
-    if (p.id === 'buff_timer_tracking') perkBonus += 2;
-    if (p.id === 'coach_timeout_reset') perkBonus += 2;
+    else if (p.id === 'comfort_signature_mastery' || p.id === 'comfort_picks') {
+      perkBonus += 2.3;
+    } else if (p.id === 'late_night_scrims' || p.id === 'bootcamp_drill') {
+      perkBonus += 2.1;
+    } else if (p.id === 'stamina_energy_hydration' || p.id === 'energy_drink') {
+      perkBonus += (gameIdx >= 2 ? 3.0 : 1.8);
+    } else if (p.id === 'sports_psychologist' || p.id === 'mental_fortitude') {
+      perkBonus += 2.4;
+    } else if (p.id === 'freeze_lane_discipline' || p.id === 'minion_wave_mgmt') {
+      perkBonus += 2.0;
+    } else if (p.id === 'rapid_whiteboard_debrief' || p.id === 'potion_refill' || p.id === 'scrim_vod_review') {
+      perkBonus += 2.0;
+    } else if (p.id === 'hand_warmers_grip' || p.id === 'hand_warmers') {
+      perkBonus += 1.9;
+    } else if (p.id === 'crisp_jungle_leash' || p.id === 'smiteless_leash') {
+      perkBonus += 2.1;
+    } else if (p.id === 'target_focus_pings' || p.id === 'target_pinging') {
+      perkBonus += 2.2;
+    } else if (p.id === 'situational_item_prep' || p.id === 'comfort_itemization') {
+      perkBonus += 2.0;
+    } else if (p.id === 'buff_respawn_clock' || p.id === 'buff_timer_tracking') {
+      perkBonus += 2.0;
+    } else if (p.id === 'tactical_pep_talk' || p.id === 'coach_timeout_reset') {
+      perkBonus += 2.0;
+    } else {
+      perkBonus += (p.effect?.bonus || p.effect?.amount || 2.0);
+    }
   });
 
   // ── Enemy Coach Perks Evaluation (Balanced & Non-Excessive) ──
   let enemyPerkBonus = 0;
   if (oppCoachPerks && oppCoachPerks.length > 0) {
     oppCoachPerks.forEach(p => {
-      const amt = p.effect?.amount || 3;
-      enemyPerkBonus += Math.min(4.0, amt); // Strictly capped to moderate values (+2.5% to +4.0%)
+      const amt = p.effect?.bonus || p.effect?.amount || 2.8;
+      enemyPerkBonus += Math.min(3.8, amt);
     });
   }
 
   // ── Adaptive Comeback Resistance (Tactical Timeout) ──
-  // If the user is ahead by 2 or on match point (e.g. 2-0 or 2-1) in Semis or Grand Finals,
-  // the opposing coach calls a Tactical Timeout to mount a fightback, preventing easy sweeps.
   let comebackResistance = 0;
   if (roundIdx >= 2 && currentState && currentState.uw >= 2 && currentState.uw > currentState.ew) {
-    comebackResistance = roundIdx >= 3 ? 4.5 : 3.5; // +4.5% in Finals, +3.5% in Semis (fair, moderate)
+    comebackResistance = roundIdx >= 3 ? 4.0 : 3.0;
   }
 
   // ── M-Series Gauntlet Mode: Challenger Drive & Modern Era Advantage ──
-  // Current modern eras possess evolved macro, refined wave state control, and emblem specialization,
-  // giving the current era a decisive advantage over previous/vintage eras.
   let gauntletEraBonus = 0;
   if (gameMode === 'gauntlet') {
-    const challengerDrive = 6; // +6% baseline challenger drive against world champions
+    const challengerDrive = 5; // +5% baseline challenger drive against world champions
     const userYears = ROLES.map(r => userRoster[r]?.year || 2024);
     const oppYears = ROLES.map(r => oppRoster?.[r]?.year || 2021);
     const userAvgYear = userYears.reduce((a, b) => a + b, 0) / userYears.length;
     const oppAvgYear = oppYears.reduce((a, b) => a + b, 0) / oppYears.length;
 
-    // +1.5% per year difference of modern meta evolution (capped between -6% and +12%)
-    // e.g. 2024 current roster vs 2019 M1 previous champions = +10% modern evolution advantage
     const yearDiff = userAvgYear - oppAvgYear;
-    const eraBonus = Math.max(-6, Math.min(12, Math.round(yearDiff * 1.5)));
+    const eraBonus = Math.max(-5, Math.min(10, Math.round(yearDiff * 1.4)));
     gauntletEraBonus = challengerDrive + eraBonus;
   }
 
@@ -549,28 +627,26 @@ export default function App() {
 
   const getOpponent = useCallback((roundIdx = 0, mode = gameMode, activeRoster = roster) => {
     if (mode === 'gauntlet') {
-      const gauntletBossKeys = [
-        'EVOS Legends 2019',            // M1 World Champions (Classic Era)
-        'Bren Esports 2021',            // M2 World Champions
-        'Blacklist International 2021', // M3 World Champions
-        'ECHO 2023',                    // M4 World Champions
-        'AP Bren 2023'                  // M5 World Champions (Current Era)
-      ];
-      const targetKey = gauntletBossKeys[roundIdx] || gauntletBossKeys[0];
+      const champDef = M_SERIES_CHAMPIONS[roundIdx] || M_SERIES_CHAMPIONS[0];
+      const targetKey = champDef.teamKey;
       const bossTeam = teamData[targetKey] || Object.values(teamData)[0];
 
-      // Anchor Gauntlet Boss OVR relative to User's squad so bosses are challenging (+0 to +3 OVR)
-      // rather than mathematically impossible brick walls (+15 OVR)
+      // Anchor Gauntlet Boss OVR relative to User's squad:
+      // M1 (EVOS): userAvg - 4 (accessible entry, ~74-78% win odds)
+      // M2 (Bren): userAvg - 1 (moderate challenge, ~64-68% win odds)
+      // M3 (Blacklist): userAvg + 1 (even clash, ~56-60% win odds)
+      // M4 (ECHO): userAvg + 2 (tough mechanical clash, ~48-52% win odds)
+      // M5 (AP Bren): userAvg + 3 (final boss, capped at 94, slight possible to win at ~43-47% baseline!)
       const effectiveRoster = activeRoster && Object.keys(activeRoster).length ? activeRoster : roster;
       const userPlayers = Object.values(effectiveRoster || {});
       const userAvgOvr = userPlayers.length
         ? Math.round(userPlayers.reduce((sum, p) => sum + (p.ovr || 75), 0) / userPlayers.length)
         : 82;
 
-      // Boss progression: M1 = userAvgOvr - 2, M2 = userAvgOvr, M3 = userAvgOvr + 1, M4 = userAvgOvr + 2, M5 = userAvgOvr + 3
-      const targetBossAvg = Math.min(94, Math.max(74, userAvgOvr + (roundIdx - 1)));
+      const diff = champDef.targetDiff !== undefined ? champDef.targetDiff : (roundIdx - 2);
+      const targetBossAvg = Math.min(94, Math.max(72, userAvgOvr + diff));
       const rawBossAvg = Math.round(bossTeam.players.reduce((sum, p) => sum + (p.ovr || 90), 0) / bossTeam.players.length) || 95;
-      const ovrShift = Math.max(-12, Math.min(2, targetBossAvg - rawBossAvg));
+      const ovrShift = Math.max(-14, Math.min(3, targetBossAvg - rawBossAvg));
 
       const enemyRoster = {};
       bossTeam.players.forEach(p => {
@@ -586,14 +662,15 @@ export default function App() {
       });
 
       return {
-        name: targetKey.replace(/\s\d{4}$/, '').trim(),
+        name: champDef.name,
+        stageTitle: champDef.title,
         logo: bossTeam.logo || "⚔️",
         country: bossTeam.country || "",
         year: bossTeam.year || "",
         teamOVR: targetBossAvg,
         players: Object.values(enemyRoster),
         oppRoster: enemyRoster,
-        coachPerks: getOpponentCoachPerks(roundIdx)
+        coachPerks: getOpponentCoachPerks(roundIdx, 'gauntlet')
       };
     }
 
@@ -605,8 +682,8 @@ export default function App() {
       ? Math.round(userPlayers.reduce((sum, p) => sum + (p.ovr || 75), 0) / userPlayers.length)
       : 80;
 
-    let minTargetOvr = Math.max(62, userAvgOvr - 7);
-    let maxTargetOvr = Math.max(66, userAvgOvr - 3);
+    let minTargetOvr = 62;
+    let maxTargetOvr = Math.min(74, Math.max(64, userAvgOvr - 6)); // Balanced Qualifier cap
     if (roundIdx === 1) {
       // Quarter Final: Clean competitive matchup within tier (+/- 2 OVR)
       minTargetOvr = Math.max(70, userAvgOvr - 2);
@@ -655,6 +732,13 @@ export default function App() {
       let unusedPool = pool.filter(p => !usedEnemyIGNs.has(p.ign));
       if (unusedPool.length === 0) unusedPool = pool;
 
+      // Qualifier cap: Ensure enemy in Qualifier never has superstar OVR
+      if (roundIdx === 0) {
+        const cappedPool = unusedPool.filter(p => p.ovr <= maxTargetOvr + 2);
+        if (cappedPool.length > 0) unusedPool = cappedPool;
+        else unusedPool = allPlayers.filter(p => p.role === role && p.ovr <= 76 && !userIGNs.has(p.ign));
+      }
+
       if (unusedPool.length > 0) {
         const rawPlayer = unusedPool[rnd(0, unusedPool.length - 1)];
         enemyRoster[role] = {
@@ -684,7 +768,7 @@ export default function App() {
       teamOVR: oppTeam.teamOVR || 85,
       players: Object.values(enemyRoster),
       oppRoster: enemyRoster,
-      coachPerks: getOpponentCoachPerks(roundIdx)
+      coachPerks: getOpponentCoachPerks(roundIdx, mode)
     };
   }, [teamData, roster, journey, chosenTeam, gameMode]);
 
@@ -748,7 +832,15 @@ export default function App() {
 
     if (Object.keys(newRoster).length >= 5) {
       setTimeout(() => {
-        setCurrentOpponent(getOpponent(0, gameMode, newRoster));
+        const firstOpp = getOpponent(0, gameMode, newRoster);
+        setCurrentOpponent(firstOpp);
+        // Preload all 10 heroes in advance
+        const heroesToPreload = [
+          ...ROLES.map(r => newRoster[r]?.signatureHero),
+          ...(firstOpp?.players || []).map(p => p.signatureHero)
+        ].filter(Boolean);
+        preloadHeroPortraits(heroesToPreload);
+
         setScreen('tournament');
         showToast('Roster locked! Tournament begins! ⚔️', 'n-good');
       }, 500);
@@ -761,9 +853,20 @@ export default function App() {
   // ── Single Game Play with Progressive KDA reveal & Smooth Transition ──
   const playOneGame = async (currentState, opp, roundIdx) => {
     const gameIdx = currentState.results.length;
+    const isGauntlet = gameMode === 'gauntlet';
+    const isQualifier = !isGauntlet && roundIdx === 0;
+
+    // Preload heroes for this specific game
+    const userHeroes = ROLES.map(r => pickGameHero(roster[r]?.ign, r, gameIdx, roster[r]?.year));
+    const oppHeroes = ROLES.map(r => pickGameHero(opp.oppRoster?.[r]?.ign, r, gameIdx, opp.oppRoster?.[r]?.year));
+    preloadHeroPortraits([...userHeroes, ...oppHeroes]);
 
     // Show smooth game transition banner
-    const bannerText = roundIdx === 0 ? '⚔️ QUALIFIER MATCH STARTING...' : `⚔️ GAME ${gameIdx + 1} STARTING...`;
+    const bannerText = isGauntlet 
+      ? `⚔️ ${opp.name.toUpperCase()} — GAME ${gameIdx + 1} STARTING...`
+      : isQualifier 
+      ? `⚔️ QUALIFIER — GAME ${gameIdx + 1} (BO3) STARTING...` 
+      : `⚔️ GAME ${gameIdx + 1} STARTING...`;
     setGameTransitionBanner(bannerText);
     await sleep(750);
     setGameTransitionBanner(null);
@@ -799,20 +902,20 @@ export default function App() {
       currentState
     );
 
-    if (activePerks.some(p => p.id === 'high_ground_fortress') && currentState.ew > currentState.uw) {
+    if (activePerks.some(p => p.id === 'base_defense_lockdown' || p.id === 'high_ground_fortress') && currentState.ew > currentState.uw) {
       winChance = Math.min(80, winChance + 5);
     }
-    if (activePerks.some(p => p.id === 'divine_retribution') && (currentState.ew > currentState.uw || gameIdx >= 3)) {
+    if (activePerks.some(p => p.id === 'divine_retribution') && (currentState.ew > currentState.uw || gameIdx >= 2)) {
       winChance = Math.min(85, winChance + 6);
     }
 
     let won = rnd(1, 100) <= winChance;
 
-    if (!won && !immortalUsed && activePerks.some(p => p.id === 'immortal_armor')) {
+    if (!won && !immortalUsed && activePerks.some(p => p.id === 'immortal_armor_safeguard' || p.id === 'immortal_armor')) {
       won = true;
       setImmortalUsed(true);
       showToast('🛡️ Immortal Armor triggered! Loss negated!', 'n-good');
-    } else if (!won && !timeRewindUsed && roundIdx >= 2 && activePerks.some(p => p.id === 'time_rewind_reset')) {
+    } else if (!won && !timeRewindUsed && roundIdx >= 2 && activePerks.some(p => p.id === 'tactical_time_rewind' || p.id === 'time_rewind_reset')) {
       won = true;
       setTimeRewindUsed(true);
       showToast('🌌 Tactical Time Rewind activated! Playoff defeat negated!', 'n-good');
@@ -869,51 +972,40 @@ export default function App() {
 
   const handleStartRound = async () => {
     usedLogsRef.current.clear();
-    const stageName = STAGES[currentRound];
+    const stages = getStagesForMode(gameMode);
+    const stageName = stages[currentRound];
     const opp = currentOpponent;
+    const isGauntlet = gameMode === 'gauntlet';
+    const isQualifier = !isGauntlet && currentRound === 0;
 
-    if (currentRound === 0) {
-      setSeriesResult({ uw: 0, ew: 0, results: [], logs: [] });
-      setRoundState('playing');
-      await sleep(300);
-
-      const finalState = await playOneGame({ uw: 0, ew: 0, results: [], logs: [] }, opp, 0);
-      const passed = finalState.uw > 0;
-
-      setJourney(prev => [
-        ...prev,
-        {
-          stage: stageName,
-          opp: opp?.name || 'Opponent',
-          score: passed ? '✓ Qualified' : '✗ Failed',
-          result: passed ? 'W' : 'L',
-          oppRoster: opp?.oppRoster
-        }
-      ]);
-
-      setRoundState(passed ? 'won' : 'lost');
-      return;
-    }
+    // Series length:
+    // Qualifier: BO3 (first to 2 wins) -> Eliminates sudden death flukes when user has good players!
+    // Gauntlet: M1-M4 = BO3 (first to 2), M5-M7 = BO5 (first to 3)
+    // Standard playoffs: BO5 (first to 3)
+    const targetWins = isQualifier ? 2 : (isGauntlet ? (currentRound >= 4 ? 3 : 2) : 3);
 
     setSeriesResult({ uw: 0, ew: 0, results: [], logs: [] });
     setRoundState('playing');
 
     let state = { uw: 0, ew: 0, results: [], logs: [] };
-    while (state.uw < 3 && state.ew < 3) {
+    while (state.uw < targetWins && state.ew < targetWins) {
       state = await playOneGame(state, opp, currentRound);
-      if (state.uw < 3 && state.ew < 3) {
-        // Reduced between rounds by 0.5s: 1100ms between games in BO5
-        await sleep(1100);
+      if (state.uw < targetWins && state.ew < targetWins) {
+        await sleep(1000);
       }
     }
 
-    const won = state.uw >= 3;
+    const won = state.uw >= targetWins;
+    const scoreDisplay = isQualifier
+      ? (won ? `✓ Qualified (${state.uw}–${state.ew})` : `✗ Failed (${state.uw}–${state.ew})`)
+      : `${state.uw}–${state.ew}`;
+
     setJourney(prev => [
       ...prev,
       {
         stage: stageName,
         opp: opp?.name || 'Opponent',
-        score: `${state.uw}–${state.ew}`,
+        score: scoreDisplay,
         result: won ? 'W' : 'L',
         oppRoster: opp.oppRoster
       }
@@ -1005,8 +1097,9 @@ export default function App() {
   };
 
   const handleContinueAfterWin = () => {
+    const stages = getStagesForMode(gameMode);
     const nextRound = currentRound + 1;
-    if (nextRound >= STAGES.length) {
+    if (nextRound >= stages.length) {
       setChamp(true);
       setScreen('result');
     } else {
@@ -1026,7 +1119,17 @@ export default function App() {
     setRoundState('waiting');
     setSeriesResult({ uw: 0, ew: 0, results: [], logs: [] });
     setCurrentGameData(null);
-    setCurrentOpponent(getOpponent(nextRound, gameMode));
+    const nextOpp = getOpponent(nextRound, gameMode);
+    setCurrentOpponent(nextOpp);
+
+    // Preload hero images for next opponent
+    if (nextOpp?.players) {
+      const heroesToPreload = [
+        ...ROLES.map(r => roster[r]?.signatureHero),
+        ...nextOpp.players.map(p => p.signatureHero)
+      ].filter(Boolean);
+      preloadHeroPortraits(heroesToPreload);
+    }
   };
 
   const handleViewResult = () => {
@@ -1043,6 +1146,8 @@ export default function App() {
     );
   }
 
+  const currentStages = getStagesForMode(gameMode);
+
   return (
     <div className="app-container">
       {toast.message && (
@@ -1053,7 +1158,7 @@ export default function App() {
         <CoachPerkModal
           perkChoices={perkChoices}
           onSelectPerk={handleSelectPerk}
-          stageName={STAGES[currentRound]}
+          stageName={currentStages[currentRound]}
         />
       )}
 
@@ -1098,6 +1203,7 @@ export default function App() {
             activePerks={activePerks}
             currentGameData={currentGameData}
             gameTransitionBanner={gameTransitionBanner}
+            gameMode={gameMode}
             onStartRound={handleStartRound}
             onContinueAfterWin={handleContinueAfterWin}
             onViewResult={handleViewResult}

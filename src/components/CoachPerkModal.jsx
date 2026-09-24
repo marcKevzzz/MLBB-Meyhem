@@ -23,14 +23,35 @@ export default function CoachPerkModal({ perkChoices, onSelectPerk, stageName })
             >
               <div className="cpm-card-glow" />
               <div className="cpm-card-top">
-                <span className={`cpm-rarity-tag tag-${perk.rarity}`}>
-                  {perk.rarity.toUpperCase()}
-                </span>
+                <div className="cpm-card-top-left">
+                  <span className={`cpm-rarity-tag tag-${perk.rarity}`}>
+                    {perk.rarity.toUpperCase()}
+                  </span>
+                  {perk.targetRole && (
+                    <span className={`cpm-role-tag role-tag-${perk.targetRole.toLowerCase()}`}>
+                      {perk.targetRole === 'Team' ? '👥 TEAM MACRO' : 
+                       perk.targetRole === 'Tactical' ? '🎯 TACTICAL' : 
+                       `⚔️ ${perk.targetRole.toUpperCase()}`}
+                    </span>
+                  )}
+                </div>
                 <span className="cpm-card-icon">{perk.icon}</span>
               </div>
 
               <h3 className="cpm-card-name">{perk.name}</h3>
               <div className="cpm-card-tagline">{perk.tagline}</div>
+
+              {/* Specific numbers and distinct buff pills */}
+              {perk.buffStats && perk.buffStats.length > 0 && (
+                <div className="cpm-buff-stats">
+                  {perk.buffStats.map((stat, sIdx) => (
+                    <span key={sIdx} className={`cpm-stat-pill stat-type-${stat.type}`}>
+                      {stat.label}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               <p className="cpm-card-desc">{perk.description}</p>
 
               <button className="cpm-select-btn">

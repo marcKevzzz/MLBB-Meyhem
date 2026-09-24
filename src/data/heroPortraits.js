@@ -52,3 +52,23 @@ export function getHeroPortraitUrl(heroName) {
   // 4. Clean avatar placeholder fallback
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(heroName)}&background=121634&color=00e5ff&bold=true&size=128`;
 }
+
+// In-memory preloaded cache
+const preloadedUrls = new Set();
+
+/**
+ * Preloads hero portrait images ahead of time so they load instantly during matches.
+ */
+export function preloadHeroPortraits(heroNames = []) {
+  if (typeof window === 'undefined' || !Array.isArray(heroNames)) return;
+
+  heroNames.forEach(hero => {
+    if (!hero) return;
+    const url = getHeroPortraitUrl(hero);
+    if (url && !preloadedUrls.has(url)) {
+      preloadedUrls.add(url);
+      const img = new Image();
+      img.src = url;
+    }
+  });
+}

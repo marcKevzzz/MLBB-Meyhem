@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { STAGES, ROLE_SVG, ROLES } from '../data/gameData';
+import { STAGES, getStagesForMode, ROLE_SVG, ROLES } from '../data/gameData';
 import HeroAvatar from './HeroAvatar';
 import { calcHeroCounters } from '../data/signatureHeroes';
 import { computeRosterSynergies } from '../data/synergies';
@@ -60,20 +60,23 @@ export default function TournamentPhase({
   activePerks = [],
   currentGameData = null,
   gameTransitionBanner = null,
+  gameMode = 'standard',
   onStartRound,
   onContinueAfterWin,
   onViewResult,
 }) {
   const [showMethodologyModal, setShowMethodologyModal] = useState(false);
 
-  const isQualifier = currentRound === 0;
+  const stages = getStagesForMode(gameMode);
+  const isGauntlet = gameMode === 'gauntlet';
+  const isQualifier = !isGauntlet && currentRound === 0;
   const finished = roundState === 'won' || roundState === 'lost';
   const userWon = roundState === 'won';
 
   // Bracket component
   const BracketBar = () => (
     <div className="overlay-bracket-bar">
-      {STAGES.map((stage, idx) => {
+      {stages.map((stage, idx) => {
         const isDone = idx < currentRound || (idx === currentRound && finished);
         const isCurrent = idx === currentRound && !finished;
         const journeyEntry = journey[idx];
@@ -299,14 +302,14 @@ export default function TournamentPhase({
             <BracketBar />
             <div className="modal-card modal-bounce modal-stretched">
               <div className="modal-top-row">
-                <span className="ph-eyebrow">Round 1: Group Stage</span>
+                <span className="ph-eyebrow">Qualifier Series (Best of 3)</span>
                 <button className="btn-methodology" onClick={() => setShowMethodologyModal(true)}>
                   ℹ️ Rating System
                 </button>
               </div>
 
               <h2 className="disp" style={{ fontSize: '28px', color: '#fff', margin: '4px 0 10px' }}>
-                {STAGES[currentRound]}
+                {stages[currentRound]}
               </h2>
 
               <ActivePerksBar />
@@ -314,7 +317,7 @@ export default function TournamentPhase({
               <RosterMatchup oppPlayers={opponent.players} />
 
               <button className="btn-cta" onClick={onStartRound} style={{ width: '100%', marginTop: '20px' }}>
-                ⚔️ Enter Qualifiers
+                ⚔️ PLAY QUALIFIER SERIES (BO3)
               </button>
             </div>
           </div>
@@ -329,13 +332,14 @@ export default function TournamentPhase({
             <BracketBar />
             <div className="modal-card modal-bounce modal-sim-card modal-stretched">
               <span className="ph-eyebrow" style={{ color: 'var(--cyan)' }}>
-                {STAGES[currentRound]} — Qualifier Match
+                {stages[currentRound]} — Game {(seriesResult?.results?.length || 0) + 1} (BO3)
               </span>
 
               {/* Perfectly Balanced Equal-Size Scoreboard */}
               <div className="broadcast-scoreboard-v2">
                 <div className="bs2-side bs2-user">
                   <span className="bs2-team-name disp">YOUR ROSTER</span>
+                  <span className="bs2-series-score">{seriesResult?.uw || 0}</span>
                 </div>
                 <div className="bs2-center">
                   <div className="bs2-kills-wrap">
@@ -346,8 +350,22 @@ export default function TournamentPhase({
                   <span className="bs2-live-tag">LIVE KILLS</span>
                 </div>
                 <div className="bs2-side bs2-opp">
+                  <span className="bs2-series-score">{seriesResult?.ew || 0}</span>
                   <span className="bs2-team-name disp">{opponent.name}</span>
                 </div>
+              </div>
+
+              {/* BO3 Pips */}
+              <div className="pips-row">
+                {[...Array(3)].map((_, i) => {
+                  const res = seriesResult?.results[i];
+                  const cls = res === 1 ? 'pip-w' : res === -1 ? 'pip-l' : '';
+                  return (
+                    <div key={i} className={`pip ${cls}`}>
+                      {res === 1 ? 'W' : res === -1 ? 'L' : `G${i + 1}`}
+                    </div>
+                  );
+                })}
               </div>
 
               {/* In-Game Roster with Circle Hero Avatars & Dynamic KDA (Side by side on mobile) */}
@@ -420,81 +438,93 @@ export default function TournamentPhase({
         </div>
       )}
 
-      {/* ═══ OVERLAY: Versus Queue (BO5 rounds) ═══ */}
-      {!isQualifier && roundState === 'waiting' && opponent && (
-        <div className="overlay-screen">
-          <div className="overlay-bg" />
-          <div className="overlay-inner">
-            <BracketBar />
-            <div className="modal-card modal-bounce modal-stretched">
-              <div className="modal-top-row">
-                <span className="ph-eyebrow">Round {currentRound} of 3</span>
-                <button className="btn-methodology" onClick={() => setShowMethodologyModal(true)}>
-                  ℹ️ Rating System
+      {/* ═══ OVERLAY: Versus Queue (Playoffs / Gauntlet) ═══ */}
+      {!isQualifier && roundState === 'waiting' && opponent && (() => {
+        const isBo3 = isGauntlet && currentRound < 4;
+        const formatLabel = isBo3 ? 'BO3' : 'BO5';
+        return (
+          <div className="overlay-screen">
+            <div className="overlay-bg" />
+            <div className="overlay-inner">
+              <BracketBar />
+              <div className="modal-card modal-bounce modal-stretched">
+                <div className="modal-top-row">
+                  <span className="ph-eyebrow">
+                    {isGauntlet 
+                      ? `M-Series Boss ${currentRound + 1} of 7` 
+                      : `Playoff Round ${currentRound} of ${stages.length - 1}`}
+                  </span>
+                  <button className="btn-methodology" onClick={() => setShowMethodologyModal(true)}>
+                    ℹ️ Rating System
+                  </button>
+                </div>
+
+                <h2 className="disp" style={{ fontSize: '30px', color: '#fff', margin: '4px 0 10px' }}>
+                  {stages[currentRound]}
+                </h2>
+
+                <ActivePerksBar />
+                <EnemyPerksBar />
+                <RosterMatchup oppPlayers={opponent.players} />
+
+                <button className="btn-cta" onClick={onStartRound} style={{ width: '100%', marginTop: '20px' }}>
+                  ⚔️ {isGauntlet ? `BATTLE ${opponent.name.toUpperCase()} (${formatLabel})` : `PLAY SERIES (${formatLabel})`}
                 </button>
               </div>
-
-              <h2 className="disp" style={{ fontSize: '32px', color: '#fff', margin: '4px 0 10px' }}>
-                {STAGES[currentRound]}
-              </h2>
-
-              <ActivePerksBar />
-              <EnemyPerksBar />
-              <RosterMatchup oppPlayers={opponent.players} />
-
-              <button className="btn-cta" onClick={onStartRound} style={{ width: '100%', marginTop: '20px' }}>
-                ⚔️ PLAY SERIES (BO5)
-              </button>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {/* ═══ OVERLAY: Match Simulation Console (BO5) ═══ */}
-      {!isQualifier && roundState === 'playing' && opponent && (
-        <div className="overlay-screen">
-          <div className="overlay-bg" />
-          <div className="overlay-inner">
-            <BracketBar />
-            <div className="modal-card modal-bounce modal-sim-card modal-stretched">
-              <span className="ph-eyebrow" style={{ color: 'var(--cyan)' }}>
-                {STAGES[currentRound]} — Game {(seriesResult?.results?.length || 0) + 1}
-              </span>
+      {/* ═══ OVERLAY: Match Simulation Console ═══ */}
+      {!isQualifier && roundState === 'playing' && opponent && (() => {
+        const isBo3 = isGauntlet && currentRound < 4;
+        const formatLabel = isBo3 ? 'BO3' : 'BO5';
+        const numPips = isBo3 ? 3 : 5;
+        return (
+          <div className="overlay-screen">
+            <div className="overlay-bg" />
+            <div className="overlay-inner">
+              <BracketBar />
+              <div className="modal-card modal-bounce modal-sim-card modal-stretched">
+                <span className="ph-eyebrow" style={{ color: 'var(--cyan)' }}>
+                  {stages[currentRound]} — Game {(seriesResult?.results?.length || 0) + 1} ({formatLabel})
+                </span>
 
-              {/* Perfectly Balanced Equal-Size Scoreboard */}
-              <div className="broadcast-scoreboard-v2">
-                <div className="bs2-side bs2-user">
-                  <span className="bs2-team-name disp">YOUR ROSTER</span>
-                  <span className="bs2-series-score">{seriesResult?.uw || 0}</span>
-                </div>
-
-                <div className="bs2-center">
-                  <div className="bs2-kills-wrap">
-                    <span className="bs2-kill-num bs2-k-user">{killsUser}</span>
-                    <SwordClash size="compact" />
-                    <span className="bs2-kill-num bs2-k-opp">{killsOpp}</span>
+                {/* Perfectly Balanced Equal-Size Scoreboard */}
+                <div className="broadcast-scoreboard-v2">
+                  <div className="bs2-side bs2-user">
+                    <span className="bs2-team-name disp">YOUR ROSTER</span>
+                    <span className="bs2-series-score">{seriesResult?.uw || 0}</span>
                   </div>
-                  <span className="bs2-live-tag">GAME KILLS</span>
-                </div>
 
-                <div className="bs2-side bs2-opp">
-                  <span className="bs2-series-score">{seriesResult?.ew || 0}</span>
-                  <span className="bs2-team-name disp">{opponent.name}</span>
-                </div>
-              </div>
-
-              {/* BO5 Pips */}
-              <div className="pips-row">
-                {[...Array(5)].map((_, i) => {
-                  const res = seriesResult?.results[i];
-                  const cls = res === 1 ? 'pip-w' : res === -1 ? 'pip-l' : '';
-                  return (
-                    <div key={i} className={`pip ${cls}`}>
-                      {res === 1 ? 'W' : res === -1 ? 'L' : `G${i + 1}`}
+                  <div className="bs2-center">
+                    <div className="bs2-kills-wrap">
+                      <span className="bs2-kill-num bs2-k-user">{killsUser}</span>
+                      <SwordClash size="compact" />
+                      <span className="bs2-kill-num bs2-k-opp">{killsOpp}</span>
                     </div>
-                  );
-                })}
-              </div>
+                    <span className="bs2-live-tag">GAME KILLS</span>
+                  </div>
+
+                  <div className="bs2-side bs2-opp">
+                    <span className="bs2-series-score">{seriesResult?.ew || 0}</span>
+                    <span className="bs2-team-name disp">{opponent.name}</span>
+                  </div>
+                </div>
+
+                {/* Series Pips */}
+                <div className="pips-row">
+                  {[...Array(numPips)].map((_, i) => {
+                    const res = seriesResult?.results[i];
+                    const cls = res === 1 ? 'pip-w' : res === -1 ? 'pip-l' : '';
+                    return (
+                      <div key={i} className={`pip ${cls}`}>
+                        {res === 1 ? 'W' : res === -1 ? 'L' : `G${i + 1}`}
+                      </div>
+                    );
+                  })}
+                </div>
 
               {/* In-Game Roster with Circle Hero Avatars & Dynamic KDA (Side by side on mobile) */}
               <div className="kda-roster-grid">
@@ -564,7 +594,8 @@ export default function TournamentPhase({
             </div>
           </div>
         </div>
-      )}
+      );
+    })()}
 
       {/* ═══ OVERLAY: Series Outcome ═══ */}
       {finished && (
@@ -579,7 +610,9 @@ export default function TournamentPhase({
                   <h2 className="disp mrb-text">VICTORY</h2>
                   <p className="mrb-sub">
                     {isQualifier
-                      ? 'Your Roster advances to the Quarter Finals!'
+                      ? 'Your Roster won the Qualifier series and advances to the Quarter Finals!'
+                      : isGauntlet
+                      ? `Your Roster conquered ${opponent?.name || 'the Champions'} ${seriesResult?.uw}–${seriesResult?.ew}!`
                       : `Your Roster wins the series ${seriesResult?.uw}–${seriesResult?.ew} and advances!`}
                   </p>
                 </>
@@ -590,6 +623,8 @@ export default function TournamentPhase({
                   <p className="mrb-sub">
                     {isQualifier
                       ? 'Your roster did not qualify this time.'
+                      : isGauntlet
+                      ? `Fallen to ${opponent?.name || 'the Champions'} ${seriesResult?.ew}–${seriesResult?.uw}. The gauntlet run ends.`
                       : `The series ends ${seriesResult?.ew}–${seriesResult?.uw}. Better luck next time.`}
                   </p>
                 </>
@@ -601,9 +636,9 @@ export default function TournamentPhase({
                 style={{ width: '100%' }}
               >
                 {userWon
-                  ? currentRound >= STAGES.length - 1
-                    ? '🏆 Claim Championship!'
-                    : `▶ Claim Reward & Advance to ${STAGES[currentRound + 1]}`
+                  ? currentRound >= stages.length - 1
+                    ? (isGauntlet ? '🏆 Claim M-Series World Championship!' : '🏆 Claim Championship!')
+                    : `▶ Claim Reward & Advance to ${stages[currentRound + 1]}`
                   : '📊 View Results'}
               </button>
             </div>

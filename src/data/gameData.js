@@ -13,6 +13,118 @@ export const ROLE_SVG = {
 export const RI = { EXP: "EXP", Jungler: "JG", Mid: "MID", Gold: "GOLD", Roamer: "ROAM" };
 export const STAGES = ["Qualifier", "Quarter Final", "Semi Final", "Final"];
 
+// M-Series World Championship Boss Rush stages (7 Rounds: M1 → M7)
+export const M_SERIES_STAGES = [
+  "M1: EVOS Legends",
+  "M2: Bren Esports",
+  "M3: Blacklist Int.",
+  "M4: ECHO",
+  "M5: AP Bren",
+  "M6: Fnatic ONIC PH",
+  "M7: Aurora Gaming"
+];
+
+export const M_SERIES_CHAMPIONS = [
+  {
+    roundIdx: 0,
+    edition: "M1",
+    stage: "M1 World Championship",
+    shortStage: "M1: EVOS Legends",
+    teamKey: "EVOS Legends 2019",
+    name: "EVOS Legends",
+    year: 2019,
+    country: "Indonesia",
+    title: "M1 World Champions (2019)",
+    desc: "The trailblazing Indonesian powerhouse led by Oura & Wann. Accessible gauntlet entry.",
+    targetDiff: -4 // Accessible start: userAvg - 4 OVR
+  },
+  {
+    roundIdx: 1,
+    edition: "M2",
+    stage: "M2 World Championship",
+    shortStage: "M2: Bren Esports",
+    teamKey: "Bren Esports 2021",
+    name: "Bren Esports",
+    year: 2021,
+    country: "Philippines",
+    title: "M2 World Champions (2021)",
+    desc: "Calculated hyper-aggression orchestrated by KarlTzy. Moderate tactical challenge.",
+    targetDiff: -2 // userAvg - 2 OVR
+  },
+  {
+    roundIdx: 2,
+    edition: "M3",
+    stage: "M3 World Championship",
+    shortStage: "M3: Blacklist Int.",
+    teamKey: "Blacklist International 2021",
+    name: "Blacklist International",
+    year: 2021,
+    country: "Philippines",
+    title: "M3 World Champions (2021)",
+    desc: "The legendary UBE System (Ultimate Bonding Experience) perfected by OhMyV33NUS & Wise.",
+    targetDiff: 0 // userAvg + 0 OVR
+  },
+  {
+    roundIdx: 3,
+    edition: "M4",
+    stage: "M4 World Championship",
+    shortStage: "M4: ECHO",
+    teamKey: "ECHO 2023",
+    name: "ECHO",
+    year: 2023,
+    country: "Philippines",
+    title: "M4 World Champions (2023)",
+    desc: "The Orcas' explosive mechanical peak featuring Sanford, KarlTzy & Bennyqt.",
+    targetDiff: +1 // userAvg + 1 OVR
+  },
+  {
+    roundIdx: 4,
+    edition: "M5",
+    stage: "M5 World Championship",
+    shortStage: "M5: AP Bren",
+    teamKey: "AP Bren 2023",
+    name: "AP Bren",
+    year: 2023,
+    country: "Philippines",
+    title: "M5 World Champions (2023)",
+    desc: "The two-time world champion titans under Ducky, FlapTzy & KyleTzy.",
+    targetDiff: +2 // userAvg + 2 OVR
+  },
+  {
+    roundIdx: 5,
+    edition: "M6",
+    stage: "M6 World Championship",
+    shortStage: "M6: Fnatic ONIC PH",
+    teamKey: "Fnatic ONIC PH 2024",
+    name: "Fnatic ONIC PH",
+    year: 2024,
+    country: "Philippines",
+    title: "M6 World Champions (2024)",
+    desc: "The undefeated world champions led by Finals MVP Kelra, K1NGKONG & Brusko.",
+    targetDiff: +3 // userAvg + 3 OVR
+  },
+  {
+    roundIdx: 6,
+    edition: "M7",
+    stage: "M7 World Championship",
+    shortStage: "M7: Aurora Gaming",
+    teamKey: "Aurora Gaming PH 2026",
+    name: "Aurora Gaming PH",
+    year: 2026,
+    country: "Philippines",
+    title: "M7 World Champions (2026)",
+    desc: "The supreme modern dynasty led by Demonkite, Edward & Light. Pinnacle final boss!",
+    targetDiff: +3.5 // userAvg + 3.5 OVR (Formidable final boss, but slight possible to win with right players & synergy!)
+  }
+];
+
+export function getStagesForMode(gameMode = 'standard') {
+  if (gameMode === 'gauntlet') {
+    return M_SERIES_STAGES;
+  }
+  return STAGES;
+}
+
 export const PREDEFINED_COMMENTARIES = [
   "**[Player]** carried the team in this **[Stage]**!",
   "**[Player]** dominated the map and secured the win.",

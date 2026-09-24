@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROLES, ROLE_SVG, STAGES } from '../data/gameData';
+import { ROLES, ROLE_SVG, STAGES, getStagesForMode } from '../data/gameData';
 import { getSignatureHeroes } from '../data/signatureHeroes';
 import { computeRosterSynergies } from '../data/synergies';
 
@@ -21,7 +21,9 @@ export default function ResultScreen({
   activePerks = [],
   onPlayAgain
 }) {
-  const title = champ ? 'WORLD CHAMPION' : 'ELIMINATED';
+  const isGauntlet = gameMode === 'gauntlet';
+  const stages = getStagesForMode(gameMode);
+  const title = champ ? (isGauntlet ? 'M-SERIES CONQUEROR' : 'WORLD CHAMPION') : 'ELIMINATED';
   const titleCls = champ ? 'champ' : 'elim';
   const emoji = champ ? '🏆' : '💔';
 
@@ -50,15 +52,17 @@ export default function ResultScreen({
         </div>
       )}
 
-      <div className="res-mode-badge">MODE: {gameMode.toUpperCase()}</div>
+      <div className="res-mode-badge">MODE: {isGauntlet ? 'M-SERIES GAUNTLET (M1 → M7)' : gameMode.toUpperCase()}</div>
       <span className="res-emoji">{emoji}</span>
       <div className={`res-title disp ${titleCls}`}>{title}</div>
 
       {/* Tournament Path as Breadcrumbs */}
       <div className="journey-breadcrumbs-container" style={{ width: '100%' }}>
-        <div className="jl-title disp" style={{ marginBottom: '16px' }}>Tournament Path</div>
+        <div className="jl-title disp" style={{ marginBottom: '16px' }}>
+          {isGauntlet ? 'M-Series Champions Defeated' : 'Tournament Path'}
+        </div>
         <div className="overlay-bracket-bar" style={{ background: 'rgba(11, 13, 30, 0.6)', margin: '0 auto 20px' }}>
-          {STAGES.map((stage, idx) => {
+          {stages.map((stage, idx) => {
             const journeyEntry = journey[idx];
             const isPlayed = !!journeyEntry;
             const won = journeyEntry?.result === 'W';
