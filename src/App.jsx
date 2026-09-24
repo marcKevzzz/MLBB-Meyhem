@@ -48,7 +48,10 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
     totalWeight += weight;
   });
 
-  const laneDifferential = laneDiffSum / totalWeight;
+  let laneDifferential = laneDiffSum / totalWeight;
+  if (gameMode === 'gauntlet') {
+    laneDifferential = Math.max(-4.0, laneDifferential); // Prevent overwhelming stat diff against historic squads
+  }
 
   // Separate Team System / Macro Synergy & Franchise Chemistry (Gentle Secondary Influence)
   const { totalSynergyOvr, activeFranchise, isDisconnected } = computeRosterSynergies(userRoster);
@@ -68,14 +71,19 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
 
   // Stage Scaling (Smooth Qualifiers vs Fierce Playoff Finals)
   let stagePressure = 0;
-  if (roundIdx === 0) stagePressure = -10;     // Qualifiers: +10% qualification advantage so runs reliably reach the bracket
-  else if (roundIdx === 1) stagePressure = 0;  // Quarters: accessible competitive entry
-  else if (roundIdx === 2) stagePressure = 4;  // Semis: high-stakes playoff tension
-  else if (roundIdx >= 3) stagePressure = 8;  // Grand Finals: world championship final boss pressure
+ if (roundIdx === 0) {
+    stagePressure = -10;     // Qualifiers: +10% qualification advantage so runs reliably reach the bracket
+  } else if (roundIdx === 1) {
+    stagePressure = 0;       // Quarters: accessible competitive entry
+  } else if (roundIdx === 2) {
+    stagePressure = 4;       // Semis: high-stakes playoff tension
+  } else if (roundIdx >= 3) {
+    stagePressure = 8;       // Grand Finals: world championship final boss pressure
+  }
 
   // Grand Finals Boss Tenacity: Opponent plays with championship composure when deep in a series
   let bossTenacity = 0;
-  if (roundIdx >= 3 && gameIdx >= 2) {
+  if (gameMode !== 'gauntlet' && roundIdx >= 3 && gameIdx >= 2) {
     bossTenacity = 3.0;
   }
 
@@ -147,20 +155,22 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
     comebackResistance = roundIdx >= 3 ? 4.5 : 3.5; // +4.5% in Finals, +3.5% in Semis (fair, moderate)
   }
 
-  // ── M-Series Gauntlet Mode: Modern Era Evolution Advantage ──
+  // ── M-Series Gauntlet Mode: Challenger Drive & Modern Era Advantage ──
   // Current modern eras possess evolved macro, refined wave state control, and emblem specialization,
   // giving the current era a decisive advantage over previous/vintage eras.
   let gauntletEraBonus = 0;
   if (gameMode === 'gauntlet') {
+    const challengerDrive = 6; // +6% baseline challenger drive against world champions
     const userYears = ROLES.map(r => userRoster[r]?.year || 2024);
     const oppYears = ROLES.map(r => oppRoster?.[r]?.year || 2021);
     const userAvgYear = userYears.reduce((a, b) => a + b, 0) / userYears.length;
     const oppAvgYear = oppYears.reduce((a, b) => a + b, 0) / oppYears.length;
 
-    // +1.8% per year difference of modern meta evolution (capped between -9% and +9%)
-    // e.g. 2024 current roster vs 2019 M1 previous champions = +9% modern evolution advantage
+    // +1.5% per year difference of modern meta evolution (capped between -6% and +12%)
+    // e.g. 2024 current roster vs 2019 M1 previous champions = +10% modern evolution advantage
     const yearDiff = userAvgYear - oppAvgYear;
-    gauntletEraBonus = Math.max(-9, Math.min(9, Math.round(yearDiff * 1.8)));
+    const eraBonus = Math.max(-6, Math.min(12, Math.round(yearDiff * 1.5)));
+    gauntletEraBonus = challengerDrive + eraBonus;
   }
 
   // Underdog mode spirit bonus (+8% upset boost)
@@ -548,10 +558,26 @@ export default function App() {
       ];
       const targetKey = gauntletBossKeys[roundIdx] || gauntletBossKeys[0];
       const bossTeam = teamData[targetKey] || Object.values(teamData)[0];
+
+      // Anchor Gauntlet Boss OVR relative to User's squad so bosses are challenging (+0 to +3 OVR)
+      // rather than mathematically impossible brick walls (+15 OVR)
+      const effectiveRoster = activeRoster && Object.keys(activeRoster).length ? activeRoster : roster;
+      const userPlayers = Object.values(effectiveRoster || {});
+      const userAvgOvr = userPlayers.length
+        ? Math.round(userPlayers.reduce((sum, p) => sum + (p.ovr || 75), 0) / userPlayers.length)
+        : 82;
+
+      // Boss progression: M1 = userAvgOvr - 2, M2 = userAvgOvr, M3 = userAvgOvr + 1, M4 = userAvgOvr + 2, M5 = userAvgOvr + 3
+      const targetBossAvg = Math.min(94, Math.max(74, userAvgOvr + (roundIdx - 1)));
+      const rawBossAvg = Math.round(bossTeam.players.reduce((sum, p) => sum + (p.ovr || 90), 0) / bossTeam.players.length) || 95;
+      const ovrShift = Math.max(-12, Math.min(2, targetBossAvg - rawBossAvg));
+
       const enemyRoster = {};
       bossTeam.players.forEach(p => {
+        const adjustedOvr = Math.max(70, Math.min(99, p.ovr + ovrShift));
         enemyRoster[p.role] = {
           ...p,
+          ovr: adjustedOvr,
           signatureHero: pickGameHero(p.ign, p.role, 0, bossTeam.year),
           teamKey: targetKey,
           country: bossTeam.country,
@@ -564,7 +590,7 @@ export default function App() {
         logo: bossTeam.logo || "⚔️",
         country: bossTeam.country || "",
         year: bossTeam.year || "",
-        teamOVR: bossTeam.teamOVR || 90,
+        teamOVR: targetBossAvg,
         players: Object.values(enemyRoster),
         oppRoster: enemyRoster,
         coachPerks: getOpponentCoachPerks(roundIdx)

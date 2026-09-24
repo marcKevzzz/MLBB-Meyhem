@@ -3454,6 +3454,25 @@ body::after {
   border: 1px solid var(--rim);
 }
 
+.country-abbr {
+  display: none;
+}
+.country-full {
+  display: inline;
+}
+
+@media (max-width: 680px) {
+  .country-full {
+    display: none;
+  }
+  .country-abbr {
+    display: inline;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text2);
+  }
+}
+
 .matchup-opp-row .mpr-hero-name {
   color: #ff9e9e;
   background: rgba(255, 59, 59, 0.08);

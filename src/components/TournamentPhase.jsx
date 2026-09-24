@@ -23,6 +23,33 @@ function SwordClash({ size = 'normal' }) {
   );
 }
 
+const COUNTRY_ACRONYMS = {
+  'Philippines': 'PH',
+  'Indonesia': 'ID',
+  'Malaysia': 'MY',
+  'Singapore': 'SG',
+  'Cambodia': 'KH',
+  'Myanmar': 'MM',
+  'United States': 'USA',
+  'USA': 'USA',
+  'Turkey': 'TR',
+  'Russia': 'RU',
+  'Brazil': 'BR',
+  'Mongolia': 'MN',
+  'Argentina': 'AR',
+  'Vietnam': 'VN',
+  'Thailand': 'TH',
+  'Saudi Arabia': 'SA',
+  'CIS': 'CIS',
+  'MENA': 'MENA',
+  'LATAM': 'LATAM'
+};
+
+function getCountryAcronym(country) {
+  if (!country) return '';
+  return COUNTRY_ACRONYMS[country] || (country.length > 4 ? country.slice(0, 3).toUpperCase() : country);
+}
+
 export default function TournamentPhase({
   roster,
   currentRound,
@@ -138,7 +165,12 @@ export default function TournamentPhase({
                   </div>
                   <div className="mpr-sub-line">
                     <span className="mpr-role-text">{role}</span>
-                    {p.country && <span className="mpr-meta-tag">{p.country}</span>}
+                    {p.country && (
+                      <span className="mpr-meta-tag mpr-country-tag">
+                        <span className="country-full">{p.country}</span>
+                        <span className="country-abbr">{getCountryAcronym(p.country)}</span>
+                      </span>
+                    )}
                     {p.year && <span className="mpr-meta-tag">{p.year}</span>}
                   </div>
                 </div>
@@ -173,7 +205,12 @@ export default function TournamentPhase({
                   </div>
                   <div className="mpr-sub-line">
                     {p.year && <span className="mpr-meta-tag">{p.year}</span>}
-                    {p.country && <span className="mpr-meta-tag">{p.country}</span>}
+                    {p.country && (
+                      <span className="mpr-meta-tag mpr-country-tag">
+                        <span className="country-full">{p.country}</span>
+                        <span className="country-abbr">{getCountryAcronym(p.country)}</span>
+                      </span>
+                    )}
                     <span className="mpr-role-text">{role}</span>
                   </div>
                 </div>
