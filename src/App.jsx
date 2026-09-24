@@ -66,16 +66,17 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
   const draftEval = calcHeroCounters(userHeroes, oppHeroes);
   const heroCounterBonus = Math.max(-2.5, Math.min(2.5, draftEval.netBonus)); // -2.5% to +2.5% max
 
-  // Playoff Stage Difficulty Scaling (Calibrated for fierce Semis & pinnacle Grand Finals)
+  // Stage Scaling (Smooth Qualifiers vs Fierce Playoff Finals)
   let stagePressure = 0;
-  if (roundIdx === 1) stagePressure = 0;      // Quarters: accessible competitive entry
-  else if (roundIdx === 2) stagePressure = 5;  // Semis: high-stakes playoff tension (tightened)
-  else if (roundIdx >= 3) stagePressure = 10; // Grand Finals: world championship final boss pressure
+  if (roundIdx === 0) stagePressure = -10;     // Qualifiers: +10% qualification advantage so runs reliably reach the bracket
+  else if (roundIdx === 1) stagePressure = 0;  // Quarters: accessible competitive entry
+  else if (roundIdx === 2) stagePressure = 4;  // Semis: high-stakes playoff tension
+  else if (roundIdx >= 3) stagePressure = 8;  // Grand Finals: world championship final boss pressure
 
   // Grand Finals Boss Tenacity: Opponent plays with championship composure when deep in a series
   let bossTenacity = 0;
   if (roundIdx >= 3 && gameIdx >= 2) {
-    bossTenacity = 3.5;
+    bossTenacity = 3.0;
   }
 
   // Tactical Coach Perks Catalog (Legendary, Epic, Rare, Common)
@@ -146,10 +147,26 @@ function calcMatchupOdds(userRoster, oppRoster, roundIdx, activePerks = [], game
     comebackResistance = roundIdx >= 3 ? 4.5 : 3.5; // +4.5% in Finals, +3.5% in Semis (fair, moderate)
   }
 
+  // ── M-Series Gauntlet Mode: Modern Era Evolution Advantage ──
+  // Current modern eras possess evolved macro, refined wave state control, and emblem specialization,
+  // giving the current era a decisive advantage over previous/vintage eras.
+  let gauntletEraBonus = 0;
+  if (gameMode === 'gauntlet') {
+    const userYears = ROLES.map(r => userRoster[r]?.year || 2024);
+    const oppYears = ROLES.map(r => oppRoster?.[r]?.year || 2021);
+    const userAvgYear = userYears.reduce((a, b) => a + b, 0) / userYears.length;
+    const oppAvgYear = oppYears.reduce((a, b) => a + b, 0) / oppYears.length;
+
+    // +1.8% per year difference of modern meta evolution (capped between -9% and +9%)
+    // e.g. 2024 current roster vs 2019 M1 previous champions = +9% modern evolution advantage
+    const yearDiff = userAvgYear - oppAvgYear;
+    gauntletEraBonus = Math.max(-9, Math.min(9, Math.round(yearDiff * 1.8)));
+  }
+
   // Underdog mode spirit bonus (+8% upset boost)
   const underdogBonus = gameMode === 'underdog' ? 8 : 0;
 
-  let winChance = 52 + (laneDifferential * 1.5) + teamSystemBonus + heroCounterBonus - stagePressure - bossTenacity + perkBonus - enemyPerkBonus - comebackResistance + underdogBonus;
+  let winChance = 52 + (laneDifferential * 1.5) + teamSystemBonus + heroCounterBonus - stagePressure - bossTenacity + perkBonus - enemyPerkBonus - comebackResistance + underdogBonus + gauntletEraBonus;
   return Math.min(88, Math.max(16, Math.round(winChance)));
 }
 
@@ -523,11 +540,11 @@ export default function App() {
   const getOpponent = useCallback((roundIdx = 0, mode = gameMode, activeRoster = roster) => {
     if (mode === 'gauntlet') {
       const gauntletBossKeys = [
-        'EVOS Legends 2019',
-        'Bren Esports 2021',
-        'AP.Bren 2020',
-        'ECHO 2023',
-        'Selangor Red Giants 2024'
+        'EVOS Legends 2019',            // M1 World Champions (Classic Era)
+        'Bren Esports 2021',            // M2 World Champions
+        'Blacklist International 2021', // M3 World Champions
+        'ECHO 2023',                    // M4 World Champions
+        'AP Bren 2023'                  // M5 World Champions (Current Era)
       ];
       const targetKey = gauntletBossKeys[roundIdx] || gauntletBossKeys[0];
       const bossTeam = teamData[targetKey] || Object.values(teamData)[0];
@@ -562,8 +579,8 @@ export default function App() {
       ? Math.round(userPlayers.reduce((sum, p) => sum + (p.ovr || 75), 0) / userPlayers.length)
       : 80;
 
-    let minTargetOvr = Math.max(68, userAvgOvr - 5);
-    let maxTargetOvr = Math.min(95, userAvgOvr - 1);
+    let minTargetOvr = Math.max(62, userAvgOvr - 7);
+    let maxTargetOvr = Math.max(66, userAvgOvr - 3);
     if (roundIdx === 1) {
       // Quarter Final: Clean competitive matchup within tier (+/- 2 OVR)
       minTargetOvr = Math.max(70, userAvgOvr - 2);
@@ -729,6 +746,20 @@ export default function App() {
     const isComebackTriggered = roundIdx >= 2 && currentState.uw >= 2 && currentState.uw > currentState.ew;
     if (isComebackTriggered) {
       showToast('🛡️ Enemy Coach called a Tactical Timeout! (Comeback Resistance Active)', 'n-bad');
+    }
+
+    // M-Series Gauntlet: Modern Era Advantage Toast in Game 1
+    if (gameMode === 'gauntlet' && gameIdx === 0) {
+      const userYears = ROLES.map(r => roster[r]?.year || 2024);
+      const oppYears = ROLES.map(r => opp.oppRoster?.[r]?.year || 2021);
+      const userAvg = Math.round(userYears.reduce((a, b) => a + b, 0) / userYears.length);
+      const oppAvg = Math.round(oppYears.reduce((a, b) => a + b, 0) / oppYears.length);
+      const diff = userAvg - oppAvg;
+      if (diff > 0) {
+        showToast(`🚀 Modern Meta Advantage: +${Math.min(9, Math.round(diff * 1.8))}% vs ${oppAvg} Era!`, 'n-good');
+      } else if (diff < 0) {
+        showToast(`⚠️ Era Power Disadvantage: Opponent is from modern ${oppAvg} Era!`, 'n-bad');
+      }
     }
 
     let winChance = calcMatchupOdds(

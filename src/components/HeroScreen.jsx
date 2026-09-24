@@ -21,7 +21,7 @@ export const GAME_MODES = [
     id: 'gauntlet',
     title: 'M-Series Gauntlet',
     badge: 'BOSS RUSH',
-    desc: 'Face historic World Champions in sequence: M1 → M2 → M3 → M4 → M5.',
+    desc: 'Battle historic World Champions: M1 → M5. Current era squads hold modern meta advantage over previous champions!',
     icon: '🔥',
     cta: 'PLAY GAUNTLET'
   }

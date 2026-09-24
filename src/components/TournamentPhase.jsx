@@ -112,6 +112,7 @@ export default function TournamentPhase({
   };
 
   // Spacious, stretched side-by-side roster matchup that stays side-by-side even on mobile
+  // Spacious, stretched side-by-side roster matchup that stays side-by-side even on mobile
   const RosterMatchup = ({ oppPlayers }) => (
     <div className="matchup-grid-v2">
       {/* User side */}
@@ -128,17 +129,17 @@ export default function TournamentPhase({
             if (!p) return null;
             return (
               <div key={role} className="matchup-player-row-v2 matchup-user-row">
-                <HeroAvatar hero={p.signatureHero || 'Hero'} size={38} side="user" />
+                <div className="mpr-role-badge">
+                  <RoleIcon role={role} />
+                </div>
                 <div className="mpr-details">
                   <div className="mpr-name-line">
                     <span className="mpr-ign">{p.ign}</span>
                   </div>
                   <div className="mpr-sub-line">
-                    <span className="mpr-role-tag">
-                      <RoleIcon role={role} />
-                      <span className="mpr-role-text">{role}</span>
-                    </span>
-                    <span className="mpr-hero-name">{p.signatureHero || 'Hero'}</span>
+                    <span className="mpr-role-text">{role}</span>
+                    {p.country && <span className="mpr-meta-tag">{p.country}</span>}
+                    {p.year && <span className="mpr-meta-tag">{p.year}</span>}
                   </div>
                 </div>
               </div>
@@ -171,14 +172,14 @@ export default function TournamentPhase({
                     <span className="mpr-ign">{p.ign}</span>
                   </div>
                   <div className="mpr-sub-line">
-                    <span className="mpr-hero-name">{p.signatureHero || 'Hero'}</span>
-                    <span className="mpr-role-tag">
-                      <span className="mpr-role-text">{role}</span>
-                      <RoleIcon role={role} />
-                    </span>
+                    {p.year && <span className="mpr-meta-tag">{p.year}</span>}
+                    {p.country && <span className="mpr-meta-tag">{p.country}</span>}
+                    <span className="mpr-role-text">{role}</span>
                   </div>
                 </div>
-                <HeroAvatar hero={p.signatureHero || 'Hero'} size={38} side="opp" />
+                <div className="mpr-role-badge mpr-role-badge-opp">
+                  <RoleIcon role={role} />
+                </div>
               </div>
             );
           })}

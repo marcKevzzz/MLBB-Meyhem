@@ -3761,44 +3761,6 @@
       }
     ]
   },
-  "Ubuntu Esports 2024": {
-    "logo": "/assets/logos/ubuntu_esports.png",
-    "year": 2024,
-    "country": "South Africa",
-    "region": "AF",
-    "league": "MLBB Africa Series",
-    "championship": null,
-    "teamOVR": 74,
-    "verified": true,
-    "notes": "South Africa's pioneering MLBB team. Won the inaugural MLBB Africa Series 2024. The continent's first serious contender in international qualifiers.",
-    "players": [
-      {
-        "ign": "Zulu",
-        "role": "Jungler",
-        "ovr": 77
-      },
-      {
-        "ign": "Ndaba",
-        "role": "EXP",
-        "ovr": 74
-      },
-      {
-        "ign": "Kruger",
-        "role": "Mid",
-        "ovr": 73
-      },
-      {
-        "ign": "Venda",
-        "role": "Gold",
-        "ovr": 73
-      },
-      {
-        "ign": "Sotho",
-        "role": "Roamer",
-        "ovr": 73
-      }
-    ]
-  },
   "Falcon Esports 2024": {
     "logo": "/assets/logos/falcons.png",
     "year": 2024,
